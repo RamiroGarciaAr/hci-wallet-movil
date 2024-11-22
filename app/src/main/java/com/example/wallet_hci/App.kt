@@ -11,7 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.wallet_hci.ui.theme.WallethciTheme
+
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,20 +32,33 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    @Composable
+    fun MyApp() {
+        val navController = rememberNavController()
+
+        // Seteamos la navegación
+        NavHost(navController = navController, startDestination = "home") {
+            composable("home") {
+                Greeting("Main")
+            }
+        }
+    }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+// Seteamos las rutas de las vistas
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     WallethciTheme {
-        Greeting("Android")
+        Greeting("Main")
     }
+}
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Tobias $name!",
+        modifier = modifier
+    )
 }
