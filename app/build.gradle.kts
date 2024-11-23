@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation(libs.kotlinx.serialization.json.v163)
     // implementation("androidx.compose.material3:material3-adaptive:1.2.0")
     // implementation("androidx.window:window:1.1.0")
     // implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
@@ -61,12 +61,16 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.retrofit) // Core Retrofit library
+    implementation(libs.converter.gson) // For JSON parsing, if using Gson
+    implementation(libs.kotlinx.serialization.json.v151) // Kotlin Serialization
+    implementation(libs.retrofit2.kotlinx.serialization.converter) // For Kotlin Serialization
 
-    implementation("androidx.compose.material3.adaptive:adaptive:1.1.0-alpha07")
-    implementation("androidx.compose.material3.adaptive:adaptive-layout:1.1.0-alpha07") 
-    implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.1.0-alpha07")
-    implementation("androidx.window:window:1.3.0")
-    implementation("androidx.window.extensions.core:core:1.0.0")
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.adaptive.layout)
+    implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.window)
+    implementation(libs.androidx.core)
     
     // implementation(libs.androidx.compose.material3.adaptive)
     // implementation(libs.androidx.compose.material3.adaptive.layout)

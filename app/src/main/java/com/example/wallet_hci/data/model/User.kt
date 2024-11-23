@@ -1,9 +1,6 @@
 package com.example.wallet_hci.data.model
 
-import android.security.NetworkSecurityPolicy
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 data class User(
     var id: Int?,
@@ -12,9 +9,3 @@ data class User(
     var email: String,
     var birthDate: Date
 )
-{
-    fun asNetworkModel():NetworkUser
-    {
-
-    }
-}
