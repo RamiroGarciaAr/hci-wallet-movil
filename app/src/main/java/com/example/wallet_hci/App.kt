@@ -21,7 +21,7 @@ import com.example.wallet_hci.ui.theme.WallethciTheme
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
-import com.example.wallet_hci.app.Home
+
 
 class MainActivity : ComponentActivity() {
 

@@ -2,11 +2,7 @@ package com.example.wallet_hci.ui.layout
 
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Text
-import androidx.compose.material3.Surface
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.adaptive.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
+/import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 
 @Composable
 fun AdaptativeApp()
