@@ -8,12 +8,11 @@ import androidx.navigation.compose.composable
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.data.UserRemoteDataSource
-import com.example.wallet_hci.data.netowrk.api.UserApiService
+import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.auth.Login.LoginView
 
-
-class Navigator {
+class Navigator() {
 
     lateinit var navController: NavHostController
 
@@ -25,13 +24,14 @@ class Navigator {
     fun Routes() {
         // Initialize navController in a composable-safe way
         navController = rememberNavController()
-//        var userRemoteDataSource = UserRemoteDataSource(sessionManager, userApiService )
+//        var userRemoteDataSource = UserRemoteDataSource(sessionManager, APIUserService )
 //        var userRepository = UserRepository(userRemoteDataSource)
 
         NavHost(navController = navController, startDestination = "home") {
-//            composable("login") {
-//                LoginView()
-//            }
+            // composable("login") {
+            //     // Login screen
+            //     LoginView(userRepository = userRepository)
+            // }
             composable("home") {
                 // Home screen
                 HomeView()

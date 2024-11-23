@@ -6,8 +6,6 @@ class LinkUuid(
     val linkUuid: String
 ){
     suspend  fun asNetworkModel(): NetworkLinkUuid {
-        return NetworkLinkUuid(
-            linkUuid = linkUuid
-        )
+        return NetworkLinkUuid(linkUuid = linkUuid)
     }
 }

@@ -1,6 +1,6 @@
 package com.example.wallet_hci.data.model
 
-import com.example.wallet_hci.data.network.model.NetworkBalancePayment
+import com.example.wallet_hci.data.model.NetworkBalancePayment
 
 class BalancePayment(
     val amount: Float,

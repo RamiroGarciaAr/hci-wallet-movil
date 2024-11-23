@@ -15,6 +15,7 @@ import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.app.routes.Navigator
 
+
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
     override fun onCreate(savedInstanceState: Bundle?) {

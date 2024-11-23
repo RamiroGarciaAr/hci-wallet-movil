@@ -16,7 +16,7 @@ fun CardWrapper(
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
     colors: CardColors = CardDefaults.cardColors(containerColor = colorResource(R.color.white)),
     modifier: Modifier = Modifier,
-    rowModifier: Modifier = Modifier,
+    
     content: @Composable () -> Unit
 ) {
     Card( 
@@ -24,10 +24,8 @@ fun CardWrapper(
         colors = colors,
         modifier = modifier.fillMaxWidth().imePadding()
     ) {
-        Row(modifier = rowModifier.padding(8.dp)){
-            Box(modifier = Modifier.weight(1f)){
-                content()
-            }
+        Box(modifier = Modifier.padding(8.dp)){
+            content()
         }
     }
 }

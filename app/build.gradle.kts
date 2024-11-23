@@ -19,9 +19,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
-        }
+        // debug {
+        //     buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
+        // }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -68,10 +68,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v151) // Kotlin Serialization
     implementation(libs.retrofit2.kotlinx.serialization.converter) // For Kotlin Serialization
     implementation(libs.hilt.android)
-    implementation (libs.retrofit)
-    implementation (libs.okhttp3.logging.interceptor)
-    implementation (libs.kotlinx.serialization.json.v163)
-    implementation (libs.retrofit2.kotlinx.serialization.converter)
+
+    implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)

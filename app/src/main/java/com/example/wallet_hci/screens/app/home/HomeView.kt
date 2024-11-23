@@ -42,40 +42,37 @@ fun HomeView(){
                     CardHolder()
                 }
             }
-            Row(
-                modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max)
-            ) {
-                CardWrapper(
-                    modifier = Modifier.weight(2f).height(intrinsicSize = IntrinsicSize.Max),
-                ){
+            Row() {
+                CardWrapper(modifier = Modifier.weight(2f)){
                     Text("Card")
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                CardWrapper(modifier = Modifier.weight(1.15f)){
+                CardWrapper(modifier = Modifier.weight(1f)){
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ){
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_visa),
-                            text = stringResource(R.string.deposit),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_mastercard),
-                            text = stringResource(R.string.spend),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            text = stringResource(R.string.transfer),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            text = stringResource(R.string.cvu),
-                            onClick = {}
-                        )
+                        Button(
+                            onClick = {},
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.primary_100),
+                                contentColor = colorResource(R.color.primary_500)
+                            )
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {  
+                                Icon(
+                                    imageVector = Icons.Filled.Add,
+                                    contentDescription = "Add",
+                                    tint = colorResource(R.color.primary_500),
+                                    modifier = Modifier.size(32.dp)
+                                )
+                                Text("Ingresar")
+                            }   
+                        }
                     }
                 }
             }

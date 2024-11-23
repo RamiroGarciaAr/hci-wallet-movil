@@ -19,7 +19,7 @@ import okhttp3.MediaType.Companion.toMediaType
 
 // Android Context (if needed for interceptors like AuthInterceptor)
 import android.content.Context
-import com.example.wallet_hci.data.netowrk.api.UserApiService
+import com.example.wallet_hci.data.netowrk.api.APIUserService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -62,8 +62,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserApiService(retrofit: Retrofit): UserApiService {
-        return retrofit.create(UserApiService::class.java)
+    fun provideAPIUserService(retrofit: Retrofit): APIUserService {
+        return retrofit.create(APIUserService::class.java)
     }
 
 //    @Provides
