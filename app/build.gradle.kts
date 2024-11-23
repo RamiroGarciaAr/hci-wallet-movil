@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.wallet_hci"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.wallet_hci"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
