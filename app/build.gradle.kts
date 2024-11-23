@@ -50,9 +50,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    //implementation(libs.androidx.adaptive.desktop)
-    //implementation(libs.androidx.window.core.android)
-    //implementation(libs.androidx.adaptive.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,4 +57,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("androidx.compose.material3.adaptive:adaptive:1.1.0-alpha07")
+    implementation("androidx.compose.material3.adaptive:adaptive-layout:1.1.0-alpha07") 
+    implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.1.0-alpha07")
+    implementation("androidx.window:window:1.3.0")
+    implementation("androidx.window.extensions.core:core:1.0.0")
+    
+    // implementation(libs.androidx.compose.material3.adaptive)
+    // implementation(libs.androidx.compose.material3.adaptive.layout)
+    // implementation(libs.androidx.compose.material3.adaptive.navigation)
+    // implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
 }
