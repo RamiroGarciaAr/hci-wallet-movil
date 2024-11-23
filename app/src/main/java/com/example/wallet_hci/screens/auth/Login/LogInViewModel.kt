@@ -1,56 +1,104 @@
-// package com.example.wallet_hci.screens.auth.Login
+ package com.example.wallet_hci.screens.auth.Login
 
-// import androidx.lifecycle.ViewModel
-// import androidx.lifecycle.ViewModelProvider
-// import androidx.lifecycle.viewModelScope
-// import androidx.lifecycle.viewmodel.compose.viewModel
-// import kotlinx.coroutines.flow.MutableStateFlow
-// import kotlinx.coroutines.flow.asStateFlow
-// import kotlinx.coroutines.flow.update
-// import kotlinx.coroutines.launch
+ import
+ import androidx.lifecycle.ViewModel
+ import androidx.lifecycle.ViewModelProvider
+ import androidx.lifecycle.viewModelScope
+ import com.example.wallet_hci.data.repository.UserRepository
+ import kotlinx.coroutines.flow.MutableStateFlow
+ import kotlinx.coroutines.flow.asStateFlow
+ import kotlinx.coroutines.flow.update
+ import kotlinx.coroutines.launch
 
 
-// class LogInViewModel(
-//     // private val userRepository:UserRepository
-//     ): ViewModel() {
-//     private val _state = MutableStateFlow(LogInState())
-//     val state = _state.asStateFlow()
+ class LoginViewModel(
+     private val userRepository: UserRepository
+ ) : ViewModel() {
 
-//     var onLoginSuccess: (() -> Unit)? = null
+     private val _state = MutableStateFlow(LogInState())
+     val state = _state.asStateFlow()
 
-//     lateinit var onLogin: () -> Unit
+     private var onLoginSuccess: (() -> Unit)? = null // Callback to navigate to the Dashboard
 
-//     fun onEvent(event: LoginEvent) {
-//         when (event) {
-//             is LoginEvent.EmailChanged -> _state.update { it.copy(email = event.email) }
-//             is LoginEvent.PasswordChanged -> _state.update { it.copy(password = event.password) }
-//             is LoginEvent.Login -> validateAndLogin()
-//             else -> throw IllegalArgumentException("Unknown event: $event")
-//         }
-//     }
+     /**
+      * Handles user events such as email/password updates and login actions.
+      */
+     fun onEvent(event: LoginEvent) {
+         when (event) {
+             is LoginEvent.EmailChanged -> updateEmail(event.email)
+             is LoginEvent.PasswordChanged -> updatePassword(event.password)
+             LoginEvent.Login -> validateAndLogin()
+         }
+     }
 
-//     fun validateAndLogin()
-//         {
-//             try{
-//                 // Validamos que los campos no sean vacios
-//                 require(_state.value.email.isNotEmpty()) { "Ingrese un correo electrónico válido." }
-//                 require(_state.value.password.isNotEmpty()) { "Ingrese una contraseña válida." }
+     /**
+      * Updates the email field in the state.
+      */
+     private fun updateEmail(email: String) {
+         _state.update { it.copy(email = email) }
+     }
 
-//                 loginUser()
-//             }
-//             catch (e: IllegalArgumentException) {
-//                 // Si hay un error en la validación, muestra el mensaje de error
-//                 _state.update { it.copy(error = e.message ?: "Error de validación") }
-//             }
-//         }
-//         private fun loginUser()
-//         {
-//            viewModelScope.launch{
-//             try{
-//                 _state.value = _state.value.copy(isLoading = true)
+     /**
+      * Updates the password field in the state.
+      */
+     private fun updatePassword(password: String) {
+         _state.update { it.copy(password = password) }
+     }
 
-//             }
-//            }
-//         }
+     /**
+      * Validates the input fields and initiates the login process.
+      */
+     private fun validateAndLogin() {
+         val currentState = _state.value
+         try {
+             // Validate email and password
+             require(currentState.email.isNotEmpty()) { "Please enter a valid email." }
+             require(currentState.password.isNotEmpty()) { "Please enter a valid password." }
 
-//     }
+             // Proceed to login
+             loginUser()
+
+         } catch (e: IllegalArgumentException) {
+             // Update state with the validation error message
+             _state.update { it.copy(errorMsg = e.message ?: "Validation error") }
+         }
+     }
+
+     /**
+      * Executes the login process using the UserRepository.
+      */
+     private fun loginUser() {
+         viewModelScope.launch {
+             try {
+                 _state.update { it.copy(isLoading = true) } // Set loading state
+
+                 userRepository.login(_state.value.email, _state.value.password)
+
+                 // Clear loading state and error message
+                 _state.update { it.copy(isLoading = false) }
+
+                 // Trigger the success callback
+                 onLoginSuccess?.invoke()
+
+             } catch (e: Exception) {
+                 // Update state with error message
+                 _state.update { it.copy(isLoading = false, errorMsg = e.message ?: "An error occurred during login") }
+             }
+         }
+     }
+
+     companion object {
+         const val TAG = "LoginViewModel"
+
+         fun provideFactory(
+             app: App
+         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+             @Suppress("UNCHECKED_CAST")
+             override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                 return LoginViewModel(
+                     app.userRepository
+                 ) as T
+             }
+         }
+     }
+ }
