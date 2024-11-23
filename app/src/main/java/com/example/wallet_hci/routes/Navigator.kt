@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.ui.layout.ViewModel
+import com.example.wallet_hci.screens.app.contacts.ContactScreen
 
 class Navigator {
     final lateinit var navController: NavHostController; 
@@ -22,6 +23,8 @@ class Navigator {
         NavHost(navController = navController, startDestination = "home") {
             composable("home") { HomeView() }
             composable("activity") { Activity() }
+            composable(route = "contacts") { ContactScreen() } // Ruta para Contacts
+
         }
     }
 }
