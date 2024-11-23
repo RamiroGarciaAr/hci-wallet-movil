@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 import androidx.navigation.compose.composable
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
-import com.example.wallet_hci.ui.layout.ViewModel
 
 class Navigator {
     final lateinit var navController: NavHostController; 
