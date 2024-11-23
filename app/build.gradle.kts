@@ -65,4 +65,6 @@ dependencies {
     implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.1.0-alpha07")
     implementation("androidx.window:window:1.3.0")
     implementation("androidx.window.extensions.core:core:1.0.0")
+
+    implementation("com.composables:core:1.19.1")
 }

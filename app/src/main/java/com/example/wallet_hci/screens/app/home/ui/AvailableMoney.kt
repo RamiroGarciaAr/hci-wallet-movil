@@ -1,6 +1,8 @@
 package com.example.wallet_hci.app.screens.home.ui
 
 import com.example.wallet_hci.R
+import com.example.wallet_hci.ui.heroicons.Eye
+import com.example.wallet_hci.ui.heroicons.EyeSlash
 import androidx.compose.ui.res.stringResource
 
 import androidx.compose.runtime.mutableStateOf
@@ -46,7 +48,7 @@ fun AvailableMoney() {
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Text("Available Money")
+        Text(stringResource(R.string.available_money))
         Spacer(modifier = Modifier.height(8.dp))
         
         Row(
@@ -65,7 +67,6 @@ fun AvailableMoney() {
                         text = if (firstDigitIndex != -1) formattedAmount.substring(0, firstDigitIndex) else formattedAmount,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.error,
                     )
                     Text(
                         text = formattedAmount.substring(firstDigitIndex).map { if (it.isDigit()) '*' else it }.joinToString(""),
@@ -77,7 +78,7 @@ fun AvailableMoney() {
 
             IconButton(onClick = { AvailableMoneyState.isHidden = !AvailableMoneyState.isHidden }) {
                 Icon(
-                    imageVector = if (AvailableMoneyState.isHidden) Icons.Filled.CheckCircle else Icons.Filled.AddCircle,
+                    imageVector = if (AvailableMoneyState.isHidden) EyeSlash else Eye,
                     contentDescription = "Toggle visibility",
                 )
             }
