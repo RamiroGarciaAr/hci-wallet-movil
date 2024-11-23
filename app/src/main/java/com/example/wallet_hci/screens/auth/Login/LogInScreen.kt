@@ -17,6 +17,4 @@ fun LoginScreen(
     viewModel: LogInViewModel = viewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
-    
-    
 }
