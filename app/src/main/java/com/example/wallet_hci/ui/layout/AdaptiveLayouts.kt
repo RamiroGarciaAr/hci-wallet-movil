@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 
 @Composable
 fun AdaptativeApp()
