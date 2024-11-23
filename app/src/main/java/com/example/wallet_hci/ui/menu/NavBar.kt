@@ -28,9 +28,16 @@ import com.example.wallet_hci.R
 
 
 @Composable
-fun NavBar() {
+fun NavBar(navigationController: NavHostController) {
 
     var selectedItem by remember { mutableIntStateOf(0) }
+
+    val routes = listOf(
+        "settings",
+        "home",
+        "activity",
+        "contacts"
+    )
     val items = listOf(stringResource(R.string.r_settings), stringResource(R.string.r_home), stringResource(R.string.r_activities), stringResource(R.string.r_contacts))
     val selectedIcons = listOf(Icons.Filled.Settings, Icons.Filled.Home, Icons.Filled.Favorite, Icons.Filled.Star)
     val unselectedIcons =
@@ -50,7 +57,10 @@ fun NavBar() {
                 },
                 label = { Text(item) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = { 
+                    selectedItem = index
+                    navigationController.navigate(routes[index]) 
+                },
             )
         }
     }

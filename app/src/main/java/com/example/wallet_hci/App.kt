@@ -1,6 +1,7 @@
 package com.example.wallet_hci
 
 import android.os.Bundle
+import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +21,7 @@ import com.example.wallet_hci.ui.theme.WallethciTheme
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
+import com.example.wallet_hci.app.Home
 
 class MainActivity : ComponentActivity() {
 
@@ -39,11 +41,8 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingQRButton()
                     },
-                ) { innerPadding ->
-                    Greeting(
-                        name = "Toto",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                ) { innerPadding -> 
+                    MyApp() 
                 }
             }
         }
@@ -54,9 +53,8 @@ class MainActivity : ComponentActivity() {
 
         // Seteamos la navegación
         NavHost(navController = navController, startDestination = "home") {
-            composable("home") {
-                Greeting("Mains")
-            }
+            composable("home") { Home() }
+            composable("activity") { Activity() }
         }
     }
 }
