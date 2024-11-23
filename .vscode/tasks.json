@@ -1,0 +1,90 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build and Run on Emulator",
+        "type": "shell",
+        "command": "./gradlew",
+        "args": ["installDebug"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+      },
+      {
+        "label": "Run Application",
+        "type": "shell",
+        "command": "adb",
+        "args": [
+          "shell",
+          "am",
+          "start",
+          "-n",
+          "com.example.wallet_hci/.MainActivity"
+        ],
+        "dependsOn": "Build and Run on Emulator",
+        "problemMatcher": []
+      },
+      {
+        "label": "Build, watch for changes, and run on Emulator",
+        "type": "shell",
+        "command": "./gradlew",
+        "args": ["installDebug", "--continuous"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "isBackground": true,
+        "presentation": {
+          "reveal": "always",
+          "panel": "shared",
+        },
+        "problemMatcher": [
+          "$gradle",
+          {
+            "owner": "gradle",
+            "fileLocation": "relative",
+            "pattern": {
+              "regexp": ".*FAILED in (.*):(\\d+).*",
+              "file": 1,
+              "line": 2
+            }
+          },
+          {
+            "owner": "gradle",
+            "fileLocation": "relative",
+            "pattern": {
+              "regexp": ".*BUILD (FAILED|SUCCESSFUL) in (.*):(\\d+).*",
+              "file": 1,
+              "line": 2
+            },
+            "background": {
+              "activeOnStart": false,
+              "beginsPattern": ".*Waiting for changes to input files.*",
+              "endsPattern": ".*BUILD (FAILED|SUCCESSFUL) in (.*):(\\d+).*"
+            }
+          }
+        ],
+      },
+      {
+        "label": "Run & Watch Application",
+        "type": "shell",
+        "command": "adb",
+        "args": [
+          "shell",
+          "am",
+          "start",
+          "-S",
+          "-n",
+          "com.example.wallet_hci/.MainActivity",
+          // "--es",
+          // "watch-for-changes"
+        ],
+        "dependsOn": "Build, watch for changes, and run on Emulator",
+        "presentation": {
+          "reveal": "always",
+          "panel": "shared",
+        }
+      }
+    ]
+  }

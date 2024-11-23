@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     },
                 ) { innerPadding ->
                     Greeting(
-                        name = "Lala",
+                        name = "Toto",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         // Seteamos la navegación
         NavHost(navController = navController, startDestination = "home") {
             composable("home") {
-                Greeting("Main")
+                Greeting("Mains")
             }
         }
     }

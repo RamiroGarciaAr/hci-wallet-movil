@@ -19,7 +19,7 @@ fun FloatingQRButton() {
         Icon(
             Icons.Filled.AddCircle,
             contentDescription = "Scan QR Code",
-            Modifier.run { size(width = 10, height = 10) }
+            // Modifier.run { size(width = 10, height = 10) }
         )
     }
 }
