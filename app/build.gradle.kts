@@ -50,9 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json.v163)
-    // implementation("androidx.compose.material3:material3-adaptive:1.2.0")
-    // implementation("androidx.window:window:1.1.0")
-    // implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
+
     implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -71,9 +69,6 @@ dependencies {
     implementation(libs.androidx.adaptive.navigation)
     implementation(libs.androidx.window)
     implementation(libs.androidx.core)
-    
-    // implementation(libs.androidx.compose.material3.adaptive)
-    // implementation(libs.androidx.compose.material3.adaptive.layout)
-    // implementation(libs.androidx.compose.material3.adaptive.navigation)
-    // implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
+
+    implementation("com.composables:core:1.19.1")
 }
