@@ -21,40 +21,27 @@ import com.example.wallet_hci.ui.theme.WallethciTheme
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
-import com.example.wallet_hci.app.Home
+import com.example.wallet_hci.app.routes.Navigator
 
 class MainActivity : ComponentActivity() {
-
-
-    private lateinit var navController: NavHostController
-
+    private lateinit var navigator: Navigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        navigator = Navigator()
         setContent {
             WallethciTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavBar()
+                        NavBar(this.navigator)
                     },
                     floatingActionButton = {
                         FloatingQRButton()
                     },
-                ) { innerPadding -> 
-                    MyApp() 
-                }
+                ) { _ ->  this.navigator.Routes() }
             }
-        }
-    }
-    @Composable
-    fun MyApp() {
-        this.navController = rememberNavController()
-
-        // Seteamos la navegación
-        NavHost(navController = navController, startDestination = "home") {
-            composable("home") { Home() }
-            composable("activity") { Activity() }
         }
     }
 }
