@@ -49,7 +49,9 @@ fun AvailableMoney() {
         Text("Available Money")
         Spacer(modifier = Modifier.height(8.dp))
         
-        Row(){
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ){
             if (!AvailableMoneyState.isHidden) {
                 Text(
                     text = formattedAmount,
