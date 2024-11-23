@@ -1,4 +1,4 @@
-package com.example.wallet_hci.auth.Login
+package com.example.wallet_hci.screens.auth.Login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +11,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModel
 import com.example.wallet_hci.MainActivity
 
-
 @Composable
-fun LoginScreen(
+fun LogInScreen(
     viewModel: LogInViewModel = viewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()

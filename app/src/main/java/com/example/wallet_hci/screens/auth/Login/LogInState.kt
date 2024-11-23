@@ -1,4 +1,4 @@
-package com.example.wallet_hci.auth.Login
+package com.example.wallet_hci.screens.auth.Login
 
 
 data class LogInState(

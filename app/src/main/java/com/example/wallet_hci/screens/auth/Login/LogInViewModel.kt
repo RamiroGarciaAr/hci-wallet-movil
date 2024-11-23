@@ -1,4 +1,4 @@
-package com.example.wallet_hci.auth.Login
+package com.example.wallet_hci.screens.auth.Login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +25,7 @@ class LogInViewModel(
             is LoginEvent.EmailChanged -> _state.update { it.copy(email = event.email) }
             is LoginEvent.PasswordChanged -> _state.update { it.copy(password = event.password) }
             is LoginEvent.Login -> validateAndLogin()
+            else -> throw IllegalArgumentException("Unknown event: $event")
         }
     }
 
