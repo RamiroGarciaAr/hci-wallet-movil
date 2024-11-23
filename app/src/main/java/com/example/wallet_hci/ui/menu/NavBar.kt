@@ -23,12 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
 import com.example.wallet_hci.R
+import com.example.wallet_hci.app.routes.Navigator
 
 
 @Composable
-fun NavBar(navigationController: NavHostController) {
+fun NavBar(navigator: Navigator) {
 
     var selectedItem by remember { mutableIntStateOf(0) }
 
@@ -59,7 +59,7 @@ fun NavBar(navigationController: NavHostController) {
                 selected = selectedItem == index,
                 onClick = { 
                     selectedItem = index
-                    navigationController.navigate(routes[index]) 
+                    navigator.navigateTo(routes[index])
                 },
             )
         }

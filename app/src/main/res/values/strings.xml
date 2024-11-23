@@ -4,4 +4,5 @@
     <string name="r_settings">Configuración</string>
     <string name="r_activities">Actividad</string>
     <string name="r_contacts">Contactos</string>
+    <string name="currency">ARS</string>
 </resources>
