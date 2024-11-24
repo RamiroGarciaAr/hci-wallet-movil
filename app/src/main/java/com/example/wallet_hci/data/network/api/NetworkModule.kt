@@ -20,6 +20,7 @@ import okhttp3.MediaType.Companion.toMediaType
 // Android Context (if needed for interceptors like AuthInterceptor)
 import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -47,6 +48,7 @@ object NetworkModule {
             .build()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideRetrofit(

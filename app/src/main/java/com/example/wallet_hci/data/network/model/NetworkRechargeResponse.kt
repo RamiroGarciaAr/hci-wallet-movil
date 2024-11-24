@@ -1,10 +1,9 @@
 package com.example.wallet_hci.data.network.model
 
-import java.text.SimpleDateFormat
-import java.util.Locale
-import kotlinx.serialization.Serializable as serializable
+import com.example.wallet_hci.data.model.RechargeResponse
+import kotlinx.serialization.Serializable
 
-@serializable
+@Serializable
 class NetworkRechargeResponse (
     var newBalance: Float
 ){

@@ -4,6 +4,7 @@ import com.example.wallet_hci.data.network.model.NetworkAlias
 import com.example.wallet_hci.data.network.model.NetworkBalance
 import com.example.wallet_hci.data.network.model.NetworkCard
 import com.example.wallet_hci.data.network.model.NetworkRechargeRequest
+import com.example.wallet_hci.data.network.model.NetworkRechargeResponse
 import com.example.wallet_hci.data.network.model.NetworkWalletDetails
 import retrofit2.http.GET
 import retrofit2.Response
