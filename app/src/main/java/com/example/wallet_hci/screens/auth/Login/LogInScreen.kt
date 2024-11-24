@@ -14,7 +14,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun LogInScreen(
-    viewModel: LoginView = viewModel(),
+    viewModel: LoginView = androidx.lifecycle.viewmodel.compose.viewModel(
+        factory = LoginView.Factory
+    ),
     onNavigateToDashboard: () -> Unit,
     onNavigateToRegister: () -> Unit
 ) {
