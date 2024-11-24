@@ -11,6 +11,7 @@ import com.example.wallet_hci.data.UserRemoteDataSource
 import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.auth.Login.LoginView
+import com.example.wallet_hci.screens.app.scan.ScanView
 
 
 class Navigator {
@@ -21,17 +22,26 @@ class Navigator {
         navController.navigate(route)
     }
 
+    fun getCurrentPage(): String {
+        return navController.currentBackStackEntry?.destination?.route ?: ""
+    }
+
     @Composable
     fun Routes() {
+        var navigator = this
         navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
             composable("home") {
                 // Home screen
-                HomeView()
+                HomeView(navigator)
             }
             composable("activity") {
                 // Activity screen
                 Activity()
+            }
+
+            composable("scan") {
+                ScanView()
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.wallet_hci.app.screens.home
 
 import com.example.wallet_hci.app.screens.home.ui.*
+import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.plots.ExpensesPlot
@@ -38,12 +39,12 @@ val actions = listOf(
 )
 
 @Composable
-fun HomeView(){
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(horizontal = 12.dp)
-            .verticalScroll(rememberScrollState())
-            
+fun HomeView(navigator: Navigator){
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(horizontal = 12.dp)
+        .verticalScroll(rememberScrollState())
+        
         ) {
             CardWrapper {
                 Column(
