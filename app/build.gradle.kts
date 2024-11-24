@@ -40,7 +40,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlinx.serialization.json)
+    // Core Kotlin and Android libraries
+    implementation(libs.kotlinx.serialization.json) // Latest version
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -49,11 +50,17 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.kotlinx.serialization.json.v163)
-    // implementation("androidx.compose.material3:material3-adaptive:1.2.0")
-    // implementation("androidx.window:window:1.1.0")
-    // implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
     implementation(libs.androidx.navigation.compose)
+
+    // Retrofit and Serialization
+    implementation(libs.retrofit) // Retrofit core library
+    implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
+    implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,23 +68,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.retrofit) // Core Retrofit library
-    implementation(libs.converter.gson) // For JSON parsing, if using Gson
-    implementation(libs.kotlinx.serialization.json.v151) // Kotlin Serialization
-    implementation(libs.retrofit2.kotlinx.serialization.converter) // For Kotlin Serialization
+
+    // Hilt for Dependency Injection
     implementation(libs.hilt.android)
-    implementation (libs.retrofit)
-    implementation (libs.okhttp3.logging.interceptor)
-    implementation (libs.kotlinx.serialization.json.v163)
-    implementation (libs.retrofit2.kotlinx.serialization.converter)
+
+    // Adaptive UI Libraries
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
     implementation(libs.androidx.window)
-    implementation(libs.androidx.core)
-    
-    // implementation(libs.androidx.compose.material3.adaptive)
-    // implementation(libs.androidx.compose.material3.adaptive.layout)
-    // implementation(libs.androidx.compose.material3.adaptive.navigation)
-    // implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
 }

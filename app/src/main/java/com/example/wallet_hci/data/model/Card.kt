@@ -1,5 +1,6 @@
 package com.example.wallet_hci.data.model
 
+import com.example.wallet_hci.data.network.model.NetworkCard
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

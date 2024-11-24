@@ -5,9 +5,9 @@ import com.example.wallet_hci.data.network.model.NetworkLinkUuid
 class LinkUuid(
     val linkUuid: String
 ){
-    suspend  fun asNetworkModel(): NetworkLinkUuid {
+      fun asNetworkModel(): NetworkLinkUuid {
         return NetworkLinkUuid(
-            return linkUuid
+            linkUuid = this.linkUuid
         )
     }
 }
