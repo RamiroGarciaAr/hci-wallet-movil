@@ -9,7 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface UserApiService {
+interface APIUserService {
 
     /**
      * Logs in the user with their credentials.
