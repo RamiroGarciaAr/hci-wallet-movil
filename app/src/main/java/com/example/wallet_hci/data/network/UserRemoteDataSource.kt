@@ -1,7 +1,7 @@
 package com.example.wallet_hci.data.network
 
 import com.example.wallet_hci.SessionManager
-import com.example.wallet_hci.data.network.api.UserApiService
+import com.example.wallet_hci.data.network.api.APIUserService
 import com.example.wallet_hci.data.network.model.NetworkCode
 import com.example.wallet_hci.data.network.model.NetworkCredentials
 import com.example.wallet_hci.data.network.model.NetworkRegistrationUser
@@ -9,7 +9,7 @@ import com.example.wallet_hci.data.network.model.NetworkUser
 
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
-    private val userApiService: UserApiService
+    private val userApiService: APIUserService
 ) {
 
     /**
