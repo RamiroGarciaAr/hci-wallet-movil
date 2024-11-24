@@ -23,11 +23,7 @@ class Navigator {
 
     @Composable
     fun Routes() {
-        // Initialize navController in a composable-safe way
         navController = rememberNavController()
-//        var userRemoteDataSource = UserRemoteDataSource(sessionManager, APIUserService )
-//        var userRepository = UserRepository(userRemoteDataSource)
-
         NavHost(navController = navController, startDestination = "home") {
             composable("home") {
                 // Home screen
