@@ -9,11 +9,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.wallet_hci.ui.theme.WallethciTheme
-import com.example.wallet_hci.ui.menu.FloatingQRButton
-import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.ui.theme.WallethciTheme
+import com.example.wallet_hci.ui.menu.NavBar
+import com.example.wallet_hci.ui.menu.FloatingQRButton
 
 
 class MainActivity : ComponentActivity() {
@@ -38,22 +37,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-// Seteamos las rutas de las vistas
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WallethciTheme {
-        Greeting("Main")
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Tobias $name!",
-        modifier = modifier
-    )
 }

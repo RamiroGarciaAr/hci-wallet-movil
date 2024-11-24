@@ -12,7 +12,8 @@ import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.auth.Login.LoginView
 
-class Navigator() {
+
+class Navigator {
 
     lateinit var navController: NavHostController
 
@@ -28,10 +29,6 @@ class Navigator() {
 //        var userRepository = UserRepository(userRemoteDataSource)
 
         NavHost(navController = navController, startDestination = "home") {
-            // composable("login") {
-            //     // Login screen
-            //     LoginView(userRepository = userRepository)
-            // }
             composable("home") {
                 // Home screen
                 HomeView()
