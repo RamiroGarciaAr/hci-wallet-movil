@@ -4,6 +4,7 @@ import com.example.wallet_hci.app.screens.home.ui.*
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.plots.ExpensesPlot
+import com.example.wallet_hci.ui.plots.GainPlot
 import com.example.wallet_hci.R
 
 import androidx.compose.runtime.Composable
@@ -16,6 +17,8 @@ import kotlinx.serialization.Serializable
 // Related to the Card
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.overscroll
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.ui.Modifier
@@ -36,10 +39,11 @@ val actions = listOf(
 
 @Composable
 fun HomeView(){
-    Scaffold() {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
+            .verticalScroll(rememberScrollState())
+            
         ) {
             CardWrapper {
                 Column(
@@ -72,9 +76,8 @@ fun HomeView(){
                     }
                 }
             }
-            CardWrapper{
-                Text("Card")
-            }
+            GainPlot( modifier = Modifier
+                .height(200.dp) 
+            )
         }
-    }
 }

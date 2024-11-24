@@ -13,8 +13,9 @@ import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.ui.menu.FloatingQRButton
-
-
+import com.example.wallet_hci.ui.menu.TopBar
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +28,13 @@ class MainActivity : ComponentActivity() {
             WallethciTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        NavBar(this.navigator)
-                    },
-                    floatingActionButton = {
-                        FloatingQRButton()
-                    },
-                ) {_ ->  this.navigator.Routes() }
+                    bottomBar = { NavBar(this.navigator) },
+                    floatingActionButton = { FloatingQRButton() },
+
+                ) { innerPadding ->  
+                    Column(modifier = Modifier.padding(innerPadding))
+                    { navigator.Routes() }
+                }
             }
         }
     }

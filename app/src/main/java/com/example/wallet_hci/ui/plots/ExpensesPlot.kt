@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.animation.Easing
 import com.google.firebase.encoders.EncodingException
 import android.content.Context
 import android.graphics.Color
@@ -82,6 +83,8 @@ fun ComposablePieChart() {
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             legend.form = Legend.LegendForm.CIRCLE
 
+            animateX(1000, Easing.EaseInOutQuart)
+            animateY(1000, Easing.EaseInOutQuart)
         }
     },
         modifier = Modifier.fillMaxSize() 
