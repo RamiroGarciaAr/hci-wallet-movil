@@ -13,11 +13,11 @@ class NetworkCardPayment(
 ){
     fun asModel(): CardPayment {
         return CardPayment(
-            amount = amount,
-            description = description,
-            type = type,
-            cardId = cardId,
-            receiverEmail = receiverEmail
+            amount = this.amount,
+            description = this.description,
+            type = this.type,
+            cardId = this.cardId,
+            receiverEmail = this.receiverEmail
         )
     }
 }

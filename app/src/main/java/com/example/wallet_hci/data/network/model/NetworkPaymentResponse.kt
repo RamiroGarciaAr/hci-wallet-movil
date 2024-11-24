@@ -9,7 +9,7 @@ class NetworkPaymentResponse (
 ) {
     fun asModel(): PaymentResponse {
         return PaymentResponse(
-            success = success
+            success = this.success
         )
 
     }

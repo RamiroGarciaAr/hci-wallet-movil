@@ -21,16 +21,16 @@ class NetworkPayment(
     fun asModel(): Payment {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
         return Payment(
-            id = id,
-            type = type,
-            amount = amount,
-            balanceBefore = balanceBefore,
-            balanceAfter = balanceAfter,
-            pending = pending,
-            linkUuid = linkUuid,
-            createdAt = dateFormat.parse(createdAt),
-            updatedAt = dateFormat.parse(updatedAt),
-            card = card?.asModel() // Convierte NetworkCard a Card si no es null
+            id = this.id,
+            type = this.type,
+            amount = this.amount,
+            balanceBefore = this.balanceBefore,
+            balanceAfter = this.balanceAfter,
+            pending = this.pending,
+            linkUuid = this.linkUuid,
+            createdAt = dateFormat.parse(this.createdAt),
+            updatedAt = dateFormat.parse(this.updatedAt),
+            card = this.card?.asModel() // Convierte NetworkCard a Card si no es null
         )
     }
 }

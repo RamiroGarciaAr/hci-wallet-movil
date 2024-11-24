@@ -14,10 +14,10 @@ class NetworkBalancePayment (
     fun asModel(): BalancePayment {
 
         return BalancePayment(
-            amount = amount,
-            description = description,
-            type = type,
-            receiverEmail = receiverEmail
+            amount = this.amount,
+            description = this.description,
+            type = this.type,
+            receiverEmail = this.receiverEmail
         )
     }
 }

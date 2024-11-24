@@ -20,14 +20,14 @@ class NetworkCard(
     fun asModel(): Card {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
         return Card(
-            id = id,
-            number = number,
-            expirationDate = expirationDate,
-            fullName = fullName,
-            cvv = cvv,
-            type = when (type) { "DEBIT" -> CardType.DEBIT else -> CardType.CREDIT },
-            createdAt = createdAt?.let { dateFormat.parse(createdAt!!) },
-            updatedAt = updatedAt?.let { dateFormat.parse(updatedAt!!) }
+            id = this.id,
+            number = this.number,
+            expirationDate = this.expirationDate,
+            fullName = this.fullName,
+            cvv = this.cvv,
+            type = when (this.type) { "DEBIT" -> CardType.DEBIT else -> CardType.CREDIT },
+            createdAt = this.createdAt?.let { dateFormat.parse(this.createdAt!!) },
+            updatedAt = this.updatedAt?.let { dateFormat.parse(this.updatedAt!!) }
         )
     }
 }

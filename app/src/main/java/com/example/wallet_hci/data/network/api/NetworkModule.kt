@@ -11,7 +11,7 @@ import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
+
 
 // Kotlin Serialization
 import kotlinx.serialization.json.Json
@@ -19,6 +19,7 @@ import okhttp3.MediaType.Companion.toMediaType
 
 // Android Context (if needed for interceptors like AuthInterceptor)
 import android.content.Context
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -61,19 +62,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserApiService(retrofit: Retrofit): UserApiService {
-        return retrofit.create(UserApiService::class.java)
+    fun provideUserApiService(retrofit: Retrofit): APIUserService {
+        return retrofit.create(APIUserService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideWalletApiService(retrofit: Retrofit): WalletApiService {
-        return retrofit.create(WalletApiService::class.java)
+    fun provideWalletApiService(retrofit: Retrofit): APIWalletService {
+        return retrofit.create(APIWalletService::class.java)
     }
 
     @Provides
     @Singleton
-    fun providePaymentApiService(retrofit: Retrofit): PaymentApiService {
-        return retrofit.create(PaymentApiService::class.java)
+    fun providePaymentApiService(retrofit: Retrofit): APIPaymentService {
+        return retrofit.create(APIPaymentService::class.java)
     }
 }

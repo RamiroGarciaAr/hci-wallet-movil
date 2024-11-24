@@ -10,7 +10,7 @@ class NetworkBalance (
 {
     fun asModel(): Balance {
         return Balance(
-            balance = balance
+            balance = this.balance
         )
 
     }
