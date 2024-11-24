@@ -9,5 +9,4 @@ class NetworkRegistrationUser(
     var email: String,
     var birthDate: String,
     var password: String
-
 )

@@ -1,27 +1,23 @@
 package com.example.wallet_hci
 
 import android.os.Bundle
-import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.example.wallet_hci.ui.theme.WallethciTheme
-
-import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.data.network.RemoteDataSource
+import com.example.wallet_hci.data.network.UserRemoteDataSource
+import com.example.wallet_hci.data.network.api.UserApiService
+import com.example.wallet_hci.data.repository.UserRepository
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
@@ -29,7 +25,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        navigator = Navigator()
+        val sessionManager = SessionManager(this)
+        //val userApiService = UserApiService()
+        //val remoteDataSource = UserRemoteDataSource(sessionManager, userApiService)
+        //val userRepository = UserRepository(remoteDataSource)
+
+        //navigator = Navigator(userRepository)
         setContent {
             WallethciTheme {
                 Scaffold(
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingQRButton()
                     },
-                ) { _ ->  this.navigator.Routes() }
+                ) {_ ->  this.navigator.Routes() }
             }
         }
     }
