@@ -40,7 +40,7 @@ fun GainPlot(
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ){
             
-            Text("Rendimiento", fontWeight = FontWeight.SemiBold) 
+            Text(stringResource(R.string.revenue), fontWeight = FontWeight.SemiBold) 
             ComposableLineChart()
         }
     }
@@ -49,16 +49,21 @@ fun GainPlot(
 @Composable
 fun ComposableLineChart() {
 
-    val entries = ArrayList<Entry>();
-    entries.add(Entry(0f, 2213.22f))
-    entries.add(Entry(1f, 1521.13f))
-    entries.add(Entry(2f, 1521.13f))
-    entries.add(Entry(3f, 3521.13f))
-    entries.add(Entry(4f, 4521.13f))
-    entries.add(Entry(5f, 1521.13f))
-    entries.add(Entry(6f, 5521.13f))
+    val entriesWithoutGain = ArrayList<Entry>();
+    entriesWithoutGain.add(Entry(0f, 2232.22f))
+    entriesWithoutGain.add(Entry(1f, 2532.13f)) 
+    entriesWithoutGain.add(Entry(2f, 2532.13f))
+    entriesWithoutGain.add(Entry(3f, 3532.13f))
+    entriesWithoutGain.add(Entry(4f, 4532.13f))
+    entriesWithoutGain.add(Entry(5f, 1532.13f))
+    val dataSetWithoutGain = LineDataSet(entriesWithoutGain, "Sin ganancia")
 
-    val dataSet = LineDataSet(entries, "")
+    val entriesWithGain = ArrayList<Entry>();
+    for (i in 0 until entriesWithoutGain.size) {
+        entriesWithGain.add(Entry(i.toFloat(), entriesWithoutGain[i].y * 1.2f))
+    }
+    val dataSetWithGain = LineDataSet(entriesWithGain, "Con Ganancia")
+
     val weekDays = stringResource(id = R.string.weekDaysShort).split(",")
 
     val formatter = object : ValueFormatter() {
@@ -69,7 +74,7 @@ fun ComposableLineChart() {
 
     val colors = intArrayOf(R.color.primary_500, R.color.primary_300)
 
-    val dataSets = listOf(dataSet)
+    val dataSets = listOf(dataSetWithGain, dataSetWithoutGain)
     val lineData = LineData(dataSets)
 
     AndroidView(factory = {
@@ -83,7 +88,8 @@ fun ComposableLineChart() {
             xAxis.setValueFormatter(formatter)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
 
-            dataSet.setColors(colors, context)
+            dataSetWithGain.setColors(intArrayOf(R.color.primary_500), context)
+            dataSetWithoutGain.setColors(intArrayOf(R.color.primary_200), context)
             legend.isEnabled = true
             legend.textSize = 14f
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER

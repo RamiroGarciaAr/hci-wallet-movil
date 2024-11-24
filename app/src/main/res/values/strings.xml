@@ -12,6 +12,8 @@
     <string name="transfer">Transferir</string>
     <string name="cvu">CVU</string>
 
+    <string name="revenue">Rendimiento</string>
+
     <string name="weekDays">Domingo,Lunes,Martes,Miércoles,Jueves,Viernes,Sábado</string>
     <string name="weekDaysShort">Dom,Lun,Mar,Mié,Jue,Vie,Sáb</string>
 </resources>
