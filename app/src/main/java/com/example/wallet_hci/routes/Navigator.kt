@@ -10,6 +10,7 @@ import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.data.UserRemoteDataSource
 import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.auth.Login.LoginView
 import com.example.wallet_hci.screens.app.scan.ScanView
 
@@ -31,18 +32,10 @@ class Navigator {
         var navigator = this
         navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
-            composable("home") {
-                // Home screen
-                HomeView(navigator)
-            }
-            composable("activity") {
-                // Activity screen
-                Activity()
-            }
+            composable("home") { HomeView() }
+            composable("activity") { Activity() }
+            composable(route = "contacts") { ContactScreen() } // Ruta para Contacts
 
-            composable("scan") {
-                ScanView()
-            }
         }
     }
 }
