@@ -19,6 +19,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -52,6 +55,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v163)
 
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.transport.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
