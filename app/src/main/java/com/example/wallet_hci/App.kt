@@ -17,20 +17,18 @@ import com.example.wallet_hci.ui.menu.FloatingQRButton
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         val sessionManager = SessionManager(this)
         navigator = Navigator()
-
         setContent {
             WallethciTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavBar(navigator)
+                        NavBar(this.navigator)
                     },
                     floatingActionButton = {
                         FloatingQRButton()
