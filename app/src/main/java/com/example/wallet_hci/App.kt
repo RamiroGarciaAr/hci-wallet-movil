@@ -14,6 +14,10 @@ import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.data.network.RemoteDataSource
+import com.example.wallet_hci.data.network.UserRemoteDataSource
+import com.example.wallet_hci.data.network.api.UserApiService
+import com.example.wallet_hci.data.repository.UserRepository
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
@@ -21,7 +25,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        navigator = Navigator()
+        val sessionManager = SessionManager(this)
+        //val userApiService = UserApiService()
+        //val remoteDataSource = UserRemoteDataSource(sessionManager, userApiService)
+        //val userRepository = UserRepository(remoteDataSource)
+
+        //navigator = Navigator(userRepository)
         setContent {
             WallethciTheme {
                 Scaffold(
@@ -32,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingQRButton()
                     },
-                ) { _ ->  this.navigator.Routes() }
+                ) {_ ->  this.navigator.Routes() }
             }
         }
     }

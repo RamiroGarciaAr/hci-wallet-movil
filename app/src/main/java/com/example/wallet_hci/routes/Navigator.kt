@@ -8,19 +8,41 @@ import kotlinx.serialization.Serializable
 import androidx.navigation.compose.composable
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
+import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.screens.auth.Login.LoginView
 
-class Navigator {
-    final lateinit var navController: NavHostController; 
-    fun navigateTo(route: String) { 
-        navController.navigate(route = route)
+class Navigator(private val userRepository: UserRepository) {
+
+    lateinit var navController: NavHostController
+
+    /**
+     * Navigates to a given route.
+     */
+    fun navigateTo(route: String) {
+        navController.navigate(route)
     }
-    
+
+    /**
+     * Defines the navigation routes for the app.
+     */
     @Composable
     fun Routes() {
-        this.navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "home") {
-            composable("home") { HomeView() }
-            composable("activity") { Activity() }
+        // Initialize navController in a composable-safe way
+        navController = rememberNavController()
+
+        NavHost(navController = navController, startDestination = "login") {
+            composable("login") {
+                // Login screen
+                LoginView(userRepository = userRepository)
+            }
+            composable("home") {
+                // Home screen
+                HomeView()
+            }
+            composable("activity") {
+                // Activity screen
+                Activity()
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
  package com.example.wallet_hci.screens.auth.Login
 
- import
+ import com.example.wallet_hci.MainActivity
  import androidx.lifecycle.ViewModel
  import androidx.lifecycle.ViewModelProvider
  import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@
  import kotlinx.coroutines.launch
 
 
- class LoginViewModel(
+ class LoginView(
      private val userRepository: UserRepository
  ) : ViewModel() {
 
@@ -88,16 +88,18 @@
      }
 
      companion object {
-         const val TAG = "LoginViewModel"
+         const val TAG = "LoginView"
+
 
          fun provideFactory(
-             app: App
+             userRepository: UserRepository
          ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
              @Suppress("UNCHECKED_CAST")
              override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                 return LoginViewModel(
-                     app.userRepository
-                 ) as T
+                 if (modelClass.isAssignableFrom(LoginView::class.java)) {
+                     return LoginView(userRepository) as T
+                 }
+                 throw IllegalArgumentException("Unknown ViewModel class")
              }
          }
      }

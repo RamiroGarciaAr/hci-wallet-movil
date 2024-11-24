@@ -65,7 +65,11 @@ dependencies {
     implementation(libs.converter.gson) // For JSON parsing, if using Gson
     implementation(libs.kotlinx.serialization.json.v151) // Kotlin Serialization
     implementation(libs.retrofit2.kotlinx.serialization.converter) // For Kotlin Serialization
-
+    implementation(libs.hilt.android)
+    implementation (libs.retrofit)
+    implementation (libs.okhttp3.logging.interceptor)
+    implementation (libs.kotlinx.serialization.json.v163)
+    implementation (libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
