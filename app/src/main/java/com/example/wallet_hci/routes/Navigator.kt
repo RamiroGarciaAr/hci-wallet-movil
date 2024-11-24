@@ -4,14 +4,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.runtime.Composable
-import kotlinx.serialization.Serializable
 import androidx.navigation.compose.composable
+import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
+import com.example.wallet_hci.data.network.UserRemoteDataSource
+import com.example.wallet_hci.data.network.api.APIUserService
+import com.example.wallet_hci.data.network.api.NetworkModule
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.auth.Login.LoginView
 
-class Navigator(private val userRepository: UserRepository) {
+class Navigator() {
 
     lateinit var navController: NavHostController
 
@@ -21,7 +24,6 @@ class Navigator(private val userRepository: UserRepository) {
     fun navigateTo(route: String) {
         navController.navigate(route)
     }
-
     /**
      * Defines the navigation routes for the app.
      */
@@ -29,11 +31,13 @@ class Navigator(private val userRepository: UserRepository) {
     fun Routes() {
         // Initialize navController in a composable-safe way
         navController = rememberNavController()
-
+        var sessionManager = SessionManager(this)
+        var remoteDataSource = UserRemoteDataSource(sessionManager)
+        var userRepository = UserRepository(remoteDataSource)
         NavHost(navController = navController, startDestination = "login") {
             composable("login") {
                 // Login screen
-                LoginView(userRepository = userRepository)
+                LoginView(userRepository)
             }
             composable("home") {
                 // Home screen

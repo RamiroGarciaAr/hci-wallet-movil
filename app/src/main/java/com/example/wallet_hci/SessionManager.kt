@@ -2,8 +2,9 @@ package com.example.wallet_hci
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.wallet_hci.app.routes.Navigator
 
-class SessionManager(context: Context) {
+class SessionManager(context: Navigator) {
 
     private var preferences: SharedPreferences =
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)

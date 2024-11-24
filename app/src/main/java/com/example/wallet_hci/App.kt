@@ -21,12 +21,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val sessionManager = SessionManager(this)
-        //val userApiService = UserApiService()
-        //val remoteDataSource = UserRemoteDataSource(sessionManager, userApiService)
-        //val userRepository = UserRepository(remoteDataSource)
 
-        //navigator = Navigator(userRepository)
+
+
+        navigator = Navigator()
         setContent {
             WallethciTheme {
                 Scaffold(
