@@ -15,8 +15,7 @@ import com.example.wallet_hci.ui.menu.FloatingQRButton
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.data.network.RemoteDataSource
-import com.example.wallet_hci.data.network.UserRemoteDataSource
-import com.example.wallet_hci.data.network.api.UserApiService
+import com.example.wallet_hci.data.UserRemoteDataSource
 import com.example.wallet_hci.data.repository.UserRepository
 
 class MainActivity : ComponentActivity() {

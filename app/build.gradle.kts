@@ -75,4 +75,6 @@ dependencies {
     implementation(libs.androidx.core)
 
     implementation("com.composables:core:1.19.1")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }

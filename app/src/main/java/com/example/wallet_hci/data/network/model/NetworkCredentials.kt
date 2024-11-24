@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.network.model
+package com.example.wallet_hci.data.model
 
 import kotlinx.serialization.Serializable
 
