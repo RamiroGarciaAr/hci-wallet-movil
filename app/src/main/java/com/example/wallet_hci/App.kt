@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingQRButton()
                     },
-                ) { _ ->  this.navigator.Routes() }
+                ) {_ ->  this.navigator.Routes() }
             }
         }
     }
