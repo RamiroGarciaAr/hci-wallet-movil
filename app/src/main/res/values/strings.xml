@@ -5,4 +5,10 @@
     <string name="r_activities">Actividad</string>
     <string name="r_contacts">Contactos</string>
     <string name="currency">ARS</string>
+    <string name="available_money">Disponible</string>
+
+    <string name="deposit">Ingresar</string>
+    <string name="spend">Egresar</string>
+    <string name="transfer">Transferir</string>
+    <string name="cvu">CVU</string>
 </resources>

@@ -4,8 +4,9 @@ package com.example.wallet_hci.screens.auth.Login
 data class LogInState(
     val email: String = "",
     val password: String = "",
-    val error: String = "",
+    val errorMsg: String? = null,
     val isLoading: Boolean = false
+
 )
 
 sealed class LoginEvent {
