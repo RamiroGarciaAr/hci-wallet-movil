@@ -1,6 +1,6 @@
 package com.example.wallet_hci.data.model
 
-import com.example.wallet_hci.data.network.model.NetworkRegistrationUser
+import com.example.wallet_hci.data.model.NetworkRegistrationUser
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

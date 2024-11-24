@@ -1,10 +1,10 @@
-package com.example.wallet_hci.data.network.api
+package com.example.wallet_hci.data.netowrk.api
 
-import com.example.wallet_hci.data.network.model.NetworkCode
-import com.example.wallet_hci.data.network.model.NetworkCredentials
-import com.example.wallet_hci.data.network.model.NetworkRegistrationUser
-import com.example.wallet_hci.data.network.model.NetworkToken
-import com.example.wallet_hci.data.network.model.NetworkUser
+import com.example.wallet_hci.data.model.NetworkCode
+import com.example.wallet_hci.data.model.NetworkCredentials
+import com.example.wallet_hci.data.model.NetworkRegistrationUser
+import com.example.wallet_hci.data.model.NetworkToken
+import com.example.wallet_hci.data.model.NetworkUser
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

@@ -1,11 +1,11 @@
-package com.example.wallet_hci.data.network
+package com.example.wallet_hci.data
 
 import com.example.wallet_hci.SessionManager
-import com.example.wallet_hci.data.network.api.UserApiService
-import com.example.wallet_hci.data.network.model.NetworkCode
-import com.example.wallet_hci.data.network.model.NetworkCredentials
-import com.example.wallet_hci.data.network.model.NetworkRegistrationUser
-import com.example.wallet_hci.data.network.model.NetworkUser
+import com.example.wallet_hci.data.netowrk.api.UserApiService
+import com.example.wallet_hci.data.model.NetworkCode
+import com.example.wallet_hci.data.model.NetworkCredentials
+import com.example.wallet_hci.data.model.NetworkRegistrationUser
+import com.example.wallet_hci.data.model.NetworkUser
 
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
