@@ -5,8 +5,7 @@ import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
 
-    private var preferences: SharedPreferences =
-        context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private var preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     fun loadAuthToken(): String? {
         return preferences.getString(AUTH_TOKEN, null)

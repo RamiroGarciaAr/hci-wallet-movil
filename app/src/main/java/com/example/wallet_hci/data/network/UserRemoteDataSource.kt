@@ -9,15 +9,15 @@ import com.example.wallet_hci.data.model.NetworkUser
 
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
-    private val APIUserService: APIUserService
+    private val userApiService: APIUserService
 ) {
 
-    /**
+        /**
      * Logs in the user by sending credentials to the API.
      * On success, saves the authentication token in the session manager.
      */
     suspend fun login(username: String, password: String) {
-        val token = APIUserService.login(NetworkCredentials(username, password))
+        val token = userApiService.login(NetworkCredentials(username, password))
         sessionManager.saveAuthToken(token.token)
     }
 
@@ -25,7 +25,7 @@ class UserRemoteDataSource(
      * Logs out the user by calling the logout endpoint and clearing the session.
      */
     suspend fun logout() {
-        APIUserService.logout()
+        userApiService.logout()
         sessionManager.removeAuthToken()
     }
 
@@ -34,7 +34,7 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object.
      */
     suspend fun getCurrentUser(): NetworkUser {
-        return APIUserService.getCurrentUser()
+        return userApiService.getCurrentUser()
     }
 
     /**
@@ -43,7 +43,7 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object for the newly registered user.
      */
     suspend fun register(user: NetworkRegistrationUser): NetworkUser {
-        return APIUserService.register(user)
+        return userApiService.register(user)
     }
 
     /**
@@ -52,6 +52,6 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object for the verified user.
      */
     suspend fun verify(code: NetworkCode): NetworkUser {
-        return APIUserService.verify(code)
+        return userApiService.verify(code)
     }
 }

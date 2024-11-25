@@ -1,8 +1,5 @@
 package com.example.wallet_hci.data.model
 
-import com.example.wallet_hci.data.model.LinkType
-import com.example.wallet_hci.data.model.PaymentData
-
 class NetworkPaymentData(
     val id: Int? = null,
     val type: String? = null,
@@ -17,16 +14,16 @@ class NetworkPaymentData(
 ) {
     fun asModel(): PaymentData {
         return PaymentData(
-            id = id,
-            type = type?.let { LinkType.valueOf(it) } ?: LinkType.BALANCE,
-            amount = amount,
-            balanceBefore = balanceBefore ?: 0.0f,
-            balanceAfter = balanceAfter ?: 0.0f,
-            pending = pending ?: false,
-            linkUuid = linkUuid,
-            createdAt = createdAt ?: "",
-            updatedAt = updatedAt ?: "",
-            card = card?.asModel()
+            id = this.id,
+            type = this.type?.let { LinkType.valueOf(it) } ?: LinkType.BALANCE,
+            amount = this.amount,
+            balanceBefore = this.balanceBefore ?: 0.0f,
+            balanceAfter = this.balanceAfter ?: 0.0f,
+            pending = this.pending ?: false,
+            linkUuid = this.linkUuid,
+            createdAt = this.createdAt ?: "",
+            updatedAt = this.updatedAt ?: "",
+            card = this.card?.asModel()
         )
     }
 }

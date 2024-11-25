@@ -10,7 +10,7 @@ class NetworkLinkUuid (
 ) {
     fun asModel(): LinkUuid {
         return LinkUuid(
-            linkUuid = linkUuid
+            linkUuid = this.linkUuid
         )
 
     }

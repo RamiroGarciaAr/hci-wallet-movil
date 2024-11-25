@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.network.model
+package com.example.wallet_hci.data.model
 
 import kotlinx.serialization.Serializable
 import com.example.wallet_hci.data.model.Balance
@@ -10,7 +10,7 @@ class NetworkBalance (
 {
     fun asModel(): Balance {
         return Balance(
-            balance = balance
+            balance = this.balance
         )
 
     }
