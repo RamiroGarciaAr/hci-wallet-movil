@@ -24,6 +24,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.api.APIPaymentService
+import androidx.compose.runtime.staticCompositionLocalOf
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -82,3 +83,7 @@ object NetworkModule {
         return retrofit.create(APIPaymentService::class.java)
     }
 }
+
+val PaymentApiServiceProvider = staticCompositionLocalOf<APIPaymentService> { error("PaymentApiService not provided") }
+val UserApiServiceProvider = staticCompositionLocalOf<APIUserService> { error("UserApiService not provided") }
+val WalletApiServiceProvider = staticCompositionLocalOf<APIWalletService> { error("WalletApiService not provided") }

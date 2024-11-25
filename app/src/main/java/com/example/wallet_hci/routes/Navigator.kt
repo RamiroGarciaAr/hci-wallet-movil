@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.compose.composable
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.screens.home.*
@@ -15,8 +16,13 @@ import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.auth.Login.LoginView
 import android.content.SharedPreferences
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Navigator() {
+val NavigatorProvider = staticCompositionLocalOf<Navigator> { error("Navigator not provided") }
+
+@Singleton
+class Navigator @Inject constructor(private val sessionManager: SessionManager) {
 
     lateinit var navController: NavHostController
 
