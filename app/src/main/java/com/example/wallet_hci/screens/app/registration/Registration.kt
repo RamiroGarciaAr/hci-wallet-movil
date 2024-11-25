@@ -1,4 +1,4 @@
-package com.example.wallet_hci
+package com.example.wallet_hci.screens.app.registration
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.wallet_hci.R
@@ -30,7 +31,7 @@ fun RegistrationScreen(
             // Logo de la aplicación
             Image(
                 painter = painterResource(id = R.drawable.app_logo), // Cambia a tu recurso de logo
-                contentDescription = "App Logo",
+                contentDescription = stringResource(id = R.string.app_logo_description),
                 modifier = Modifier
                     .size(120.dp)
                     .padding(bottom = 16.dp)
@@ -44,16 +45,16 @@ fun RegistrationScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
-                placeholder = { Text("Email") },
+                label = { Text(stringResource(id = R.string.email_label)) },
+                placeholder = { Text(stringResource(id = R.string.email_placeholder)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Contraseña") },
-                placeholder = { Text("**********") },
+                label = { Text(stringResource(id = R.string.password_label)) },
+                placeholder = { Text(stringResource(id = R.string.password_placeholder)) },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -61,8 +62,8 @@ fun RegistrationScreen(
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                label = { Text("Repetir contraseña") },
-                placeholder = { Text("**********") },
+                label = { Text(stringResource(id = R.string.confirm_password_label)) },
+                placeholder = { Text(stringResource(id = R.string.confirm_password_placeholder)) },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -77,9 +78,10 @@ fun RegistrationScreen(
                     containerColor = colorResource(id = R.color.blue_bar) // Cambia a tu color azul
                 )
             ) {
-                Text(text = "Registrarse", color = Color.White)
+                Text(text = stringResource(id = R.string.register_button), color = Color.White)
             }
         }
     }
 }
+
 

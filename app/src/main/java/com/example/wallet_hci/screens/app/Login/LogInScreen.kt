@@ -1,4 +1,4 @@
-package com.example.wallet_hci.screens.auth.Login
+package com.example.wallet_hci.screens.app.Login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

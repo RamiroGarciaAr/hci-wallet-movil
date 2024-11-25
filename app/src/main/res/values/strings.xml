@@ -37,6 +37,39 @@
     <string name="schedule_transfer">Programar transferencia</string>
     <string name="retry_transfer">Intentar nuevamente</string>
 
+    <string name="my_cvu_title">Mi CVU</string>
+    <string name="qr_code_description">Código QR</string>
+    <string name="alias_title">Alias: %1$s</string>
+    <string name="cvu_title">CVU: %1$s</string>
+    <string name="copy_alias">Copiar alias</string>
+    <string name="copy_cvu">Copiar CVU</string>
+    <string name="share_contact">Compartir contacto</string>
+    <string name="my_profile">Mi perfil</string>
+
+    <string name="back">Volver</string>
+
+    <string name="welcome_title">¡Bienvenido!</string>
+    <string name="welcome_subtitle">Contanos un poco de vos.</string>
+    <string name="name_label">Nombre</string>
+    <string name="name_placeholder">Nombre</string>
+    <string name="last_name_label">Apellido</string>
+    <string name="last_name_placeholder">Apellido</string>
+    <string name="nationality_label">Nacionalidad</string>
+    <string name="nationality_placeholder">Nacionalidad</string>
+    <string name="terms_conditions_text">Acepto los Términos y Condiciones de Servicio</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="register_button">Registrarse</string>
+
+    <string name="app_logo_description">Logo de la aplicación</string>
+    <string name="email_label">Email</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_label">Contraseña</string>
+    <string name="password_placeholder">**********</string>
+    <string name="confirm_password_label">Repetir contraseña</string>
+    <string name="confirm_password_placeholder">**********</string>
+
+
+
 
     <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
 
