@@ -26,8 +26,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun TransferScreen(
     accountBalance: String = "$1500.00", // Saldo actual del usuario
+    onSearchContact: () -> Unit = {}, // Acción para buscar contactos
+    onCreateContact: () -> Unit = {}, // Acción para crear un nuevo contacto
     onCancel: () -> Unit = {},
-    onContinue: (paymentMethod: String, amount: Double, description: String, cardId: String?) -> Unit = { _, _, _, _ -> }
+    onContinue: (String, Double, String, String?) -> Unit = { _, _, _, _ -> }
 ) {
     val amountMinimumError = stringResource(id = R.string.amount_minimum)
     val noValidValue = stringResource(id = R.string.no_valid_value)
@@ -63,6 +65,37 @@ fun TransferScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Nueva sección para Buscar y Crear contacto
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    onClick = onSearchContact,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.blue_bar)
+                    )
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.search_contact),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+                Button(
+                    onClick = onCreateContact,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(R.color.blue_bar)
+                    )
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.create_contact),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+
             // Ingresar monto
             Text(text = stringResource(id = R.string.enter_amount), style = MaterialTheme.typography.titleMedium)
             TextField(
@@ -103,7 +136,6 @@ fun TransferScreen(
                         )
                     }
                 }
-
 
                 // Tarjetas de pago
                 CardHolder(
@@ -162,30 +194,21 @@ fun TransferScreen(
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            // Intentar convertir el monto ingresado a un número
                             val parsedAmount = amount.toDoubleOrNull()
-
-                            // Validar que sea un número válido y mayor a 0
                             if (parsedAmount == null || parsedAmount <= 0) {
-                                errorMessage = amountMinimumError // Mensaje de error
+                                errorMessage = amountMinimumError
                                 return@launch
                             }
-
-                            // Validar que el motivo no esté vacío
                             if (description.isBlank()) {
-                                errorMessage = noValidValue // Mensaje de error para motivo
+                                errorMessage = noValidValue
                                 return@launch
                             }
-
-                            // Validar el método de pago
                             if (selectedPaymentMethod == "CARD" && selectedCardId == null) {
-                                errorMessage = noValidCard // Mensaje de error para tarjeta
+                                errorMessage = noValidCard
                                 return@launch
                             }
 
-                            // Si todo es válido, resetear el error y proceder con la acción
                             errorMessage = null
-
                             onContinue(
                                 selectedPaymentMethod,
                                 parsedAmount,
@@ -204,7 +227,6 @@ fun TransferScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
-
             }
         }
     }

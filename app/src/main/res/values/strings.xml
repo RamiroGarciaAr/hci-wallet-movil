@@ -75,4 +75,8 @@
 
     <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
 
+    <string name="search_contact">Seleccionar contacto</string>
+    <string name="create_contact">Crear contacto</string>
+
+
 </resources>

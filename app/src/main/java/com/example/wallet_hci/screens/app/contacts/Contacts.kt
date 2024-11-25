@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
@@ -16,53 +17,79 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.wallet_hci.R
 
 enum class FilterOption { ALL, FAVORITES, RECENTS }
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactScreen() {
+fun ContactScreen(
+    onBack: () -> Unit, // Acción para volver a la pantalla anterior
+    onAddContact: () -> Unit // Acción para agregar un nuevo contacto
+) {
     // Obtén el ViewModel
     val viewModel: ContactsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 
     // Obtén la lista de contactos desde el ViewModel
     val contacts = viewModel.contacts
 
-    // Diseña la pantalla como antes, pero usa los datos del ViewModel
-    Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFF5F5F5))
-    ) {
-        // Barra de búsqueda
-        var searchQuery by remember { mutableStateOf("") }
-        SearchBar(query = searchQuery, onQueryChange = { searchQuery = it })
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Contactos") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF0066CC) // Azul
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = onAddContact) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_add), // Cambia por el recurso correcto
+                            contentDescription = "Agregar contacto",
+                            tint = Color(0xFF0066CC) // Azul
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF5F5F5))
+                .padding(paddingValues)
+        ) {
+            // Barra de búsqueda
+            var searchQuery by remember { mutableStateOf("") }
+            SearchBar(
+                query = searchQuery,
+                onQueryChange = { searchQuery = it },
+                onSearch = {  },
+                active = false,
+                onActiveChange = {  }
+            )
 
-        // Lista de contactos (filtros opcionales)
-        LazyColumn(modifier = Modifier.padding(8.dp)) {
-            items(contacts) { contact ->
-                ContactItem(
-                    contact = contact,
-                    onFavoriteToggle = { viewModel.toggleFavorite(contact) }
-                )
+            // Lista de contactos (filtros opcionales)
+            LazyColumn(modifier = Modifier.padding(8.dp)) {
+                items(contacts) { contact ->
+                    ContactItem(
+                        contact = contact,
+                        onFavoriteToggle = { viewModel.toggleFavorite(contact) }
+                    )
+                }
             }
         }
     }
 }
-
-
 @Composable
-fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
-    OutlinedTextField(
-        value = query,
-        onValueChange = onQueryChange,
-        placeholder = { Text("Buscar un contacto") },
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    )
-}
-
-@Composable
-fun ContactItem(contact: Contact, onFavoriteToggle: (Contact) -> Unit) {
+fun ContactItem(
+    contact: Contact,
+    onFavoriteToggle: (Contact) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -71,18 +98,24 @@ fun ContactItem(contact: Contact, onFavoriteToggle: (Contact) -> Unit) {
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.weight(1f)) {
+            // Nombre del contacto
             Text(text = contact.name, fontWeight = FontWeight.Bold)
+            // Email del contacto
             Text(text = contact.email, color = Color.Gray, fontSize = 12.sp)
+            // Iconos de bancos asociados
             Row {
                 contact.banks.forEach { bank ->
                     Icon(
                         painter = painterResource(id = bank.icon),
                         contentDescription = bank.name,
-                        modifier = Modifier.size(24.dp).padding(2.dp)
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(2.dp)
                     )
                 }
             }
         }
+        // Botón de favorito
         IconButton(onClick = { onFavoriteToggle(contact) }) {
             Icon(
                 imageVector = if (contact.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -92,55 +125,31 @@ fun ContactItem(contact: Contact, onFavoriteToggle: (Contact) -> Unit) {
         }
     }
 }
-
 @Composable
-fun FiltersRow(selectedFilter: FilterOption, onFilterSelected: (FilterOption) -> Unit) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        FilterButton("Todos los contactos", isSelected = selectedFilter == FilterOption.ALL) {
-            onFilterSelected(FilterOption.ALL)
-        }
-        FilterButton("Favoritos", isSelected = selectedFilter == FilterOption.FAVORITES) {
-            onFilterSelected(FilterOption.FAVORITES)
-        }
-        FilterButton("Recientes", isSelected = selectedFilter == FilterOption.RECENTS) {
-            onFilterSelected(FilterOption.RECENTS)
-        }
-    }
-}
-
-@Composable
-fun FilterButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) Color(0xFF0066CC) else Color.White,
-            contentColor = if (isSelected) Color.White else Color.Black
-        ),
-        modifier = Modifier.padding(horizontal = 4.dp)
-    ) {
-        Text(text = text)
-    }
-}
-
-fun filterContacts(
-    contacts: List<Contact>,
+fun SearchBar(
     query: String,
-    filter: FilterOption
-): List<Contact> {
-    return contacts.filter { contact ->
-        // Filtrar por nombre o email
-        contact.name.contains(query, ignoreCase = true) ||
-                contact.email.contains(query, ignoreCase = true)
-    }.filter { contact ->
-        // Aplicar filtro adicional
-        when (filter) {
-            FilterOption.ALL -> true
-            FilterOption.FAVORITES -> contact.isFavorite
-            FilterOption.RECENTS -> contact.isRecent
-        }
-    }
+    onQueryChange: (String) -> Unit,
+    onSearch: () -> Unit,
+    active: Boolean,
+    onActiveChange: (Boolean) -> Unit
+) {
+    // Componente de barra de búsqueda
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        placeholder = { Text("Buscar un contacto") },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Buscar"
+            )
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        singleLine = true
+    )
 }
+
+
 

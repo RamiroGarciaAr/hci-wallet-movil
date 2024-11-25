@@ -97,7 +97,14 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         NavHost(navController = navController, startDestination = "home") {
             composable("home") { HomeView() }
             composable("activity") { Activity() }
-            composable(route = "contacts") { ContactScreen() }
+            composable(route = "contacts") {/*
+                ContactScreen(
+                    onBack = { navigator.navigateBack() }, // Navega hacia atrás al hacer clic en el botón de retroceso
+                    onAddContact = { navigator.navigateTo("add_contact") } // Cambia la ruta según la pantalla de agregar contactos
+                )
+                */
+            }
+
 
             // Pantalla de transferencia
             composable("transfer") {
