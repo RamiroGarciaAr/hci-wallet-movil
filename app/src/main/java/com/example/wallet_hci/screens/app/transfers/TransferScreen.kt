@@ -14,19 +14,25 @@ import androidx.compose.material3.ListItemDefaults.contentColor
 import androidx.compose.ui.res.colorResource
 import com.example.wallet_hci.app.screens.home.ui.CardHolder
 
+import com.example.wallet_hci.app.routes.NavigatorProvider
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(
-    accountBalance: String = "$ 1500.00", // Supongamos que recibimos el saldo como parámetro
+    accountBalance: String = "$ 1500.00",
     onCancel: () -> Unit = {},
     onContinue: () -> Unit = {}
 ) {
+    val navigator = NavigatorProvider.current
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.transfer), color = colorResource(R.color.blue_bar)) },
                 navigationIcon = {
-                    IconButton(onClick = onCancel) {
+                    IconButton(onClick = {
+                        navigator.navigateBack()
+                    }) {
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
                             contentDescription = "Back"
@@ -123,7 +129,9 @@ fun TransferScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(
-                    onClick = onCancel,
+                    onClick = {
+                        navigator.navigateBack()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = colorResource(R.color.blue_bar) // Color azul para el texto del botón

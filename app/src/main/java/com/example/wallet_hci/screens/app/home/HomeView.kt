@@ -3,6 +3,7 @@ package com.example.wallet_hci.app.screens.home
 import com.example.wallet_hci.app.screens.home.ui.*
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.app.routes.NavigatorProvider
+import com.example.wallet_hci.app.routes.Routes
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.plots.ExpensesPlot
@@ -32,17 +33,28 @@ import androidx.window.core.layout.WindowWidthSizeClass
 
 
 data class Action (val icon: Int, val text: Int, val onClick: () -> Unit);
-val actions = listOf(
-    Action(R.drawable.ic_visa, R.string.deposit, onClick = {}),
-    Action(R.drawable.ic_mastercard, R.string.spend, onClick = {}),
-    Action(R.drawable.ic_arrow_right, R.string.transfer, onClick = {}),
-    Action(R.drawable.ic_arrow_right, R.string.cvu, onClick = {})
-)
 
 @Composable
 fun HomeView(){
 
     val navigator = NavigatorProvider.current
+
+    val actions = listOf(
+        Action(R.drawable.fa_money_bills, R.string.deposit, onClick = {
+            navigator.navigateTo(Routes.Activity)
+        }),
+        Action(R.drawable.fa_paper_plane, R.string.spend, onClick = {
+            navigator.navigateTo(Routes.Contacts)
+        }),
+        Action(R.drawable.fa_money_bill_transfer, R.string.transfer, onClick = {
+            val routeTransfer = Routes.Transfer()
+            navigator.navigateTo(routeTransfer)
+        }),
+        Action(R.drawable.fa_address_card, R.string.cvu, onClick = {
+            navigator.navigateTo(Routes.Profile)
+        })
+    )
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.padding(horizontal = 12.dp)
