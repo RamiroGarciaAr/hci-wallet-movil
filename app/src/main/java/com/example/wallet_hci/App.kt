@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -26,11 +27,14 @@ import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
 import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
 
         val sessionManager = SessionManager(this)
 
@@ -57,13 +61,16 @@ class MainActivity : ComponentActivity() {
                 WallethciTheme {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        bottomBar = {
-                            NavBar()
+                        floatingActionButton = { FloatingQRButton(navigator) },
+                        floatingActionButtonPosition = FabPosition.Center,
+                        bottomBar = { 
+                            NavBar() 
                         },
-                        floatingActionButton = {
-                            FloatingQRButton()
-                        },
-                    ) {_ ->  this.navigator.Routes() }
+
+                    ) { innerPadding ->  
+                        Column(modifier = Modifier.padding(innerPadding))
+                        { navigator.Routes() }
+                    }
                 }
             }
         }

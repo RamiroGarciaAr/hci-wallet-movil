@@ -30,29 +30,19 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         navController.navigate(route)
     }
 
-    /**
-     * Defines the navigation routes for the app.
-     */
+    fun getCurrentPage(): String {
+        return navController.currentBackStackEntry?.destination?.route ?: ""
+    }
+    
     @Composable
     fun Routes() {
-        // Initialize navController in a composable-safe way
+        var navigator = this
         navController = rememberNavController()
-        // var sessionManager = SessionManager(this)
-        // var remoteDataSource = UserRemoteDataSource(sessionManager)
-        // var userRepository = UserRepository(remoteDataSource)
-        NavHost(navController = navController, startDestination = "login") {
-            composable("login") {
-                // Login screen
-                // LoginView(userRepository)
-            }
-            composable("home") {
-                // Home screen
-                HomeView()
-            }
-            composable("activity") {
-                // Activity screen
-                Activity()
-            }
+        NavHost(navController = navController, startDestination = "home") {
+            composable("home") { HomeView() }
+            composable("activity") { Activity() }
+            composable(route = "contacts") { ContactScreen() } // Ruta para Contacts
+
         }
     }
 }

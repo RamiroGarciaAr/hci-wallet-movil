@@ -24,12 +24,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.api.APIPaymentService
+import com.example.wallet_hci.BuildConfig
 import androidx.compose.runtime.staticCompositionLocalOf
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://10.0.2.2:8080/api/"
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     @Provides
     @Singleton

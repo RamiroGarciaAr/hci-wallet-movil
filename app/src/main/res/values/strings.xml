@@ -12,6 +12,11 @@
     <string name="transfer">Transferir</string>
     <string name="cvu">CVU</string>
 
+    <string name="revenue">Rendimiento</string>
+
+    <string name="weekDays">Domingo,Lunes,Martes,Miércoles,Jueves,Viernes,Sábado</string>
+    <string name="weekDaysShort">Dom,Lun,Mar,Mié,Jue,Vie,Sáb</string>
+
     <string name="enter_amount">Ingresar monto</string>
     <string name="select_payment_method">Seleccione el método de pago</string>
     <string name="enter_reason">Ingrese el motivo</string>

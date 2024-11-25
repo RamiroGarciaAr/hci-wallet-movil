@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -40,11 +41,26 @@ fun NavBar() {
         "activity",
         "contacts"
     )
-    val items = listOf(stringResource(R.string.r_settings), stringResource(R.string.r_home), stringResource(R.string.r_activities), stringResource(R.string.r_contacts))
-    val selectedIcons = listOf(Icons.Filled.Settings, Icons.Filled.Home, Icons.Filled.Favorite, Icons.Filled.Star)
-    val unselectedIcons =
-        listOf(Icons.Outlined.Settings, Icons.Outlined.Home, Icons.Outlined.FavoriteBorder, Icons.Outlined.Star)
+    var currentPage by remember { mutableStateOf("home") }
 
+    val items = listOf(
+        stringResource(R.string.r_settings), 
+        stringResource(R.string.r_home), 
+        stringResource(R.string.r_activities), 
+        // stringResource(R.string.r_contacts)
+    )
+    val selectedIcons = listOf(
+        Icons.Filled.Settings, 
+        Icons.Filled.Home, 
+        Icons.Filled.Favorite, 
+        Icons.Filled.Star
+    )
+    val unselectedIcons = listOf(
+        Icons.Outlined.Settings, 
+        Icons.Outlined.Home, 
+        Icons.Outlined.FavoriteBorder, 
+        Icons.Outlined.Star
+    )
     NavigationBar(
         containerColor = colorResource(R.color.primary_100),
     ) {
@@ -52,17 +68,18 @@ fun NavBar() {
             NavigationBarItem(
                 icon = {
                     Icon(
-                        if (selectedItem == index) selectedIcons[index] else unselectedIcons[index],
+                        if (currentPage.compareTo(routes[index]) == 0) selectedIcons[index] else unselectedIcons[index],
                         contentDescription = item,
                         tint = colorResource(R.color.primary_500),
                     )
                 },
                 label = { Text(item) },
-                selected = selectedItem == index,
+                selected = currentPage.compareTo(routes[index]) == 0,
                 onClick = { 
-                    selectedItem = index
-                    navigator.navigateTo(routes[index])
+                    currentPage = routes[index]
+                    navigator.navigateTo(currentPage)
                 },
+                alwaysShowLabel = false
             )
         }
     }
