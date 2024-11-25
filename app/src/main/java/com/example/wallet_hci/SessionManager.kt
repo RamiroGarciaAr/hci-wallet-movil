@@ -2,9 +2,14 @@ package com.example.wallet_hci
 
 import android.content.Context
 import android.content.SharedPreferences
+import javax.inject.Inject
+import javax.inject.Singleton
+import androidx.compose.runtime.staticCompositionLocalOf
 
-class SessionManager(context: Context) {
+val SessionProvider = staticCompositionLocalOf<SessionManager> { error("SessionManager not provided") }
 
+@Singleton
+class SessionManager @Inject constructor(context: Context) {
     private var preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     fun loadAuthToken(): String? {

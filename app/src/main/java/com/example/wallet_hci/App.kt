@@ -8,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.ui.menu.FloatingQRButton
-
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
@@ -24,16 +24,20 @@ class MainActivity : ComponentActivity() {
         val sessionManager = SessionManager(this)
         navigator = Navigator()
         setContent {
-            WallethciTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        NavBar(this.navigator)
-                    },
-                    floatingActionButton = {
-                        FloatingQRButton()
-                    },
-                ) {_ ->  this.navigator.Routes() }
+            CompositionLocalProvider(
+                SessionProvider provides sessionManager
+            ){
+                WallethciTheme {
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        bottomBar = {
+                            NavBar(this.navigator)
+                        },
+                        floatingActionButton = {
+                            FloatingQRButton()
+                        },
+                    ) {_ ->  this.navigator.Routes() }
+                }
             }
         }
     }
