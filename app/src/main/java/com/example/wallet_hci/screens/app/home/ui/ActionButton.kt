@@ -21,8 +21,8 @@ fun ActionButton(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(R.color.primary_700),
-            contentColor = colorResource(R.color.white)
+            containerColor = colorResource(R.color.primary_100),
+            contentColor = colorResource(R.color.primary_500)
         ),
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp)
@@ -34,7 +34,7 @@ fun ActionButton(
             Icon(
                 painter = painter,
                 contentDescription = "Visa",
-                tint = colorResource(R.color.white),
+                tint = colorResource(R.color.primary_500),
                 modifier = Modifier.size(32.dp)
             )
             Text(text)
