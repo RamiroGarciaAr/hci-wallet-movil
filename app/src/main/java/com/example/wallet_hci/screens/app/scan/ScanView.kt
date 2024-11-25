@@ -17,6 +17,7 @@ import android.Manifest
 import android.util.Log
 import com.example.wallet_hci.R
 import com.example.wallet_hci.app.routes.NavigatorProvider
+import com.example.wallet_hci.screens.app.scan.ScannerPreview
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.remember
