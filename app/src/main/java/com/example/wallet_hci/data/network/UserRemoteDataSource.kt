@@ -54,5 +54,4 @@ class UserRemoteDataSource(
     suspend fun verify(code: NetworkCode): NetworkUser {
         return userApiService.verify(code)
     }
-    }
 }

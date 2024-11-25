@@ -22,6 +22,8 @@ import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 
+import com.example.wallet_hci.data.netowrk.api.APIUserService
+import com.example.wallet_hci.data.api.APIPaymentService
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {

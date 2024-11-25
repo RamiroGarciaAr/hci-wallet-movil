@@ -14,6 +14,7 @@ import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.auth.Login.LoginView
+import android.content.SharedPreferences
 
 class Navigator() {
 
@@ -22,6 +23,7 @@ class Navigator() {
     fun navigateTo(route: String) {
         navController.navigate(route)
     }
+
     /**
      * Defines the navigation routes for the app.
      */
@@ -29,13 +31,13 @@ class Navigator() {
     fun Routes() {
         // Initialize navController in a composable-safe way
         navController = rememberNavController()
-        var sessionManager = SessionManager(this)
-        var remoteDataSource = UserRemoteDataSource(sessionManager)
-        var userRepository = UserRepository(remoteDataSource)
+        // var sessionManager = SessionManager(this)
+        // var remoteDataSource = UserRemoteDataSource(sessionManager)
+        // var userRepository = UserRepository(remoteDataSource)
         NavHost(navController = navController, startDestination = "login") {
             composable("login") {
                 // Login screen
-                LoginView(userRepository)
+                // LoginView(userRepository)
             }
             composable("home") {
                 // Home screen
