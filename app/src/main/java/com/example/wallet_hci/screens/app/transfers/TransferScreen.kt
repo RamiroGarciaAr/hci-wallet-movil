@@ -19,7 +19,6 @@ import com.example.wallet_hci.app.screens.home.ui.CardHolder
 import kotlinx.coroutines.launch
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(
@@ -33,7 +32,7 @@ fun TransferScreen(
     val noValidValue = stringResource(id = R.string.no_valid_value)
     val noValidCard = stringResource(id = R.string.no_valid_card)
     val insufficientFundsError = stringResource(id = R.string.insufficient_funds)
-    val noContactSelectedError = stringResource(id = R.string.no_contact_selected) // Nuevo mensaje de error
+    val noContactSelectedError = stringResource(id = R.string.no_contact_selected) // Mensaje de error
     val coroutineScope = rememberCoroutineScope()
 
     // Estados locales para manejar las entradas del usuario
@@ -70,7 +69,7 @@ fun TransferScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    // Botón único para ir a la pantalla de contactos
+                    // Botón para ir a la pantalla de contactos
                     Button(
                         onClick = onGoToContacts,
                         modifier = Modifier.fillMaxWidth(),
@@ -86,8 +85,8 @@ fun TransferScreen(
                 }
 
                 item {
-                    // Muestra el contacto seleccionado o un mensaje si no hay ninguno
-                    if (selectedContact.isNullOrBlank() ) {
+                    // Mostrar contacto seleccionado o advertencia si no hay ninguno
+                    if (selectedContact.isNullOrBlank()) {
                         Text(
                             text = stringResource(id = R.string.no_contact_selected_warning),
                             color = MaterialTheme.colorScheme.error,
@@ -221,7 +220,7 @@ fun TransferScreen(
                             val parsedAmount = amount.toDoubleOrNull()
                             val balance = accountBalance.toDoubleOrNull() ?: 0.0
                             when {
-                                selectedContact == null -> {
+                                selectedContact.isNullOrBlank() || selectedContact == "null" -> {
                                     errorMessage = noContactSelectedError
                                     return@launch
                                 }
@@ -267,3 +266,4 @@ fun TransferScreen(
         }
     }
 }
+

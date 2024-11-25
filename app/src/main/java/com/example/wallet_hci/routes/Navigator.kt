@@ -107,33 +107,32 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
 
             // Pantalla de resultado de la transferencia
             composable(
-                route = "transferResult?amount={amount}&receiverName={receiverName}&bankName={bankName}&aliasSender={aliasSender}&aliasReceiver={aliasReceiver}&receiptId={receiptId}",
-                arguments = listOf(
-                    navArgument("amount") { type = NavType.StringType },
-                    navArgument("receiverName") { type = NavType.StringType },
-                    navArgument("bankName") { type = NavType.StringType },
-                    navArgument("aliasSender") { type = NavType.StringType },
-                    navArgument("aliasReceiver") { type = NavType.StringType },
-                    navArgument("receiptId") { type = NavType.StringType }
-                )
+                route = "transfer?selectedContact={selectedContact}",
+                arguments = listOf(navArgument("selectedContact") {
+                    type = NavType.StringType
+                    nullable = true // Permitir valores nulos
+                })
             ) { backStackEntry ->
-                val amount = backStackEntry.arguments?.getString("amount") ?: "0.00"
-                val receiverName = backStackEntry.arguments?.getString("receiverName") ?: "Desconocido"
-                val bankName = backStackEntry.arguments?.getString("bankName") ?: "Desconocido"
-                val aliasSender = backStackEntry.arguments?.getString("aliasSender") ?: "Desconocido"
-                val aliasReceiver = backStackEntry.arguments?.getString("aliasReceiver") ?: "Desconocido"
-                val receiptId = backStackEntry.arguments?.getString("receiptId") ?: "000000"
+                val selectedContact = backStackEntry.arguments?.getString("selectedContact")
+                println("Valor recibido en TransferScreen: $selectedContact") // Depuración
 
-                TransferResultScreen(
-                    amount = amount,
-                    receiverName = receiverName,
-                    bankName = bankName,
-                    aliasSender = aliasSender,
-                    aliasReceiver = aliasReceiver,
-                    receiptId = receiptId,
-                    onBack = { navigateTo("home") } // Lleva al usuario a la pantalla principal
+                TransferScreen(
+                    selectedContact = selectedContact,
+                    onCancel = { navigateBack() },
+                    onContinue = { paymentMethod, amount, description, cardId ->
+                        val receiverName = selectedContact ?: "Sin contacto"
+                        val bankName = "Banco Ejemplo"
+                        val aliasSender = "AliasPropio"
+                        val aliasReceiver = "AliasReceptor"
+                        val receiptId = "123456"
+
+                        val route = "transferResult?amount=$amount&receiverName=$receiverName&bankName=$bankName&aliasSender=$aliasSender&aliasReceiver=$aliasReceiver&receiptId=$receiptId"
+                        navigateTo(route)
+                    },
+                    onGoToContacts = { navigateTo("contacts") }
                 )
             }
+
         }
     }
 }
