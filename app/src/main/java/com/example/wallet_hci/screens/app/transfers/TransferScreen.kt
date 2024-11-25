@@ -17,6 +17,7 @@ import com.example.wallet_hci.app.screens.home.ui.CardHolder
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(
+    accountBalance: String = "$ 1500.00", // Supongamos que recibimos el saldo como parámetro
     onCancel: () -> Unit = {},
     onContinue: () -> Unit = {}
 ) {
@@ -63,11 +64,33 @@ fun TransferScreen(
                 }
             }
 
-            // Seleccionar método de pago
+            // Opción Dinero en cuenta
             Text(text = stringResource(id = R.string.select_payment_method), style = MaterialTheme.typography.titleMedium)
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = colorResource(R.color.blue_bar),
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text(
+                            text = "Dinero en cuenta: $accountBalance",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                }
+
+                // Tarjetas de pago
                 CardHolder(issuer = "mastercard", lastFourDigits = "0854", onClick = {})
                 CardHolder(issuer = "mastercard", lastFourDigits = "0734", onClick = {})
             }
@@ -124,3 +147,4 @@ fun TransferScreen(
         }
     }
 }
+

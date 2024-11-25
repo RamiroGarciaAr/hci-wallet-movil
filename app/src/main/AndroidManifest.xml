@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
 
-        <uses-permission android:name="android.permission.CAMERA" />
     </application>
 
 </manifest>
