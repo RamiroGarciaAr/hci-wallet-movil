@@ -1,6 +1,6 @@
 package com.example.wallet_hci.data.model
 
-import com.example.wallet_hci.data.network.model.NetworkNewPaymentLink
+import com.example.wallet_hci.data.model.NetworkNewPaymentLink
 
 class NewPaymentLink
     (

@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.network
+package com.example.wallet_hci.data.model
 
 import android.util.Log
 import com.example.wallet_hci.data.DataSourceException

@@ -26,10 +26,12 @@ import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.app.routes.Navigator
 
+import com.example.wallet_hci.app.routes.NavigatorProvider
 
 @Composable
-fun NavBar(navigator: Navigator) {
+fun NavBar() {
 
+    val navigator = NavigatorProvider.current
     var selectedItem by remember { mutableIntStateOf(0) }
 
     val routes = listOf(

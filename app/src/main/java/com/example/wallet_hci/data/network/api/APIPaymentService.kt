@@ -1,13 +1,13 @@
-package com.example.wallet_hci.data.network.api
+package com.example.wallet_hci.data.api
 
-import com.example.wallet_hci.data.network.model.NetworkBalancePayment
-import com.example.wallet_hci.data.network.model.NetworkCardPayment
-import com.example.wallet_hci.data.network.model.NetworkLinkPaymentObject
-import com.example.wallet_hci.data.network.model.NetworkLinkUuid
-import com.example.wallet_hci.data.network.model.NetworkNewPaymentLink
-import com.example.wallet_hci.data.network.model.NetworkPayment
-import com.example.wallet_hci.data.network.model.NetworkPaymentLink
-import com.example.wallet_hci.data.network.model.NetworkPaymentResponse
+import com.example.wallet_hci.data.model.NetworkBalancePayment
+import com.example.wallet_hci.data.model.NetworkCardPayment
+import com.example.wallet_hci.data.model.NetworkLinkPaymentObject
+import com.example.wallet_hci.data.model.NetworkLinkUuid
+import com.example.wallet_hci.data.model.NetworkNewPaymentLink
+import com.example.wallet_hci.data.model.NetworkPayment
+import com.example.wallet_hci.data.model.NetworkPaymentLink
+import com.example.wallet_hci.data.model.NetworkPaymentResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

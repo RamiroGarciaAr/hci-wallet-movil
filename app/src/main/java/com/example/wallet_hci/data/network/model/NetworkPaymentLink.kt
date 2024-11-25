@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.network.model
+package com.example.wallet_hci.data.model
 
 class NetworkPaymentLink (
     val type: String,

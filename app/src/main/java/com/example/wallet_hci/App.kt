@@ -8,12 +8,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.wallet_hci.ui.theme.WallethciTheme
-import com.example.wallet_hci.ui.menu.FloatingQRButton
-import com.example.wallet_hci.ui.menu.NavBar
+
+import com.example.wallet_hci.app.routes.NavigatorProvider
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.ui.theme.WallethciTheme
+import com.example.wallet_hci.ui.menu.NavBar
+import com.example.wallet_hci.ui.menu.FloatingQRButton
+
+import com.example.wallet_hci.data.UserRemoteDataSource
+
+import com.example.wallet_hci.data.repository.UserRepositoryProvider
+import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.data.network.api.NetworkModule
+import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
+import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
+
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
@@ -21,40 +32,40 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val sessionManager = SessionManager(this)
 
+        val loggingInterceptor = NetworkModule.provideHttpLoggingInterceptor()
+        val okHttpClient = NetworkModule.provideOkHttpClient(loggingInterceptor, this)
+        val retrofit = NetworkModule.provideRetrofit(okHttpClient)
 
+        val userRemoteDataSource = UserRemoteDataSource(sessionManager, NetworkModule.provideUserApiService(retrofit))
+        val userRepository = UserRepository(userRemoteDataSource)
 
-        navigator = Navigator()
+        val walletRemoteDataSource = NetworkModule.provideWalletApiService(retrofit)
+        val paymentRemoteDataSource = NetworkModule.providePaymentApiService(retrofit)
+
+        navigator = Navigator(sessionManager)
         setContent {
-            WallethciTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        NavBar(this.navigator)
-                    },
-                    floatingActionButton = {
-                        FloatingQRButton()
-                    },
-                ) {_ ->  this.navigator.Routes() }
+            CompositionLocalProvider(
+                NavigatorProvider provides navigator,
+                SessionProvider provides sessionManager,
+                UserRepositoryProvider provides userRepository,
+                WalletApiServiceProvider provides walletRemoteDataSource,
+                PaymentApiServiceProvider provides paymentRemoteDataSource,
+                
+            ){
+                WallethciTheme {
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        bottomBar = {
+                            NavBar()
+                        },
+                        floatingActionButton = {
+                            FloatingQRButton()
+                        },
+                    ) {_ ->  this.navigator.Routes() }
+                }
             }
         }
     }
-}
-
-// Seteamos las rutas de las vistas
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WallethciTheme {
-        Greeting("Main")
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Tobias $name!",
-        modifier = modifier
-    )
 }
