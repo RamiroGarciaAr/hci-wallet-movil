@@ -67,10 +67,23 @@
     <string name="password_placeholder">**********</string>
     <string name="confirm_password_label">Repetir contraseña</string>
     <string name="confirm_password_placeholder">**********</string>
-
-
-
+    <string name="balance_money">Dinero en cuenta: %s</string>
+    <string name="reason_transfer">Motivo</string>
+    <string name="amount_minimum">El monto minimo debe ser mayor a 0</string>
+    <string name="no_valid_value">Por favor seleccione un monto válido.</string>
+    <string name="no_valid_card">Seleccione una tarjeta válida</string>
 
     <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
 
+    <string name="search_contact">Seleccionar contacto</string>
+    <string name="create_contact">Crear contacto</string>
+    <string name="go_to_contacts">Buscar un contacto</string>
+    <string name="selected_contact">Contacto seleccionado: %1$s</string>
+    <string name="no_contact_selected">No se ha seleccionado ningún contacto</string>
+    <string name="insufficient_funds">Fondos insuficientes</string>
+    <string name="no_contact_selected_warning">Seleccione un contacto</string>
+    <string name="card">Tarjeta: %1$s</string>
+    <string name="mercado_pay">Cuenta bancaria: MercadoPay</string>
+    <string name="external_account">Seleccione una cuenta externa </string>
+    <string name="add_amount">Seleccione el monto</string>
 </resources>
