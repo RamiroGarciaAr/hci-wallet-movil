@@ -25,15 +25,15 @@ class NetworkUser(
 
         // Safely parse the birthDate string into a Date object
         val parsedBirthDate: Date = try {
-            dateFormat.parse(birthDate) ?: throw IllegalArgumentException("Invalid date format")
+            dateFormat.parse(this.birthDate) ?: throw IllegalArgumentException("Invalid date format")
         } catch (e: Exception) {
             throw IllegalArgumentException("Error parsing birthDate: $birthDate", e)
         }
 
         return User(
-            id = id,
-            firstName = firstName,
-            lastName = lastName,
+            id = this.id,
+            firstName = this.firstName,
+            lastName = this.lastName,
             email = email,
             birthDate = parsedBirthDate
         )

@@ -1,5 +1,7 @@
 package com.example.wallet_hci.data.model
 
+import com.example.wallet_hci.data.model.NetworkAlias
+
 class Alias (
     var alias : String
 )

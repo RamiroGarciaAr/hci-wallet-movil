@@ -27,12 +27,14 @@ import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.app.routes.Navigator
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.ui.unit.dp
+import com.example.wallet_hci.app.routes.NavigatorProvider
 
 @Composable
-fun NavBar(navigator: Navigator) {
-    // Retorno si el usuario está en la pantalla scan para que no aparezca el botón de QR
+fun NavBar() {
+
+    val navigator = NavigatorProvider.current
+    var selectedItem by remember { mutableIntStateOf(0) }
+
     val routes = listOf(
         "settings",
         "home",

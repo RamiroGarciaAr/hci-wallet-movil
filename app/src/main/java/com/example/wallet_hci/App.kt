@@ -9,11 +9,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+
+import com.example.wallet_hci.app.routes.NavigatorProvider
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.ui.menu.FloatingQRButton
+
+import com.example.wallet_hci.data.UserRemoteDataSource
+
+import com.example.wallet_hci.data.repository.UserRepositoryProvider
+import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.data.network.api.NetworkModule
+import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
+import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
+
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
@@ -24,22 +37,41 @@ class MainActivity : ComponentActivity() {
 
 
         val sessionManager = SessionManager(this)
-        navigator = Navigator()
-        setContent {
-            WallethciTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    floatingActionButton = { FloatingQRButton(navigator) },
-                    floatingActionButtonPosition = FabPosition.Center,
-                    bottomBar = { 
-                        NavBar(this.navigator) 
-                    },
 
-                ) { innerPadding ->  
-                    Column(modifier = Modifier.padding(innerPadding))
-                    { navigator.Routes() }
+        val loggingInterceptor = NetworkModule.provideHttpLoggingInterceptor()
+        val okHttpClient = NetworkModule.provideOkHttpClient(loggingInterceptor, this)
+        val retrofit = NetworkModule.provideRetrofit(okHttpClient)
+
+        val userRemoteDataSource = UserRemoteDataSource(sessionManager, NetworkModule.provideUserApiService(retrofit))
+        val userRepository = UserRepository(userRemoteDataSource)
+
+        val walletRemoteDataSource = NetworkModule.provideWalletApiService(retrofit)
+        val paymentRemoteDataSource = NetworkModule.providePaymentApiService(retrofit)
+
+        navigator = Navigator(sessionManager)
+        setContent {
+            CompositionLocalProvider(
+                NavigatorProvider provides navigator,
+                SessionProvider provides sessionManager,
+                UserRepositoryProvider provides userRepository,
+                WalletApiServiceProvider provides walletRemoteDataSource,
+                PaymentApiServiceProvider provides paymentRemoteDataSource,
+                
+            ){
+                WallethciTheme {
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        floatingActionButton = { FloatingQRButton(navigator) },
+                        floatingActionButtonPosition = FabPosition.Center,
+                        bottomBar = { 
+                            NavBar(this.navigator) 
+                        },
+
+                    ) { innerPadding ->  
+                        Column(modifier = Modifier.padding(innerPadding))
+                        { navigator.Routes() }
+                    }
                 }
-            }
         }
     }
 }
