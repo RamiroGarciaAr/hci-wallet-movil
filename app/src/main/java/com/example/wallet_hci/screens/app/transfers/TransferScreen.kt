@@ -1,7 +1,9 @@
 package com.example.wallet_hci.app.screens.home
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,24 +12,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material3.ListItemDefaults.contentColor
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
 import com.example.wallet_hci.app.screens.home.ui.CardHolder
-
-
 import kotlinx.coroutines.launch
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(
     accountBalance: String = "$1500.00", // Saldo actual del usuario
-    onSearchContact: () -> Unit = {}, // Acción para buscar contactos
-    onCreateContact: () -> Unit = {}, // Acción para crear un nuevo contacto
+    onGoToContacts: () -> Unit = {}, // Acción para redirigir a la pantalla de contactos
     onCancel: () -> Unit = {},
     onContinue: (String, Double, String, String?) -> Unit = { _, _, _, _ -> }
 ) {
@@ -50,7 +43,7 @@ fun TransferScreen(
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -62,125 +55,132 @@ fun TransferScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Nueva sección para Buscar y Crear contacto
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Button(
-                    onClick = onSearchContact,
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.blue_bar)
-                    )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.search_contact),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-                Button(
-                    onClick = onCreateContact,
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.blue_bar)
-                    )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.create_contact),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            }
-
-            // Ingresar monto
-            Text(text = stringResource(id = R.string.enter_amount), style = MaterialTheme.typography.titleMedium)
-            TextField(
-                value = amount,
-                onValueChange = { amount = it },
-                label = { Text("$ 0.00") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            // Seleccionar método de pago
-            Text(text = stringResource(id = R.string.select_payment_method), style = MaterialTheme.typography.titleMedium)
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // Opción Dinero en cuenta
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = colorResource(R.color.blue_bar),
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        selectedPaymentMethod = "BALANCE"
-                        selectedCardId = null
-                    }
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.CenterStart
+                item {
+                    // Botón único para ir a la pantalla de contactos
+                    Button(
+                        onClick = onGoToContacts,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.blue_bar)
+                        )
                     ) {
                         Text(
-                            text = stringResource(id = R.string.balance_money, accountBalance),
-                            style = MaterialTheme.typography.titleMedium,
+                            text = stringResource(id = R.string.go_to_contacts),
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
 
-                // Tarjetas de pago
-                CardHolder(
-                    issuer = "mastercard",
-                    lastFourDigits = "0854",
-                    onClick = {
-                        selectedPaymentMethod = "CARD"
-                        selectedCardId = "0854" // Ejemplo de ID de la tarjeta
+                item {
+                    // Ingresar monto
+                    Text(
+                        text = stringResource(id = R.string.enter_amount),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    TextField(
+                        value = amount,
+                        onValueChange = { amount = it },
+                        label = { Text("$ 0.00") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                }
+
+                item {
+                    // Seleccionar método de pago
+                    Text(
+                        text = stringResource(id = R.string.select_payment_method),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        // Opción Dinero en cuenta
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = colorResource(R.color.blue_bar),
+                                contentColor = MaterialTheme.colorScheme.onPrimary
+                            ),
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                selectedPaymentMethod = "BALANCE"
+                                selectedCardId = null
+                            }
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.balance_money, accountBalance),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        }
+
+                        // Tarjetas de pago
+                        CardHolder(
+                            issuer = "mastercard",
+                            lastFourDigits = "0854",
+                            onClick = {
+                                selectedPaymentMethod = "CARD"
+                                selectedCardId = "0854"
+                            }
+                        )
+                        CardHolder(
+                            issuer = "mastercard",
+                            lastFourDigits = "0734",
+                            onClick = {
+                                selectedPaymentMethod = "CARD"
+                                selectedCardId = "0734"
+                            }
+                        )
                     }
-                )
-                CardHolder(
-                    issuer = "mastercard",
-                    lastFourDigits = "0734",
-                    onClick = {
-                        selectedPaymentMethod = "CARD"
-                        selectedCardId = "0734" // Ejemplo de ID de la tarjeta
+                }
+
+                item {
+                    // Ingresar motivo
+                    Text(
+                        text = stringResource(id = R.string.enter_reason),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    TextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        label = { Text(stringResource(id = R.string.reason_transfer)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                }
+
+                item {
+                    // Mostrar mensaje de error si hay
+                    errorMessage?.let {
+                        Text(
+                            text = it,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
-                )
+                }
             }
 
-            // Ingresar motivo
-            Text(text = stringResource(id = R.string.enter_reason), style = MaterialTheme.typography.titleMedium)
-            TextField(
-                value = description,
-                onValueChange = { description = it },
-                label = { Text(stringResource(id = R.string.reason_transfer)) },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Mostrar mensaje de error si hay
-            errorMessage?.let {
-                Text(
-                    text = it,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-            // Botones de acciones
+            // Botones de acciones fuera de LazyColumn
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 TextButton(
                     onClick = onCancel,
@@ -231,3 +231,4 @@ fun TransferScreen(
         }
     }
 }
+
