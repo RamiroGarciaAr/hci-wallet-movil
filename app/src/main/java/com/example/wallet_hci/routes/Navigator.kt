@@ -23,13 +23,16 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.navigation.compose.composable
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.screens.home.*
+
 import com.example.wallet_hci.app.Activity
+import com.example.wallet_hci.app.routes.Routes
 import com.example.wallet_hci.data.network.api.NetworkModule
 import com.example.wallet_hci.data.UserRemoteDataSource
 import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.Login.LoginView
+import com.example.wallet_hci.screens.app.myProfile.MyProfile
 import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -88,6 +91,13 @@ sealed interface Routes {
         }
     }
 
+
+    @Serializable
+    data class Transfer(val amount: String? = null, val description: String? = null, val contactId: String? = null)
+
+    @Serializable
+    object Profile
+
     @Composable
     abstract fun getName(): String
 
@@ -105,7 +115,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         navController.navigate(route, navOptions, navigatorExtras)
     }
 
-    fun navigateTo(route: Routes, navOptions: NavOptions? = null, navigatorExtras: NavHostNavigator.Extras? = null) {
+    fun <T: Any> navigateTo(route: T, navOptions: NavOptions? = null, navigatorExtras: NavHostNavigator.Extras? = null) {
         navController.navigate(route, navOptions, navigatorExtras)
     }
 
@@ -124,6 +134,10 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> { ContactScreen() } // Ruta para Contacts
+
+            // Transfer screen
+            composable<Routes.Transfer> { TransferScreen() }
+            composable<Routes.Profile> { MyProfile() }
         }
     }
 }
