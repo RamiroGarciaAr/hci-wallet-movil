@@ -1,3 +1,4 @@
+/*
 package com.example.wallet_hci.screens.app.scan
 
 import androidx.compose.foundation.layout.*
@@ -45,12 +46,14 @@ fun ScanView() {
             navigator.navigateBack()
         }
     }
-    
+
     LaunchedEffect(cameraPermissionState){
         if (cameraPermissionState.status.isGranted || !cameraPermissionState.status.shouldShowRationale) {
             launcher.launch(android.Manifest.permission.CAMERA)
         }
     }
+
+
 
     // val permissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
     // PermissionRequired(
@@ -68,3 +71,5 @@ fun ScanView() {
     //     permissionNotAvailableContent = { }
     // ) { ScannerPreview() }
 }
+
+ */
