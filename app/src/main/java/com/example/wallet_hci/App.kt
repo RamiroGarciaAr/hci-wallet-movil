@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                         floatingActionButton = { FloatingQRButton(navigator) },
                         floatingActionButtonPosition = FabPosition.Center,
                         bottomBar = { 
-                            NavBar(this.navigator) 
+                            NavBar() 
                         },
 
                     ) { innerPadding ->  
@@ -72,6 +72,7 @@ class MainActivity : ComponentActivity() {
                         { navigator.Routes() }
                     }
                 }
+            }
         }
     }
 }
