@@ -1,4 +1,4 @@
- package com.example.wallet_hci.screens.auth.Login
+ package com.example.wallet_hci.screens.app.Login
 
  import com.example.wallet_hci.MainActivity
  import androidx.lifecycle.ViewModel
