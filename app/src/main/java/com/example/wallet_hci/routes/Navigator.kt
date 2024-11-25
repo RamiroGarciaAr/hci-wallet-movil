@@ -12,8 +12,6 @@ import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.auth.Login.LoginView
-import com.example.wallet_hci.screens.app.scan.ScanView
-
 
 class Navigator {
 
