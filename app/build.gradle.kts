@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json.v163)
 
+
+
     implementation(libs.androidx.navigation.compose)
     implementation(libs.transport.runtime)
 
@@ -82,6 +84,7 @@ dependencies {
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
     implementation("androidx.compose.material:material-icons-extended")
+
 
 
 

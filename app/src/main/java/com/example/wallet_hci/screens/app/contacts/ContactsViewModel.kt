@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.wallet_hci.R
 
+
+
 class ContactsViewModel : ViewModel() {
 
     // Lista de contactos como estado mutable
@@ -24,10 +26,16 @@ class ContactsViewModel : ViewModel() {
     )
     val contacts: SnapshotStateList<Contact> get() = _contacts
 
+    // Alternar favorito
     fun toggleFavorite(contact: Contact) {
         val index = _contacts.indexOf(contact)
         if (index != -1) {
-            _contacts[index] = _contacts[index].copy(isFavorite = !contact.isFavorite)
+            _contacts[index] = _contacts[index].copy(isFavorite = !_contacts[index].isFavorite)
         }
+    }
+
+    // Agregar nuevo contacto
+    fun addContact(contact: Contact) {
+        _contacts.add(contact)
     }
 }

@@ -1,44 +1,51 @@
-package com.example.wallet_hci.screens.app.transfers
+package com.example.wallet_hci.screens.app.Deposit
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
-
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.colorResource
+import com.example.wallet_hci.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.colorResource
-import com.example.wallet_hci.R
-import com.example.wallet_hci.ui.components.CustomCard
 import com.example.wallet_hci.ui.components.CardStyle
+import com.example.wallet_hci.ui.components.CustomCard
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransferResultScreen(
-    amount: String,
-    receiverName: String,
-    bankName: String,
-    aliasSender: String,
-    aliasReceiver: String,
-    receiptId: String,
-    onShare: () -> Unit = {},
-    onSaveContact: () -> Unit = {},
-    onBack: () -> Unit = {} // onBack configurado para navegación
+fun DepositResultScreen(
+    depositedAmount: Double,
+    accountName: String,
+    receiptId: String = "41231", // ID de recibo generado
+    onContinue: () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.transfer)) },
+                title = { Text(text = "Ingreso de dinero", color = colorResource(R.color.blue_bar)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { // Usa la función onBack
+                    IconButton(onClick = onContinue) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -55,29 +62,26 @@ fun TransferResultScreen(
         ) {
             // Mensaje de éxito
             CustomCard(
-                title = stringResource(id = R.string.transfer_success_title),
+                title = "Ingreso de dinero exitoso",
                 style = CardStyle.Success
             ) {
                 Column {
                     Text(
-                        text = stringResource(
-                            id = R.string.transfer_success_message,
-                            amount, receiverName, bankName
-                        ),
+                        text = "Se ingresaron $${String.format("%.2f", depositedAmount)} a tu cuenta de $accountName",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = stringResource(id = R.string.transfer_receipt, receiptId),
+                        text = "Comprobante #$receiptId",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
 
-            // Detalles de la transferencia
+            // Detalles del depósito
             CustomCard(
-                title = stringResource(id = R.string.transfer_details_title),
+                title = "Detalles",
                 style = CardStyle.Default
             ) {
                 Row(
@@ -86,12 +90,12 @@ fun TransferResultScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Tobías Juhasz", // Nombre del remitente
+                            text = "Mercado Pago",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Alias: $aliasSender",
+                            text = "CVU: 0000034318741111138992",
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -102,12 +106,12 @@ fun TransferResultScreen(
                     )
                     Column {
                         Text(
-                            text = receiverName, // Nombre del destinatario
+                            text = accountName,
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Alias: $aliasReceiver",
+                            text = "Alias: sol.cielo.arcoiris",
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -116,32 +120,16 @@ fun TransferResultScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Botones
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
+            // Botón para continuar
+            Button(
+                onClick = onContinue,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.blue_bar)
+                )
             ) {
-                TextButton(
-                    onClick = onSaveContact,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onSurface
-                    )
-                ) {
-                    Text(text = stringResource(id = R.string.save_contact))
-                }
-                Button(
-                    onClick = onShare,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.blue_bar)
-                    )
-                ) {
-                    Text(text = stringResource(id = R.string.share_receipt))
-                }
+                Text(text = "Continuar", color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }
 }
-
-
