@@ -12,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,10 +27,10 @@ import androidx.compose.ui.res.colorResource
 import com.example.wallet_hci.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.wallet_hci.ui.components.CardStyle
 import com.example.wallet_hci.ui.components.CustomCard
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +38,7 @@ fun DepositResultScreen(
     depositedAmount: Double,
     accountName: String,
     receiptId: String = "41231", // ID de recibo generado
-    onContinue: () -> Unit
+    onContinue: () -> Unit = {} // Acción para continuar
 ) {
     Scaffold(
         topBar = {
@@ -61,11 +63,19 @@ fun DepositResultScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Mensaje de éxito
-            CustomCard(
-                title = "Ingreso de dinero exitoso",
-                style = CardStyle.Success
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                ),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Ingreso de dinero exitoso",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Se ingresaron $${String.format("%.2f", depositedAmount)} a tu cuenta de $accountName",
                         style = MaterialTheme.typography.bodyLarge,
@@ -80,38 +90,42 @@ fun DepositResultScreen(
             }
 
             // Detalles del depósito
-            CustomCard(
-                title = "Detalles",
-                style = CardStyle.Default
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                ),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
                         Text(
-                            text = "Mercado Pago",
+                            text = "Mercado Pago", // Cuenta emisora fija
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "CVU: 0000034318741111138992",
+                            text = "CVU: 0000034318741111138992", // CVU de la cuenta emisora
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                     Text(
                         text = "→",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
                     Column {
                         Text(
-                            text = accountName,
+                            text = accountName, // Nombre de la cuenta destino
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Alias: sol.cielo.arcoiris",
+                            text = "Alias: sol.cielo.arcoiris", // Alias del destino
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -132,4 +146,15 @@ fun DepositResultScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DepositResultScreenPreview() {
+    DepositResultScreen(
+        depositedAmount = 123.45,
+        accountName = "Pagozen",
+        receiptId = "41231",
+        onContinue = {}
+    )
 }
