@@ -8,6 +8,7 @@ import com.example.wallet_hci.data.model.NetworkUser
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Header
 
 interface APIUserService {
 
@@ -23,14 +24,14 @@ interface APIUserService {
      * Logs out the current user.
      */
     @POST("user/logout")
-    suspend fun logout()
+    suspend fun logout(@Header("Authorization") token: String)
 
     /**
      * Fetches the current user's details.
      * @return A [NetworkUser] representing the current user.
      */
     @GET("user")
-    suspend fun getCurrentUser(): NetworkUser
+    suspend fun getCurrentUser(@Header("Authorization") token: String): NetworkUser
 
     /**
      * Registers a new user with the provided details.

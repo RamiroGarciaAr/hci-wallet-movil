@@ -34,8 +34,8 @@ class UserRepository @Inject constructor(
     /**
      * Logs out the user by delegating to the remote data source.
      */
-    suspend fun logout() {
-        remoteDataSource.logout()
+    suspend fun logout(token: String) {
+        remoteDataSource.logout(token)
     }
 
     /**
@@ -43,9 +43,9 @@ class UserRepository @Inject constructor(
      * @param refresh Whether to force refresh from the remote data source.
      * @return The current user, or null if not logged in.
      */
-    suspend fun getCurrentUser(refresh: Boolean): User? {
+    suspend fun getCurrentUser(refresh: Boolean, token: String): User? {
         if (refresh || currentUser == null) {
-            val networkUser = remoteDataSource.getCurrentUser()
+            val networkUser = remoteDataSource.getCurrentUser(token)
             // Safely update the current user cache.
             currentUserMutex.withLock {
                 this.currentUser = networkUser.asModel()

@@ -79,7 +79,6 @@ fun NavBar() {
                     currentPage = routes[index]
                     navigator.navigateTo(currentPage)
                 },
-                alwaysShowLabel = false
             )
         }
     }

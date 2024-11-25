@@ -87,7 +87,13 @@ dependencies {
     implementation(libs.androidx.window)
     implementation(libs.androidx.core)
 
+    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+    implementation("com.google.accompanist:accompanist-insets:0.30.1")
+
     implementation("com.composables:core:1.19.1")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.1.0")
+    implementation("com.google.zxing:core:3.4.0")
 
 }
