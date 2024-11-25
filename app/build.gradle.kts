@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -64,7 +65,9 @@ dependencies {
     implementation(libs.retrofit) // Retrofit core library
     implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
     implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
-    implementation (libs.kotlinx.serialization.json.v163)
+    // implementation (libs.kotlinx.serialization.json.v163)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
 
 
     // Testing
