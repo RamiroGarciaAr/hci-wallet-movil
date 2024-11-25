@@ -67,9 +67,11 @@
     <string name="password_placeholder">**********</string>
     <string name="confirm_password_label">Repetir contraseña</string>
     <string name="confirm_password_placeholder">**********</string>
-
-
-
+    <string name="balance_money">Dinero en cuenta: %s</string>
+    <string name="reason_transfer">Motivo</string>
+    <string name="amount_minimum">El monto minimo debe ser mayor a 0</string>
+    <string name="no_valid_value">Por favor seleccione un monto válido.</string>
+    <string name="no_valid_card">Seleccione una tarjeta válida</string>
 
     <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
 
