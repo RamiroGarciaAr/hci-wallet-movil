@@ -2,8 +2,8 @@ package com.example.wallet_hci.data.repository
 
 import com.example.wallet_hci.data.model.LinkData
 import com.example.wallet_hci.data.model.LinkType
-import com.example.wallet_hci.data.network.PaymentRemoteDataSource
-import com.example.wallet_hci.data.network.model.NetworkCard
+import com.example.wallet_hci.data.model.PaymentRemoteDataSource
+import com.example.wallet_hci.data.model.NetworkCard
 
 class PaymentRepository (
     val id: Int? = null,

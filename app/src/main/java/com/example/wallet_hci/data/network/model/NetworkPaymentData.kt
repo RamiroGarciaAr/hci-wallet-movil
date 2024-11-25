@@ -1,7 +1,4 @@
-package com.example.wallet_hci.data.network.model
-
-import com.example.wallet_hci.data.model.LinkType
-import com.example.wallet_hci.data.model.PaymentData
+package com.example.wallet_hci.data.model
 
 class NetworkPaymentData(
     val id: Int? = null,

@@ -5,4 +5,34 @@
     <string name="r_activities">Actividad</string>
     <string name="r_contacts">Contactos</string>
     <string name="currency">ARS</string>
+    <string name="available_money">Disponible</string>
+
+    <string name="deposit">Ingresar</string>
+    <string name="spend">Egresar</string>
+    <string name="transfer">Transferir</string>
+    <string name="cvu">CVU</string>
+
+    <string name="enter_amount">Ingresar monto</string>
+    <string name="select_payment_method">Seleccione el método de pago</string>
+    <string name="enter_reason">Ingrese el motivo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="continue_action">Continuar</string>
+
+
+    <string name="transfer_success_title">Transferencia exitosa</string>
+    <string name="transfer_success_message">Se transfirieron %1$s a %2$s en %3$s</string>
+    <string name="transfer_receipt">Comprobante %1$s</string>
+    <string name="transfer_details_title">Detalles de la transferencia</string>
+    <string name="save_contact">Guardar contacto</string>
+    <string name="share_receipt">Compartir comprobante</string>
+
+    <string name="transfer_error_title">Ocurrió un error mientras realizábamos la transferencia</string>
+    <string name="transfer_error_message">Parece que no tenés conexión a internet.</string>
+    <string name="transfer_error_detail">Podés programar la transferencia para más tarde o cambiar tu red Wi-Fi e intentar nuevamente.</string>
+    <string name="schedule_transfer">Programar transferencia</string>
+    <string name="retry_transfer">Intentar nuevamente</string>
+
+
+
+
 </resources>

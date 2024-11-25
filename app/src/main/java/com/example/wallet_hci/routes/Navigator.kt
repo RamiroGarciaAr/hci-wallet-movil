@@ -8,19 +8,17 @@ import androidx.navigation.compose.composable
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.screens.home.*
 import com.example.wallet_hci.app.Activity
-import com.example.wallet_hci.data.network.UserRemoteDataSource
-import com.example.wallet_hci.data.network.api.APIUserService
 import com.example.wallet_hci.data.network.api.NetworkModule
+import com.example.wallet_hci.data.UserRemoteDataSource
+import com.example.wallet_hci.data.netowrk.api.APIUserService
 import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.auth.Login.LoginView
 
 class Navigator() {
 
     lateinit var navController: NavHostController
 
-    /**
-     * Navigates to a given route.
-     */
     fun navigateTo(route: String) {
         navController.navigate(route)
     }

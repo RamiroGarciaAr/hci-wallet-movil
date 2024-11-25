@@ -1,18 +1,18 @@
-package com.example.wallet_hci.data.network
+package com.example.wallet_hci.data
 
 import com.example.wallet_hci.SessionManager
-import com.example.wallet_hci.data.network.api.APIUserService
-import com.example.wallet_hci.data.network.model.NetworkCode
-import com.example.wallet_hci.data.network.model.NetworkCredentials
-import com.example.wallet_hci.data.network.model.NetworkRegistrationUser
-import com.example.wallet_hci.data.network.model.NetworkUser
+import com.example.wallet_hci.data.netowrk.api.APIUserService
+import com.example.wallet_hci.data.model.NetworkCode
+import com.example.wallet_hci.data.model.NetworkCredentials
+import com.example.wallet_hci.data.model.NetworkRegistrationUser
+import com.example.wallet_hci.data.model.NetworkUser
 
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
     private val userApiService: APIUserService
 ) {
 
-    /**
+        /**
      * Logs in the user by sending credentials to the API.
      * On success, saves the authentication token in the session manager.
      */
@@ -53,5 +53,6 @@ class UserRemoteDataSource(
      */
     suspend fun verify(code: NetworkCode): NetworkUser {
         return userApiService.verify(code)
+    }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.network.model
+package com.example.wallet_hci.data.model
 
 import com.example.wallet_hci.data.model.PaymentResponse
 import kotlinx.serialization.Serializable
@@ -9,7 +9,7 @@ class NetworkPaymentResponse (
 ) {
     fun asModel(): PaymentResponse {
         return PaymentResponse(
-            success = this.success
+            success = success
         )
 
     }
