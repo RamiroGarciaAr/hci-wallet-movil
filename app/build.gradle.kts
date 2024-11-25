@@ -19,10 +19,11 @@ android {
     }
 
     buildTypes {
-        // debug {
-        //     buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
-        // }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://dhz57745-8080.brs.devtunnels.ms/\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -39,11 +40,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
-    implementation(libs.kotlinx.serialization.json)
+    // Core Kotlin and Android libraries
+    implementation(libs.kotlinx.serialization.json) // Latest version
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,6 +59,15 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.transport.runtime)
+
+    // Retrofit and Serialization
+    implementation(libs.retrofit) // Retrofit core library
+    implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
+    implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
+    implementation (libs.kotlinx.serialization.json.v163)
+
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,20 +75,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.retrofit) // Core Retrofit library
-    implementation(libs.converter.gson) // For JSON parsing, if using Gson
-    implementation(libs.kotlinx.serialization.json.v151) // Kotlin Serialization
-    implementation(libs.retrofit2.kotlinx.serialization.converter) // For Kotlin Serialization
+
+    // Hilt for Dependency Injection
     implementation(libs.hilt.android)
 
-    implementation(libs.okhttp3.logging.interceptor)
+    // Adaptive UI Libraries
+
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
     implementation(libs.androidx.window)
     implementation(libs.androidx.core)
 
+    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+    implementation("com.google.accompanist:accompanist-insets:0.30.1")
+
     implementation("com.composables:core:1.19.1")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.1.0")
+    implementation("com.google.zxing:core:3.4.0")
 
 }

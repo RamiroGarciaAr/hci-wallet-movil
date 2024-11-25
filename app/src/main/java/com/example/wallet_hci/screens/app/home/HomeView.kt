@@ -1,8 +1,12 @@
 package com.example.wallet_hci.app.screens.home
 
 import com.example.wallet_hci.app.screens.home.ui.*
+import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.app.routes.NavigatorProvider
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
+import com.example.wallet_hci.ui.plots.ExpensesPlot
+import com.example.wallet_hci.ui.plots.GainPlot
 import com.example.wallet_hci.R
 
 import androidx.compose.runtime.Composable
@@ -15,7 +19,8 @@ import kotlinx.serialization.Serializable
 // Related to the Card
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.overscroll
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.ui.Modifier
@@ -25,12 +30,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.window.core.layout.WindowWidthSizeClass
 
+
+data class Action (val icon: Int, val text: Int, val onClick: () -> Unit);
+val actions = listOf(
+    Action(R.drawable.ic_visa, R.string.deposit, onClick = {}),
+    Action(R.drawable.ic_mastercard, R.string.spend, onClick = {}),
+    Action(R.drawable.ic_arrow_right, R.string.transfer, onClick = {}),
+    Action(R.drawable.ic_arrow_right, R.string.cvu, onClick = {})
+)
+
 @Composable
 fun HomeView(){
-    Scaffold() {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(12.dp)
+
+    val navigator = NavigatorProvider.current
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(horizontal = 12.dp)
+        .verticalScroll(rememberScrollState())
+        
         ) {
             CardWrapper {
                 Column(
@@ -45,43 +62,26 @@ fun HomeView(){
             Row(
                 modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max)
             ) {
-                CardWrapper(
-                    modifier = Modifier.weight(2f).height(intrinsicSize = IntrinsicSize.Max),
-                ){
-                    Text("Card")
-                }
+
+                ExpensesPlot( modifier = Modifier.weight(2f))
                 Spacer(modifier = Modifier.width(8.dp))
                 CardWrapper(modifier = Modifier.weight(1.15f)){
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ){
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_visa),
-                            text = stringResource(R.string.deposit),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_mastercard),
-                            text = stringResource(R.string.spend),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            text = stringResource(R.string.transfer),
-                            onClick = {}
-                        )
-                        ActionButton(
-                            painter = painterResource(id = R.drawable.ic_arrow_right),
-                            text = stringResource(R.string.cvu),
-                            onClick = {}
-                        )
+                        actions.forEach { action ->
+                            ActionButton(
+                                painter = painterResource(action.icon),
+                                text = stringResource(action.text),
+                                onClick = action.onClick
+                            )
+                        }
                     }
                 }
             }
-            CardWrapper{
-                Text("Card")
-            }
+            GainPlot( modifier = Modifier
+                .height(200.dp) 
+            )
         }
-    }
 }

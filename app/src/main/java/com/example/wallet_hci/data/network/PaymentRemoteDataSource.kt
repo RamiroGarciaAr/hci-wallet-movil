@@ -16,41 +16,41 @@ import retrofit2.http.Path
 class PaymentRemoteDataSource(private val paymentService: APIPaymentService): RemoteDataSource()
 {
     //Getters
-    suspend fun getPayments(): List<NetworkPayment>? {
+    suspend fun getPayments(token: String): List<NetworkPayment>? {
         return handleApiResponse {
-            paymentService.getPayments()
+            paymentService.getPayments(token)
         }
     }
-    suspend fun getPaymentData(linkUuid: String): NetworkLinkPaymentObject? {
+    suspend fun getPaymentData(linkUuid: String, token: String): NetworkLinkPaymentObject? {
         return handleApiResponse {
-            paymentService.getPaymentData(linkUuid)
+            paymentService.getPaymentData(linkUuid, token)
         }
     }
 
-    suspend fun payWithCard(@Body cardPayment : NetworkCardPayment): Response<Unit>
+    suspend fun payWithCard(@Body cardPayment : NetworkCardPayment, token: String): Response<Unit>
     {
-        return paymentService.payWithCard(cardPayment)
+        return paymentService.payWithCard(cardPayment, token)
     }
 
-    suspend fun settlePayment(@Body linkPayment: NetworkPaymentLink, @Path("linkUuid") linkUuid: String): Response<NetworkPaymentResponse>
+    suspend fun settlePayment(@Body linkPayment: NetworkPaymentLink, @Path("linkUuid") linkUuid: String, token: String): Response<NetworkPaymentResponse>
     {
-        return paymentService.settlePayment(linkPayment, linkUuid)
+        return paymentService.settlePayment(linkPayment, linkUuid, token)
     }
 
-    suspend fun getPaymentLink(@Path("linkUuid") linkUuid: String): Response<NetworkPaymentResponse>
+    suspend fun getPaymentLink(@Path("linkUuid") linkUuid: String, token: String): Response<NetworkPaymentResponse>
     {
-        return paymentService.getPaymentLink(linkUuid)
+        return paymentService.getPaymentLink(linkUuid, token)
     }
 
-    suspend fun payWithBalance(@Body balancePayment : NetworkBalancePayment): Response<Unit>
+    suspend fun payWithBalance(@Body balancePayment : NetworkBalancePayment, token: String): Response<Unit>
     {
-        return paymentService.payWithBalance(balancePayment)
+        return paymentService.payWithBalance(balancePayment, token)
     }
 
-    suspend fun generateLink(linkPayment: NetworkNewPaymentLink): NetworkLinkUuid?
+    suspend fun generateLink(linkPayment: NetworkNewPaymentLink, token: String): NetworkLinkUuid?
     {
         return handleApiResponse {
-            paymentService.generateLink(linkPayment)
+            paymentService.generateLink(linkPayment, token)
         }
     }
 }

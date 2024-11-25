@@ -1,25 +1,38 @@
 package com.example.wallet_hci.ui.menu
 
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.colorResource
+import com.example.wallet_hci.R
+
+import androidx.compose.ui.unit.dp
+
+import com.example.wallet_hci.app.routes.Navigator
+
 @Composable
-fun FloatingQRButton() {
+fun FloatingQRButton(navigator: Navigator) {
     // TODO: Implement FloatingQRButton
-    LargeFloatingActionButton (
-        onClick = {},
+    FloatingActionButton (
+        onClick = { navigator.navigateTo("scan") },
         shape = CircleShape,
+        modifier = Modifier.size(68.dp),
+        containerColor = colorResource(R.color.primary_500),
+        elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 15.dp)
     ){
         Icon(
-            Icons.Filled.AddCircle,
+            painter = painterResource(id = R.drawable.ic_qrcode),
             contentDescription = "Scan QR Code",
-            // Modifier.run { size(width = 10, height = 10) }
+            modifier = Modifier.size(32.dp),
+            tint = colorResource(R.color.white)
         )
     }
 }

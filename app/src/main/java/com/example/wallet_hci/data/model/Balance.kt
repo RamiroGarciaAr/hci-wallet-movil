@@ -1,6 +1,6 @@
 package com.example.wallet_hci.data.model
 
-import com.example.wallet_hci.data.network.model.NetworkBalance
+import com.example.wallet_hci.data.model.NetworkBalance
 
 class Balance (
     var balance: Float
