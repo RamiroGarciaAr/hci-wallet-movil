@@ -16,63 +16,13 @@ import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.Login.LoginView
 import android.content.SharedPreferences
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-/*
-@Composable
-fun Routes() {
-    val navigator = this
-    navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "transfer") {
-        composable("transfer") {
-            TransferScreen(
-                onCancel = {
-                    navigator.navigateBack() // Regresar a la pantalla anterior
-                },
-                onContinue = { paymentMethod, amount, description, cardId ->
-                    // Navegar a la pantalla de resultados con datos simulados
-                    navController.navigate(
-                        "result/$amount/Damián Villablanca/Banco Galicia/Tobías Juhasz/sol.cielo.arcoiris/$description"
-                    )
-                }
-            )
-        }
-
-        composable(
-            "result/{amount}/{receiverName}/{bankName}/{aliasSender}/{aliasReceiver}/{receiptId}"
-        ) { backStackEntry ->
-            // Obtener parámetros de la ruta
-            val amount = backStackEntry.arguments?.getString("amount") ?: "0.0"
-            val receiverName = backStackEntry.arguments?.getString("receiverName") ?: "Unknown"
-            val bankName = backStackEntry.arguments?.getString("bankName") ?: "Unknown"
-            val aliasSender = backStackEntry.arguments?.getString("aliasSender") ?: "Unknown"
-            val aliasReceiver = backStackEntry.arguments?.getString("aliasReceiver") ?: "Unknown"
-            val receiptId = backStackEntry.arguments?.getString("receiptId") ?: "N/A"
-
-            // Mostrar la pantalla de resultados con los datos pasados
-            TransferResultScreen(
-                amount = amount,
-                receiverName = receiverName,
-                bankName = bankName,
-                aliasSender = aliasSender,
-                aliasReceiver = aliasReceiver,
-                receiptId = receiptId,
-                onShare = { /* Lógica de prueba para compartir */ },
-                onSaveContact = { /* Lógica de prueba para guardar contacto */ },
-                onBack = { navController.popBackStack() }
-            )
-        }
-    }
-}
-
- */
-
-
-val NavigatorProvider = staticCompositionLocalOf<Navigator> { error("Navigator not provided") }
 
 @Singleton
 class Navigator @Inject constructor(private val sessionManager: SessionManager) {
@@ -107,34 +57,84 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             composable("contacts") {
                 ContactScreen(
                     onBack = { navigateBack() },
-                    onAddContact = { navigateTo("addContact") } // Navega a agregar contacto
+                    onAddContact = { navigateTo("addContact") }, // Navega a agregar contacto
+                    onContactSelected = { selectedContact ->
+                        // Navega a la pantalla de transferencias con el contacto seleccionado
+                        navigateTo("transfer?selectedContact=$selectedContact")
+                    }
                 )
             }
 
             // Pantalla para agregar contactos
             composable("addContact") {
                 AddContactScreen(
-                    onBack = { navigateBack() }, // Regresa a la pantalla de contactos
+                    onBack = { navigateBack() },
                     onAdd = { name, cvuOrAlias, email ->
-                        // Lógica para manejar el contacto agregado
+                        // Aquí puedes manejar la lógica de agregar un contacto
                         println("Contacto agregado: $name, $cvuOrAlias, $email")
-                        navigateBack() // Regresa a contactos tras agregar
+                        navigateBack() // Regresa a la pantalla de contactos
                     }
                 )
             }
 
             // Pantalla de transferencias
-            composable(route = "transfer") {
+            composable(
+                route = "transfer?selectedContact={selectedContact}",
+                arguments = listOf(navArgument("selectedContact") {
+                    type = NavType.StringType
+                    defaultValue = "" // Valor por defecto si no se seleccionó ningún contacto
+                })
+            ) { backStackEntry ->
+                val selectedContact = backStackEntry.arguments?.getString("selectedContact")
                 TransferScreen(
+                    selectedContact = selectedContact,
                     onCancel = { navigateBack() },
                     onContinue = { paymentMethod, amount, description, cardId ->
-                        val route = "result?amount=$amount&description=$description"
+                        // Define los valores necesarios para TransferResult
+                        val receiverName = selectedContact ?: "Sin contacto"
+                        val bankName = "Banco Ejemplo" // Cambia por el valor real si lo tienes
+                        val aliasSender = "AliasPropio" // Alias del remitente
+                        val aliasReceiver = "AliasReceptor" // Alias del receptor
+                        val receiptId = "123456" // ID de recibo generado
+
+                        // Construye la ruta y navega a TransferResult
+                        val route = "transferResult?amount=$amount&receiverName=$receiverName&bankName=$bankName&aliasSender=$aliasSender&aliasReceiver=$aliasReceiver&receiptId=$receiptId"
                         navigateTo(route)
                     },
-                    onGoToContacts = { navigateTo("contacts") } // Cambiar el nombre del parámetro
+                    onGoToContacts = { navigateTo("contacts") }
                 )
             }
 
+            // Pantalla de resultado de la transferencia
+            composable(
+                route = "transferResult?amount={amount}&receiverName={receiverName}&bankName={bankName}&aliasSender={aliasSender}&aliasReceiver={aliasReceiver}&receiptId={receiptId}",
+                arguments = listOf(
+                    navArgument("amount") { type = NavType.StringType },
+                    navArgument("receiverName") { type = NavType.StringType },
+                    navArgument("bankName") { type = NavType.StringType },
+                    navArgument("aliasSender") { type = NavType.StringType },
+                    navArgument("aliasReceiver") { type = NavType.StringType },
+                    navArgument("receiptId") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount") ?: "0.00"
+                val receiverName = backStackEntry.arguments?.getString("receiverName") ?: "Desconocido"
+                val bankName = backStackEntry.arguments?.getString("bankName") ?: "Desconocido"
+                val aliasSender = backStackEntry.arguments?.getString("aliasSender") ?: "Desconocido"
+                val aliasReceiver = backStackEntry.arguments?.getString("aliasReceiver") ?: "Desconocido"
+                val receiptId = backStackEntry.arguments?.getString("receiptId") ?: "000000"
+
+                TransferResultScreen(
+                    amount = amount,
+                    receiverName = receiverName,
+                    bankName = bankName,
+                    aliasSender = aliasSender,
+                    aliasReceiver = aliasReceiver,
+                    receiptId = receiptId,
+                    onBack = { navigateTo("home") } // Lleva al usuario a la pantalla principal
+                )
+            }
         }
     }
 }
+

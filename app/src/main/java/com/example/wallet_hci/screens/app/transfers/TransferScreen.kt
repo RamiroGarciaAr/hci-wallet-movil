@@ -14,19 +14,26 @@ import com.example.wallet_hci.R
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import com.example.wallet_hci.app.screens.home.ui.CardHolder
 import kotlinx.coroutines.launch
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferScreen(
-    accountBalance: String = "$1500.00", // Saldo actual del usuario
-    onGoToContacts: () -> Unit = {}, // Acción para redirigir a la pantalla de contactos
-    onCancel: () -> Unit = {},
-    onContinue: (String, Double, String, String?) -> Unit = { _, _, _, _ -> }
+    accountBalance: String = "1500.00", // Saldo actual del usuario
+    selectedContact: String? = null, // Contacto seleccionado
+    onGoToContacts: () -> Unit = {}, // Acción para abrir pantalla de contactos
+    onCancel: () -> Unit = {}, // Acción para cancelar
+    onContinue: (String, Double, String, String?) -> Unit = { _, _, _, _ -> } // Acción para continuar
 ) {
     val amountMinimumError = stringResource(id = R.string.amount_minimum)
     val noValidValue = stringResource(id = R.string.no_valid_value)
     val noValidCard = stringResource(id = R.string.no_valid_card)
+    val insufficientFundsError = stringResource(id = R.string.insufficient_funds)
+    val noContactSelectedError = stringResource(id = R.string.no_contact_selected) // Nuevo mensaje de error
     val coroutineScope = rememberCoroutineScope()
 
     // Estados locales para manejar las entradas del usuario
@@ -74,6 +81,23 @@ fun TransferScreen(
                         Text(
                             text = stringResource(id = R.string.go_to_contacts),
                             color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+                }
+
+                item {
+                    // Muestra el contacto seleccionado o un mensaje si no hay ninguno
+                    if (selectedContact.isNullOrBlank() ) {
+                        Text(
+                            text = stringResource(id = R.string.no_contact_selected_warning),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(id = R.string.selected_contact, selectedContact),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -195,23 +219,34 @@ fun TransferScreen(
                     onClick = {
                         coroutineScope.launch {
                             val parsedAmount = amount.toDoubleOrNull()
-                            if (parsedAmount == null || parsedAmount <= 0) {
-                                errorMessage = amountMinimumError
-                                return@launch
-                            }
-                            if (description.isBlank()) {
-                                errorMessage = noValidValue
-                                return@launch
-                            }
-                            if (selectedPaymentMethod == "CARD" && selectedCardId == null) {
-                                errorMessage = noValidCard
-                                return@launch
+                            val balance = accountBalance.toDoubleOrNull() ?: 0.0
+                            when {
+                                selectedContact == null -> {
+                                    errorMessage = noContactSelectedError
+                                    return@launch
+                                }
+                                parsedAmount == null || parsedAmount <= 0 -> {
+                                    errorMessage = amountMinimumError
+                                    return@launch
+                                }
+                                description.isBlank() -> {
+                                    errorMessage = noValidValue
+                                    return@launch
+                                }
+                                selectedPaymentMethod == "CARD" && selectedCardId == null -> {
+                                    errorMessage = noValidCard
+                                    return@launch
+                                }
+                                selectedPaymentMethod == "BALANCE" && parsedAmount > balance -> {
+                                    errorMessage = insufficientFundsError
+                                    return@launch
+                                }
                             }
 
                             errorMessage = null
                             onContinue(
                                 selectedPaymentMethod,
-                                parsedAmount,
+                                parsedAmount!!, // Aseguramos que no sea null después de las validaciones
                                 description,
                                 selectedCardId
                             )
@@ -227,8 +262,8 @@ fun TransferScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
+
             }
         }
     }
 }
-

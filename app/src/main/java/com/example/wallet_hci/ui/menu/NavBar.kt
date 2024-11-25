@@ -26,8 +26,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.routes.NavigatorProvider
 
-import com.example.wallet_hci.app.routes.NavigatorProvider
 
 @Composable
 fun NavBar() {

@@ -1,5 +1,6 @@
 package com.example.wallet_hci.screens.app.contacts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,7 +25,8 @@ enum class FilterOption { ALL, FAVORITES, RECENTS }
 @Composable
 fun ContactScreen(
     onBack: () -> Unit, // Acción para volver a la pantalla anterior
-    onAddContact: () -> Unit // Acción para agregar un nuevo contacto
+    onAddContact: () -> Unit, // Acción para agregar un nuevo contacto
+    onContactSelected: (String) -> Unit // Acción al seleccionar un contacto
 ) {
     // Obtén el ViewModel
     val viewModel: ContactsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
@@ -68,33 +70,37 @@ fun ContactScreen(
             SearchBar(
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
-                onSearch = {  },
+                onSearch = { },
                 active = false,
-                onActiveChange = {  }
+                onActiveChange = { }
             )
 
-            // Lista de contactos (filtros opcionales)
+            // Lista de contactos
             LazyColumn(modifier = Modifier.padding(8.dp)) {
                 items(contacts) { contact ->
                     ContactItem(
                         contact = contact,
-                        onFavoriteToggle = { viewModel.toggleFavorite(contact) }
+                        onFavoriteToggle = { viewModel.toggleFavorite(contact) },
+                        onClick = { onContactSelected(contact.name) } // Aquí pasamos el contacto seleccionado
                     )
                 }
             }
         }
     }
 }
+
 @Composable
 fun ContactItem(
     contact: Contact,
-    onFavoriteToggle: (Contact) -> Unit
+    onFavoriteToggle: (Contact) -> Unit,
+    onClick: () -> Unit // Acción al hacer clic en el contacto
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick) // Añadimos acción clic
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.weight(1f)) {
@@ -125,6 +131,7 @@ fun ContactItem(
         }
     }
 }
+
 @Composable
 fun SearchBar(
     query: String,

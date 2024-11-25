@@ -2,7 +2,8 @@ package com.example.wallet_hci.app.screens.home
 
 import com.example.wallet_hci.app.screens.home.ui.*
 import com.example.wallet_hci.app.routes.Navigator
-import com.example.wallet_hci.app.routes.NavigatorProvider
+import com.example.wallet_hci.routes.NavigatorProvider
+
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.plots.ExpensesPlot

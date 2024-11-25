@@ -78,6 +78,9 @@
     <string name="search_contact">Seleccionar contacto</string>
     <string name="create_contact">Crear contacto</string>
     <string name="go_to_contacts">Buscar un contacto</string>
-
+    <string name="selected_contact">Contacto seleccionado: %1$s</string>
+    <string name="no_contact_selected">No se ha seleccionado ningún contacto</string>
+    <string name="insufficient_funds">Fondos insuficientes</string>
+    <string name="no_contact_selected_warning">Seleccione un contacto</string>
 
 </resources>

@@ -19,7 +19,6 @@ import com.example.wallet_hci.ui.components.CustomCard
 import com.example.wallet_hci.ui.components.CardStyle
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferResultScreen(
@@ -31,14 +30,14 @@ fun TransferResultScreen(
     receiptId: String,
     onShare: () -> Unit = {},
     onSaveContact: () -> Unit = {},
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {} // onBack configurado para navegación
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.transfer)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = onBack) { // Usa la función onBack
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
                             contentDescription = "Back"
@@ -145,4 +144,5 @@ fun TransferResultScreen(
         }
     }
 }
+
 
