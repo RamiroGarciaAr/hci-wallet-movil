@@ -30,6 +30,10 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         navController.navigate(route)
     }
 
+    fun navigateBack() {
+        navController.popBackStack()
+    }
+
     fun getCurrentPage(): String {
         return navController.currentBackStackEntry?.destination?.route ?: ""
     }

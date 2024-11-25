@@ -13,26 +13,27 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Header
 
 interface APIPaymentService {
     @POST("payment")
-    suspend fun generateLink(@Body linkPayment: NetworkNewPaymentLink): Response<NetworkLinkUuid>
+    suspend fun generateLink(@Body linkPayment: NetworkNewPaymentLink, @Header("Authorization") token: String): Response<NetworkLinkUuid>
 
     @GET("payment")
-    suspend fun getPayments(): Response<List<NetworkPayment>>
+    suspend fun getPayments(@Header("Authorization") token: String): Response<List<NetworkPayment>>
 
     @POST("payment")
-    suspend fun payWithCard(@Body cardPayment : NetworkCardPayment): Response<Unit>
+    suspend fun payWithCard(@Body cardPayment : NetworkCardPayment, @Header("Authorization") token: String): Response<Unit>
 
     @POST("payment/link/{linkUuid}")
-    suspend fun settlePayment(@Body linkPayment: NetworkPaymentLink, @Path("linkUuid") linkUuid: String): Response<NetworkPaymentResponse>
+    suspend fun settlePayment(@Body linkPayment: NetworkPaymentLink, @Path("linkUuid") linkUuid: String, @Header("Authorization") token: String): Response<NetworkPaymentResponse>
 
     @GET("payment/link/{linkUuid}")
-    suspend fun getPaymentLink(@Path("linkUuid") linkUuid: String): Response<NetworkPaymentResponse>
+    suspend fun getPaymentLink(@Path("linkUuid") linkUuid: String, @Header("Authorization") token: String): Response<NetworkPaymentResponse>
 
     @POST("payment")
-    suspend fun payWithBalance(@Body balancePayment : NetworkBalancePayment): Response<Unit>
+    suspend fun payWithBalance(@Body balancePayment : NetworkBalancePayment, @Header("Authorization") token: String): Response<Unit>
 
     @GET("payment/link/{linkUuid}")
-    suspend fun getPaymentData(@Path("linkUuid") linkUuid: String): Response<NetworkLinkPaymentObject>
+    suspend fun getPaymentData(@Path("linkUuid") linkUuid: String, @Header("Authorization") token: String): Response<NetworkLinkPaymentObject>
 }

@@ -38,6 +38,6 @@
     <string name="retry_transfer">Intentar nuevamente</string>
 
 
-
+    <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
 
 </resources>

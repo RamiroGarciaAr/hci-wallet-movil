@@ -24,8 +24,8 @@ class UserRemoteDataSource(
     /**
      * Logs out the user by calling the logout endpoint and clearing the session.
      */
-    suspend fun logout() {
-        userApiService.logout()
+    suspend fun logout(token: String) {
+        userApiService.logout(token)
         sessionManager.removeAuthToken()
     }
 
@@ -33,8 +33,8 @@ class UserRemoteDataSource(
      * Fetches the current user's details from the API.
      * @return A [NetworkUser] object.
      */
-    suspend fun getCurrentUser(): NetworkUser {
-        return userApiService.getCurrentUser()
+    suspend fun getCurrentUser(token: String): NetworkUser {
+        return userApiService.getCurrentUser(token)
     }
 
     /**

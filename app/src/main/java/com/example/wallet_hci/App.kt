@@ -62,7 +62,6 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         floatingActionButton = { FloatingQRButton(navigator) },
-                        floatingActionButtonPosition = FabPosition.Center,
                         bottomBar = { 
                             NavBar() 
                         },
