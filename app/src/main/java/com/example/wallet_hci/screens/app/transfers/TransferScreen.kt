@@ -219,6 +219,7 @@ fun TransferScreen(
                         coroutineScope.launch {
                             val parsedAmount = amount.toDoubleOrNull()
                             val balance = accountBalance.toDoubleOrNull() ?: 0.0
+
                             when {
                                 selectedContact.isNullOrBlank() || selectedContact == "null" -> {
                                     errorMessage = noContactSelectedError
@@ -232,8 +233,15 @@ fun TransferScreen(
                                     errorMessage = noValidValue
                                     return@launch
                                 }
-                                selectedPaymentMethod == "CARD" && selectedCardId == null -> {
-                                    errorMessage = noValidCard
+                                selectedPaymentMethod == "CARD" -> {
+                                    // Ignora validaciones de monto para tarjeta de crédito
+                                    errorMessage = null
+                                    onContinue(
+                                        selectedPaymentMethod,
+                                        parsedAmount ?: 0.0,
+                                        description,
+                                        selectedCardId
+                                    )
                                     return@launch
                                 }
                                 selectedPaymentMethod == "BALANCE" && parsedAmount > balance -> {
@@ -245,7 +253,7 @@ fun TransferScreen(
                             errorMessage = null
                             onContinue(
                                 selectedPaymentMethod,
-                                parsedAmount!!, // Aseguramos que no sea null después de las validaciones
+                                parsedAmount ?: 0.0, // Aseguramos un valor predeterminado
                                 description,
                                 selectedCardId
                             )
@@ -261,9 +269,7 @@ fun TransferScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
-
             }
         }
     }
 }
-

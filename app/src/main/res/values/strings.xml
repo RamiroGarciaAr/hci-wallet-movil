@@ -82,5 +82,6 @@
     <string name="no_contact_selected">No se ha seleccionado ningún contacto</string>
     <string name="insufficient_funds">Fondos insuficientes</string>
     <string name="no_contact_selected_warning">Seleccione un contacto</string>
+    <string name="card">Tarjeta: %1$s</string>
 
 </resources>
