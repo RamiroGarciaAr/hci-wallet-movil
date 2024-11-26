@@ -3,12 +3,12 @@ package com.example.wallet_hci.data.repository
 import com.example.wallet_hci.data.model.Code
 import com.example.wallet_hci.data.model.RegistrationUser
 import com.example.wallet_hci.data.model.User
-import com.example.wallet_hci.data.UserRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import javax.inject.Singleton
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.example.wallet_hci.data.network.UserRemoteDataSource
 
 val UserRepositoryProvider = staticCompositionLocalOf<UserRepository> { error("UserRepository not provided") }
 
@@ -27,7 +27,7 @@ class UserRepository @Inject constructor(
      * @param username The user's username.
      * @param password The user's password.
      */
-    suspend fun login(username: String, password: String): String {
+    suspend fun login(username: String, password: String) {
         return remoteDataSource.login(username, password)
     }
 

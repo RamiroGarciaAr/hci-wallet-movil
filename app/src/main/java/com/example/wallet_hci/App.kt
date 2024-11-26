@@ -17,8 +17,6 @@ import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.ui.menu.FloatingQRButton
 
-import com.example.wallet_hci.data.UserRemoteDataSource
-
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.data.repository.UserRepository
 import com.example.wallet_hci.data.network.api.NetworkModule
@@ -29,6 +27,7 @@ import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.wallet_hci.data.network.UserRemoteDataSource
 import com.example.wallet_hci.routes.NavigatorProvider
 
 class MainActivity : ComponentActivity() {

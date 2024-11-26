@@ -15,7 +15,7 @@ class RegistrationUser(
 
 ) {
     fun asNetworkModel(): NetworkRegistrationUser {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
+        val dateFormat = SimpleDateFormat("YYYY-MM-DD", Locale.getDefault(Locale.Category.FORMAT))
 
         return NetworkRegistrationUser(
             firstName = firstName,
