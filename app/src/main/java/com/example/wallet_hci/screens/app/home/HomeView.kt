@@ -2,6 +2,7 @@ package com.example.wallet_hci.app.screens.home
 
 import com.example.wallet_hci.app.screens.home.ui.*
 import com.example.wallet_hci.app.routes.Navigator
+import com.example.wallet_hci.app.routes.Routes
 import com.example.wallet_hci.routes.NavigatorProvider
 
 import com.example.wallet_hci.ui.layout.ViewModel
@@ -39,24 +40,26 @@ fun HomeView() {
     // Definir las acciones dinámicamente
     val actions = listOf(
         Action(
-            icon = R.drawable.ic_visa,
+            icon = R.drawable.fa_money_bills,
             text = R.string.deposit,
             onClick = { /* Lógica para Depósito */ }
         ),
         Action(
-            icon = R.drawable.ic_mastercard,
+            icon = R.drawable.fa_paper_plane,
             text = R.string.spend,
-            onClick = { /* Lógica para Gasto */ }
+            onClick = { 
+                navigator.navigateTo(Routes.Deposit)
+             }
         ),
         Action(
-            icon = R.drawable.ic_arrow_right,
+            icon = R.drawable.fa_money_bill_transfer,
             text = R.string.transfer,
             onClick = {
                 navigator.navigateTo("transfer") // Navegar a TransferScreen
             }
         ),
         Action(
-            icon = R.drawable.ic_arrow_right,
+            icon = R.drawable.fa_address_card,
             text = R.string.cvu,
             onClick = { /* Lógica para CVU */ }
         )

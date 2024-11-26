@@ -41,6 +41,7 @@ import javax.inject.Singleton
 import kotlinx.serialization.Serializable
 
 import androidx.navigation.Navigator as NavHostNavigator
+import com.example.wallet_hci.screens.app.Deposit.DepositScreen
 
 sealed interface Routes {
     @Serializable
@@ -107,6 +108,9 @@ sealed interface Routes {
             val contactId: String? = null
     )
 
+    @Serializable
+    object Deposit
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -159,6 +163,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
              } // Ruta para Contacts
 
+            composable<Routes.Deposit> { DepositScreen() }
             // Transfer screen
             composable<Routes.Transfer> { TransferScreen() }
 
