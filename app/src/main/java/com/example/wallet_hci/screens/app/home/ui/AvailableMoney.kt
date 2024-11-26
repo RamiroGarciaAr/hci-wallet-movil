@@ -22,7 +22,12 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
-
+import com.example.wallet_hci.SessionProvider
+import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
+import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 object AvailableMoneyState {
@@ -32,6 +37,7 @@ object AvailableMoneyState {
 
 @Composable
 fun AvailableMoney() {
+    
     var formatter = NumberFormat.getCurrencyInstance()
 
     formatter.setCurrency(Currency.getInstance(stringResource(R.string.currency)))
