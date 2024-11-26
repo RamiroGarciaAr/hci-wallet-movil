@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PagoZen</string>
+    <string name="r_home">Home</string>
+    <string name="r_activities">Activity</string>
+    <string name="r_settings">Settings</string>
+    <string name="r_contacts">Contacts</string>
+    <string name="currency">ARS</string>
+    <string name="available_money">Available</string>
+
+    <string name="deposit">Deposit</string>
+    <string name="spend">Spend</string>
+    <string name="transfer">Transfer</string>
+    <string name="cvu">CVU</string>
+
+    <string name="revenue">Revenue</string>
+
+    <string name="weekDays">Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday</string>
+    <string name="weekDaysShort">Sun,Mon,Tue,Wed,Thu,Fri,Sat</string>
+
+    <string name="enter_amount">Enter amount</string>
+    <string name="select_payment_method">Select payment method</string>
+    <string name="enter_reason">Enter reason</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_action">Continue</string>
+
+    <string name="transfer_success_title">Successful Transfer</string>
+    <string name="transfer_success_message">%1$s transferred to %2$s on %3$s</string>
+    <string name="transfer_receipt">Receipt %1$s</string>
+    <string name="transfer_details_title">Transfer Details</string>
+    <string name="save_contact">Save Contact</string>
+    <string name="share_receipt">Share Receipt</string>
+
+    <string name="transfer_error_title">An error occurred during the transfer</string>
+    <string name="transfer_error_message">It seems you have no internet connection.</string>
+    <string name="transfer_error_detail">You can schedule the transfer for later or change your Wi-Fi network and try again.</string>
+    <string name="schedule_transfer">Schedule Transfer</string>
+    <string name="retry_transfer">Retry</string>
+
+    <string name="my_cvu_title">My CVU</string>
+    <string name="qr_code_description">QR Code</string>
+    <string name="alias_title">Alias: %1$s</string>
+    <string name="cvu_title">CVU: %1$s</string>
+    <string name="copy_alias">Copy Alias</string>
+    <string name="copy_cvu">Copy CVU</string>
+    <string name="share_contact">Share Contact</string>
+    <string name="my_profile">My Profile</string>
+
+    <string name="back">Back</string>
+
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_subtitle">Tell us a bit about yourself.</string>
+    <string name="mail_sent">We sent you a code to your email</string>
+    <string name="name_label">Name</string>
+    <string name="name_placeholder">Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="last_name_placeholder">Last Name</string>
+    <string name="nationality_label">Nationality</string>
+    <string name="nationality_placeholder">Nationality</string>
+    <string name="terms_conditions_text">I accept the Terms and Conditions of Service</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="register_button">Register</string>
+
+    <string name="app_logo_description">App Logo</string>
+    <string name="email_label">Email</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_label">Password</string>
+    <string name="password_placeholder">**********</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="confirm_password_placeholder">**********</string>
+    <string name="balance_money">Account Balance: %s</string>
+    <string name="reason_transfer">Reason</string>
+    <string name="amount_minimum">The minimum amount must be greater than 0</string>
+    <string name="no_valid_value">Please select a valid amount.</string>
+    <string name="no_valid_card">Please select a valid card</string>
+
+    <string name="need_camera_permission_to_scan">Camera permission is required to scan</string>
+
+    <string name="search_contact">Select Contact</string>
+    <string name="create_contact">Create Contact</string>
+    <string name="go_to_contacts">Search for a Contact</string>
+    <string name="selected_contact">Selected Contact: %1$s</string>
+    <string name="no_contact_selected">No contact selected</string>
+    <string name="insufficient_funds">Insufficient funds</string>
+    <string name="no_contact_selected_warning">Select a contact</string>
+    <string name="card">Card: %1$s</string>
+    <string name="mercado_pay">Bank Account: MercadoPay</string>
+    <string name="external_account">Select an external account</string>
+    <string name="add_amount">Select amount</string>
+
+    <string name="delete_account">Delete Account</string>
+    <string name="change_password">Change Password</string>
+</resources>

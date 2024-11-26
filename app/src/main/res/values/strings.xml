@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">PagoZen</string>
-    <string name="r_settings">Configuración</string>
     <string name="r_home">Inicio</string>
     <string name="r_activities">Actividad</string>
+    <string name="r_settings">Configuración</string>
     <string name="r_contacts">Contactos</string>
     <string name="currency">ARS</string>
     <string name="available_money">Disponible</string>
