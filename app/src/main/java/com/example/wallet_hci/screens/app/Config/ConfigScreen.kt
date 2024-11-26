@@ -5,9 +5,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.wallet_hci.R
 
 @Composable
 fun ConfigurationAccordionMenu(viewModel: AccordionViewModel = viewModel()) {
@@ -19,33 +21,33 @@ fun ConfigurationAccordionMenu(viewModel: AccordionViewModel = viewModel()) {
         // Sections
         item {
             AccordionItem(
-                title = "Personales",
-                content = listOf("Nombre", "Apellido", "Email"),
+                title = stringResource(id = R.string.personal),
+                content = listOf(stringResource(id = R.string.name_label), stringResource(id = R.string.last_name_label), stringResource(id = R.string.email_placeholder)),
                 viewModel = viewModel,
-                txtBarMsg = listOf("Nombre", "Apellido", "Email")
+                txtBarMsg = listOf(stringResource(id = R.string.name_label), stringResource(id = R.string.last_name_label), stringResource(id = R.string.email_placeholder))
             )
         }
         item {
             AccordionItem(
-                title = "Contacto y Seguridad",
-                content = listOf("Número de teléfono"),
+                title = stringResource(id = R.string.contact_sec),
+                content = listOf(stringResource(id = R.string.accordion_title_phone)),
                 viewModel = viewModel,
-                txtBarMsg = listOf("Número de teléfono")
+                txtBarMsg = listOf(stringResource(id = R.string.accordion_title_phone))
             )
         }
         item {
             AccordionItem(
-                title = "Bancaria",
-                content = listOf("Tu Alias"),
+                title = stringResource(id = R.string.accordion_title_bank),
+                content = listOf(stringResource(id = R.string.accordion_content_alias)),
                 viewModel = viewModel,
-                txtBarMsg = listOf("Tu Alias"),
+                txtBarMsg = listOf(stringResource(id = R.string.accordion_content_alias)),
                 isBank = true
             )
         }
         item {
             AccordionItem(
-                title = "Zona de Peligro",
-                content = listOf("Cambiar contraseña", "Eliminar Cuenta"),
+                title = stringResource(id = R.string.accordion_title_danger),
+                content = listOf( stringResource(id = R.string.accordion_content_change_password), stringResource(id = R.string.accordion_content_delete_account)),
                 isDangerZone = true,
                 viewModel = viewModel
             )

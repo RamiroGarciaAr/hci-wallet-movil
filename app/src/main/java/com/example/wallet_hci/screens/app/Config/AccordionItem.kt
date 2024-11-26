@@ -176,7 +176,7 @@ fun AccordionItem(
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
                         ) {
-                            Text(text = "Nueva Trajeta")
+                            Text(text = stringResource(id = R.string.new_card))
 
                         }
                     }

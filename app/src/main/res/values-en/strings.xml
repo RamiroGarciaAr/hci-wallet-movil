@@ -90,4 +90,16 @@
 
     <string name="delete_account">Delete Account</string>
     <string name="change_password">Change Password</string>
+    <string name="personal">Personal</string>
+    <string name="contact_sec">Contact Information</string>
+    <string name="accordion_title_personal">First Name</string>
+    <string name="accordion_title_last_name">Last Name</string>
+    <string name="accordion_title_email">Email</string>
+    <string name="accordion_title_phone">Phone Number</string>
+    <string name="accordion_title_bank">Banking</string>
+    <string name="accordion_content_alias">Your Alias</string>
+    <string name="accordion_title_danger">Danger Zone</string>
+    <string name="accordion_content_change_password">Change Password</string>
+    <string name="accordion_content_delete_account">Delete Account</string>
+    <string name="new_card">Add Card</string>">
 </resources>
