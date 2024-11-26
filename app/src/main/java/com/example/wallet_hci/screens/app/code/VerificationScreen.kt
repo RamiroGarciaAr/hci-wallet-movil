@@ -68,7 +68,7 @@ fun VerificationScreen(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 35.sp,
-                    color = colorResource(R.color.primary_700),
+                    color = colorResource(R.color.primary_600),
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(),
@@ -102,6 +102,7 @@ fun VerificationScreen(
                     text ="Código de Verificación",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.SemiBold,
+                    color = colorResource(R.color.primary_600),
                     fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
