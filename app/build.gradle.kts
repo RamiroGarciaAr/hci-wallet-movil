@@ -59,8 +59,6 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json.v163)
 
-
-
     implementation(libs.androidx.navigation.compose)
     implementation(libs.transport.runtime)
 
@@ -69,8 +67,7 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
     implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
     implementation(libs.kotlinx.serialization.json.v163)
-
-
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Testing
     testImplementation(libs.junit)
@@ -84,9 +81,6 @@ dependencies {
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
     implementation(libs.androidx.material.icons.extended)
-
-
-
 
     // Adaptive UI Libraries
 

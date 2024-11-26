@@ -29,6 +29,7 @@ import com.example.wallet_hci.R
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.app.screens.home.*
+import com.example.wallet_hci.screens.app.Deposit.DepositResultScreen
 import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
@@ -43,6 +44,8 @@ import javax.inject.Singleton
 import kotlinx.serialization.Serializable
 
 import androidx.navigation.Navigator as NavHostNavigator
+import com.example.wallet_hci.screens.app.Deposit.DepositScreen
+import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
 
 sealed interface Routes {
     @Serializable
@@ -111,6 +114,9 @@ sealed interface Routes {
 
     @Serializable object VerifyCode
 
+    @Serializable
+    object Deposit
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -149,7 +155,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     @Composable
     fun Routes() {
         this.navController = rememberNavController()
-        NavHost(navController = this.navController, startDestination = Routes.VerifyCode) {
+        NavHost(navController = this.navController, startDestination = Routes.Login) {
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> {
@@ -163,6 +169,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
             } // Ruta para Contacts
 
+            composable<Routes.Deposit> { DepositScreen() }
             // Transfer screen
             composable<Routes.Transfer> { TransferScreen() }
             composable<Routes.Login> { LogInScreen() }
@@ -223,6 +230,22 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
             }
 
+            //pantalla depositScreen
+            composable(
+                route = "depositResult/{amount}",
+                arguments = listOf(
+                    navArgument("amount") { type = NavType.StringType } // Maneja el monto como String
+                )
+            ) { backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount")?.toDoubleOrNull() ?: 0.0
+                DepositResultScreen(
+                    depositedAmount = amount,
+                    accountName = "Pagozen",
+                    onContinue = { navigateTo("home") }
+                )
+            }
+
+
             // Pantalla para agregar contactos
             composable("addContact") {
                 AddContactScreen(
@@ -237,6 +260,26 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
 
             // Pantalla de transferencias
             // Pantalla de transferencias
+            // Nueva ruta en Navigator para Desvincular y Vincular Tarjetas
+           /* composable("unlinkCards") {
+                UnlinkCardScreen(
+                    cardList = listOf("Visa **** 1234", "Mastercard **** 5678"),
+                    onCardUnlink = { card ->
+                        println("Tarjeta desvinculada: $card") // Lógica para desvincular tarjeta
+                    },
+                    onBack = { navigateBack() }
+                )
+            }*/
+
+            composable("linkCard") {
+                LinkCardScreen(
+                    onCardLink = { cardNumber, expiryDate, cvv ->
+                        println("Tarjeta vinculada: $cardNumber $expiryDate $cvv") // Lógica para vincular tarjeta
+                    },
+                    onBack = { navigateBack() }
+                )
+            }
+
             composable(
                 route = "transfer?selectedContact={selectedContact}",
                 arguments =

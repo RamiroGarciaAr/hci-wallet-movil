@@ -104,4 +104,10 @@
     <string name="accordion_content_delete_account">Eliminar Cuenta</string>
     <string name="new_card">Nueva tarjeta</string>">
     <string name="verification_code">Código de Verificación</string>>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="card_number"> Número de Tarjeta</string>
+    <string name="expiration_date">Fecha de Vencimiento (MM/AA)</string>
+    <string name="cvv">CVV</string>
+
 </resources>
