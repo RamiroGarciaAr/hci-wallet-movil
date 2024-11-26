@@ -22,6 +22,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://dhz57745-8080.brs.devtunnels.ms/api/\"")
+
         }
         release {
             buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")

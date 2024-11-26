@@ -4,17 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.routes.NavigatorProvider
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
@@ -54,8 +57,9 @@ fun LogInScreen(
                 painter = painterResource(id = R.drawable.app_logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(200.dp)
                     .padding(bottom = 16.dp)
+                    .clip(CircleShape)
             )
 
             // Campos de entrada
@@ -96,7 +100,7 @@ fun LogInScreen(
                  },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0056D2) // Cambia a tu color azul
+                    containerColor = colorResource(R.color.primary_500)
                 )
             ) {
                 Text(text = "Iniciar sesión", color = Color.White)
@@ -119,7 +123,7 @@ fun LogInScreen(
                 onClick = { onRegisterClick() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0056D2) // Cambia a tu color azul
+                    containerColor = colorResource(R.color.primary_500)
                 )
             ) {
                 Text(text = "Crear cuenta", color = Color.White)
