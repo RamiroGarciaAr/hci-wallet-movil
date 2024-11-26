@@ -1,4 +1,4 @@
-package com.example.wallet_hci.data.model
+package com.example.wallet_hci.data.network
 
 import com.example.wallet_hci.data.api.APIPaymentService
 import com.example.wallet_hci.data.model.NetworkBalancePayment

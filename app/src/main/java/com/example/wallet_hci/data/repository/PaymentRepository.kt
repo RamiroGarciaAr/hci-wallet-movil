@@ -2,7 +2,6 @@ package com.example.wallet_hci.data.repository
 
 import com.example.wallet_hci.data.model.LinkData
 import com.example.wallet_hci.data.model.LinkType
-import com.example.wallet_hci.data.model.PaymentRemoteDataSource
 import com.example.wallet_hci.data.model.NetworkCard
 
 class PaymentRepository (

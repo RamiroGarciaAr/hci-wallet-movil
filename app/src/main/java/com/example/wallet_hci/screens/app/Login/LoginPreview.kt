@@ -84,10 +84,12 @@ fun LogInScreen(
             Button(
                 onClick = { 
                     CoroutineScope(Dispatchers.Main).launch {
-                        val token = userRepository.login(email.value, password.value)
-                        if (token.isNotEmpty()) {
-                            sessionManager.saveAuthToken(token)
-                            navigator.navigateTo(Routes.Home)
+                        try {
+                           userRepository.login(email.value, password.value)
+                           navigator.navigateTo(Routes.Home)
+                        }
+                        catch (e: Exception) {
+                            println("Error al iniciar sesión: ${e.message}")
                         }
                     }
                     navigator.navigateTo(Routes.Home)
