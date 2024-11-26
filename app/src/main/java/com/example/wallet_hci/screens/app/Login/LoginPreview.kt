@@ -16,14 +16,30 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import com.example.wallet_hci.R
+import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.data.repository.UserRepositoryProvider
+import com.example.wallet_hci.app.routes.Routes
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch 
+
+import com.example.wallet_hci.SessionProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogInScreen(
-    onLoginClick: (String, String) -> Unit = { _, _ -> },
-    onRegisterClick: () -> Unit = {},
-    onForgotPasswordClick: () -> Unit = {}
+    // onLoginClick: (String, String) -> Unit = { _, _ -> },
+    // onRegisterClick: () -> Unit = {},
+    // onForgotPasswordClick: () -> Unit = {}
 ) {
+    val navigator = NavigatorProvider.current
+    val sessionManager = SessionProvider.current
+    val userRepository = UserRepositoryProvider.current
+
+    val onRegisterClick = { navigator.navigateTo(Routes.Register) }
+    val onForgotPasswordClick = { navigator.navigateTo(Routes.Login) }
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -66,7 +82,16 @@ fun LogInScreen(
 
             // Botón de inicio de sesión
             Button(
-                onClick = { onLoginClick(email.value, password.value) },
+                onClick = { 
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = userRepository.login(email.value, password.value)
+                        if (token.isNotEmpty()) {
+                            sessionManager.saveAuthToken(token)
+                            navigator.navigateTo(Routes.Home)
+                        }
+                    }
+                    navigator.navigateTo(Routes.Home)
+                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF0056D2) // Cambia a tu color azul
@@ -101,8 +126,8 @@ fun LogInScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LogInScreenPreview() {
-    LogInScreen()
-}
+// @Preview(showBackground = true)
+// @Composable
+// fun LogInScreenPreview() {
+//     LogInScreen()
+// }

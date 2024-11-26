@@ -14,16 +14,24 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
+import com.example.wallet_hci.routes.NavigatorProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DepositScreen(
-    currentBalance: String = "1500.00",
-    onDepositComplete: (Double) -> Unit = {}, // Acción al completar el depósito
-    onCancel: () -> Unit = {}
+    // onDepositComplete: (Double) -> Unit = {}, // Acción al completar el depósito
+    // onCancel: () -> Unit = {}
 ) {
+    val navigator = NavigatorProvider.current
+    val onDepositComplete: (Double) -> Unit = { depositAmount -> 
+        run { println("Depósito realizado: $depositAmount") }
+    }
+    val onCancel: () -> Unit = { run {
+        navigator.navigateBack()
+    } }
     var amount by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
 
     Scaffold(
         topBar = {
@@ -141,7 +149,7 @@ fun DepositScreen(
 @Composable
 fun DepositScreenPreview() {
     DepositScreen(
-        onDepositComplete = { amount -> println("Depósito realizado: $amount") },
-        onCancel = { println("Cancelado") }
+        // onDepositComplete = { amount -> println("Depósito realizado: $amount") },
+        // onCancel = { println("Cancelado") }
     )
 }

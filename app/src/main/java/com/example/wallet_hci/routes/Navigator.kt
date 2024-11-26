@@ -32,13 +32,24 @@ import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
 
+
+import com.example.wallet_hci.screens.app.Login.LogInScreen
+import com.example.wallet_hci.screens.app.registration.RegistrationScreen
+
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.serialization.Serializable
 
 import androidx.navigation.Navigator as NavHostNavigator
+import com.example.wallet_hci.screens.app.Deposit.DepositScreen
 
 sealed interface Routes {
+    @Serializable
+    object Login
+
+    @Serializable
+    object Register
+
     @Serializable
     object Settings : Routes {
         @Composable
@@ -97,6 +108,9 @@ sealed interface Routes {
             val contactId: String? = null
     )
 
+    @Serializable
+    object Deposit
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -135,7 +149,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     @Composable
     fun Routes() {
         this.navController = rememberNavController()
-        NavHost(navController = this.navController, startDestination = Routes.Home) {
+        NavHost(navController = this.navController, startDestination = Routes.Login) {
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> { 
@@ -149,8 +163,13 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
              } // Ruta para Contacts
 
+            composable<Routes.Deposit> { DepositScreen() }
             // Transfer screen
             composable<Routes.Transfer> { TransferScreen() }
+
+            composable<Routes.Login> { LogInScreen() }
+            composable<Routes.Register> { RegistrationScreen() }
+
             // composable<Routes.Profile> { MyProfile() }
             // TransferResult
             composable(
