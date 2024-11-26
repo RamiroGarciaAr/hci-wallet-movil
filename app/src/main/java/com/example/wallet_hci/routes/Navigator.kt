@@ -36,6 +36,7 @@ import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
 
 import com.example.wallet_hci.screens.app.Login.LogInScreen
 import com.example.wallet_hci.screens.app.registration.RegistrationScreen
+import com.example.wallet_hci.screens.app.code.VerificationScreen
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -108,6 +109,8 @@ sealed interface Routes {
         val contactId: String? = null
     )
 
+    @Serializable object VerifyCode
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -146,7 +149,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     @Composable
     fun Routes() {
         this.navController = rememberNavController()
-        NavHost(navController = this.navController, startDestination = Routes.Login) {
+        NavHost(navController = this.navController, startDestination = Routes.VerifyCode) {
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> {
@@ -162,9 +165,9 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
 
             // Transfer screen
             composable<Routes.Transfer> { TransferScreen() }
-
             composable<Routes.Login> { LogInScreen() }
             composable<Routes.Register> { RegistrationScreen() }
+            composable<Routes.VerifyCode> { VerificationScreen() } 
 
             // composable<Routes.Profile> { MyProfile() }
             // TransferResult

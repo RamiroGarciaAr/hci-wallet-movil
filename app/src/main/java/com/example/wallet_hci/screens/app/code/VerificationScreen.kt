@@ -29,8 +29,8 @@ import com.example.wallet_hci.R
 @Composable
 fun VerificationScreen(
     viewModel: VerificationViewModel = viewModel(),
-    onVerificationSuccess: () -> Unit,
-    onCancel: () -> Unit
+    onVerificationSuccess: () -> Unit = {},
+    onCancel: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
