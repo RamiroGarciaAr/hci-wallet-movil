@@ -118,47 +118,72 @@ fun AccordionItem(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                content.forEachIndexed { index, item ->
-                    Text(
-                        text = item,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
-                    OutlinedTextField(
-                        value = textFieldValues[index],
-                        label = { Text(txtBarMsg?.getOrNull(index) ?: "Type here") },
-                        onValueChange = { textFieldValues[index] = it },
-                        placeholder = { Text(txtBarMsg?.getOrNull(index) ?: "Type Here") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.Black,
-                            unfocusedContainerColor = Color.White,
-                            focusedContainerColor = Color.White,
-                            focusedBorderColor = Color.Blue,
+                // Display buttons for Danger Zone
+                if (isDangerZone) {
+                    Button(
+                        onClick = { onChangePass() },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(id = R.string.change_password))
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = { onDeleteAccount() },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(id = R.string.delete_account))
+                    }
+                }
+                else {
+                    // Display content items and TextFields
+                    content.forEachIndexed { index, item ->
+                        Text(
+                            text = item,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(vertical = 4.dp)
                         )
-                    )
+                        OutlinedTextField(
+                            value = textFieldValues[index],
+                            label = { Text(txtBarMsg?.getOrNull(index) ?: "Type here") },
+                            onValueChange = { textFieldValues[index] = it },
+                            placeholder = { Text(txtBarMsg?.getOrNull(index) ?: "Type Here") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.Black,
+                                unfocusedContainerColor = Color.White,
+                                focusedContainerColor = Color.White,
+                                focusedBorderColor = Color.Blue
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    // Display button for Bank Section
                     if (isBank) {
                         Button(
-                            onClick = { /* Handle button click */ },
+                            onClick = { /* Handle bank action */ },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = colorResource(R.color.primary_500)
+                                containerColor = colorResource(R.color.teal_700)
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
                         ) {
-                            Text(text = "Bank Action", color = MaterialTheme.colorScheme.onPrimary)
+                            Text(text = "Nueva Trajeta")
+
                         }
                     }
                 }
+
             }
         }
-
         // Divider
         HorizontalDivider(
             modifier = Modifier
