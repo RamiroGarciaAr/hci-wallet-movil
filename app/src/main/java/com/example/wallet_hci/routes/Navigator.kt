@@ -151,7 +151,16 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         NavHost(navController = navController, startDestination = Routes.Home) {
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
-            composable<Routes.Contacts> { ContactScreen() } // Ruta para Contacts
+            composable<Routes.Contacts> { 
+                ContactScreen(
+                    onBack = { navigateBack() },
+                    onAddContact = { navigateTo("addContact") }, // Navega a agregar contacto
+                    onContactSelected = { selectedContact ->
+                        // Navega a la pantalla de transferencias con el contacto seleccionado
+                        navigateTo("transfer?selectedContact=$selectedContact")
+                    }
+                )
+             } // Ruta para Contacts
 
             // Transfer screen
             composable<Routes.Transfer> { TransferScreen() }
