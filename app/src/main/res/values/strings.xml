@@ -11,6 +11,7 @@
     <string name="spend">Egresar</string>
     <string name="transfer">Transferir</string>
     <string name="cvu">CVU</string>
+    <string name="ingress">Ingreso</string>
 
     <string name="revenue">Rendimiento</string>
 
@@ -102,4 +103,5 @@
     <string name="accordion_content_change_password">Cambiar contraseña</string>
     <string name="accordion_content_delete_account">Eliminar Cuenta</string>
     <string name="new_card">Nueva tarjeta</string>">
+    <string name="verification_code">Código de Verificación</string>>
 </resources>

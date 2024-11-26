@@ -28,7 +28,7 @@ fun DepositScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ingreso", color = colorResource(R.color.blue_bar))},
+                title = { Text(text = stringResource(id = R.string.ingress), color = colorResource(R.color.blue_bar))},
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
                         Icon(
@@ -110,7 +110,7 @@ fun DepositScreen(
                         contentColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
-                    Text(text = "Cancelar")
+                    Text(text = stringResource(id = R.string.cancel))
                 }
                 Button(
                     onClick = {
@@ -128,7 +128,7 @@ fun DepositScreen(
                         )
                 ) {
                     Text(
-                        text = "Continuar",
+                        text =  stringResource(id = R.string.continue_action),
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }

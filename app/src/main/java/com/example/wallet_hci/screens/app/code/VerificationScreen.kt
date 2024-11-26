@@ -99,7 +99,7 @@ fun VerificationScreen(
 
                 // Verification Code Fields
                 Text(
-                    text ="Código de Verificación",
+                    text = stringResource(id = R.string.verification_code),
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(R.color.primary_600),
