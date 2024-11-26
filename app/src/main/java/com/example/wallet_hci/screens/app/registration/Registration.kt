@@ -13,12 +13,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.wallet_hci.R
+import com.example.wallet_hci.data.repository.UserRepositoryProvider
+import com.example.wallet_hci.routes.NavigatorProvider
+
+import com.example.wallet_hci.data.model.RegistrationUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Date
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
-    onRegisterClick: (String, String, String) -> Unit = { _, _, _ -> }
+    // onRegisterClick: (String, String, String) -> Unit = { _, _, _ -> }
 ) {
+    val navigator = NavigatorProvider.current
+    val userRepository = UserRepositoryProvider.current
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -72,7 +84,21 @@ fun RegistrationScreen(
 
             // Botón "Registrarse"
             Button(
-                onClick = { onRegisterClick(email, password, confirmPassword) },
+                onClick = { 
+
+                    val dateBirth = Date(123456789)
+                    val registrationUser = RegistrationUser(
+                        firstName = "Test",
+                        lastName = "Test",
+                        email = email,
+                        birthDate = dateBirth,
+                        password = password
+                    )
+
+                    CoroutineScope(Dispatchers.Main).launch {
+                        userRepository.register(registrationUser)
+                    }
+                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.blue_bar) // Cambia a tu color azul

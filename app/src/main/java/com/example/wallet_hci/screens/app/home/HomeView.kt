@@ -2,7 +2,9 @@ package com.example.wallet_hci.app.screens.home
 
 import com.example.wallet_hci.app.screens.home.ui.*
 import com.example.wallet_hci.app.routes.Navigator
-import com.example.wallet_hci.app.routes.NavigatorProvider
+import com.example.wallet_hci.app.routes.Routes
+import com.example.wallet_hci.routes.NavigatorProvider
+
 import com.example.wallet_hci.ui.layout.ViewModel
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.plots.ExpensesPlot
@@ -29,59 +31,81 @@ import androidx.compose.ui.Alignment
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.window.core.layout.WindowWidthSizeClass
-
-
-data class Action (val icon: Int, val text: Int, val onClick: () -> Unit);
-val actions = listOf(
-    Action(R.drawable.ic_visa, R.string.deposit, onClick = {}),
-    Action(R.drawable.ic_mastercard, R.string.spend, onClick = {}),
-    Action(R.drawable.ic_arrow_right, R.string.transfer, onClick = {}),
-    Action(R.drawable.ic_arrow_right, R.string.cvu, onClick = {})
-)
+import com.example.wallet_hci.screens.app.home.Action
 
 @Composable
-fun HomeView(){
+fun HomeView() {
+    val navigator = NavigatorProvider.current // Accede al Navigator
 
-    val navigator = NavigatorProvider.current
+    // Definir las acciones dinámicamente
+    val actions = listOf(
+        Action(
+            icon = R.drawable.fa_money_bills,
+            text = R.string.deposit,
+            onClick = { /* Lógica para Depósito */ }
+        ),
+        Action(
+            icon = R.drawable.fa_paper_plane,
+            text = R.string.spend,
+            onClick = { 
+                navigator.navigateTo(Routes.Deposit)
+             }
+        ),
+        Action(
+            icon = R.drawable.fa_money_bill_transfer,
+            text = R.string.transfer,
+            onClick = {
+                navigator.navigateTo("transfer") // Navegar a TransferScreen
+            }
+        ),
+        Action(
+            icon = R.drawable.fa_address_card,
+            text = R.string.cvu,
+            onClick = { /* Lógica para CVU */ }
+        )
+    )
+
+    // UI principal
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(horizontal = 12.dp)
-        .verticalScroll(rememberScrollState())
-        
-        ) {
-            CardWrapper {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) { 
-                    AvailableMoney()
-                    CardHolder()
-                }
-            }
-            Row(
-                modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max)
+        modifier = Modifier
+            .padding(horizontal = 12.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        CardWrapper {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
             ) {
-
-                ExpensesPlot( modifier = Modifier.weight(2f))
-                Spacer(modifier = Modifier.width(8.dp))
-                CardWrapper(modifier = Modifier.weight(1.15f)){
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ){
-                        actions.forEach { action ->
-                            ActionButton(
-                                painter = painterResource(action.icon),
-                                text = stringResource(action.text),
-                                onClick = action.onClick
-                            )
-                        }
+                AvailableMoney()
+                CardHolder()
+            }
+        }
+        Row(
+            modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max)
+        ) {
+            ExpensesPlot(modifier = Modifier.weight(2f))
+            Spacer(modifier = Modifier.width(8.dp))
+            CardWrapper(modifier = Modifier.weight(1.15f)) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    actions.forEach { action ->
+                        ActionButton(
+                            painter = painterResource(action.icon),
+                            text = stringResource(action.text),
+                            onClick = action.onClick
+                        )
                     }
                 }
             }
-            GainPlot( modifier = Modifier
-                .height(200.dp) 
-            )
         }
+        GainPlot(
+            modifier = Modifier
+                .height(200.dp)
+        )
+    }
 }
+

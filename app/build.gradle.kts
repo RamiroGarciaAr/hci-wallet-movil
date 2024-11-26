@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -57,6 +58,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json.v163)
 
+
+
     implementation(libs.androidx.navigation.compose)
     implementation(libs.transport.runtime)
 
@@ -64,7 +67,8 @@ dependencies {
     implementation(libs.retrofit) // Retrofit core library
     implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
     implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
-    implementation (libs.kotlinx.serialization.json.v163)
+    implementation(libs.kotlinx.serialization.json.v163)
+
 
 
     // Testing
@@ -78,7 +82,8 @@ dependencies {
 
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
+
 
 
 

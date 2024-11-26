@@ -16,9 +16,11 @@ class UserRemoteDataSource(
      * Logs in the user by sending credentials to the API.
      * On success, saves the authentication token in the session manager.
      */
-    suspend fun login(username: String, password: String) {
+    suspend fun login(username: String, password: String): String {
         val token = userApiService.login(NetworkCredentials(username, password))
         sessionManager.saveAuthToken(token.token)
+
+        return token.token
     }
 
     /**

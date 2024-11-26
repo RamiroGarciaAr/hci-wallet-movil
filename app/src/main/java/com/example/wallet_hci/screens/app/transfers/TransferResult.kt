@@ -3,7 +3,6 @@ package com.example.wallet_hci.screens.app.transfers
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,18 +17,26 @@ import com.example.wallet_hci.R
 import com.example.wallet_hci.ui.components.CustomCard
 import com.example.wallet_hci.ui.components.CardStyle
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferResultScreen(
+    amount: String,
+    receiverName: String,
+    bankName: String,
+    aliasSender: String,
+    aliasReceiver: String,
+    receiptId: String,
     onShare: () -> Unit = {},
-    onSaveContact: () -> Unit = {}
+    onSaveContact: () -> Unit = {},
+    onBack: () -> Unit = {} // onBack configurado para navegación
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.transfer)) },
                 navigationIcon = {
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = onBack) { // Usa la función onBack
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
                             contentDescription = "Back"
@@ -46,24 +53,23 @@ fun TransferResultScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Mensaje de éxito
             CustomCard(
-                title = stringResource(id = R.string.transfer_success_title),
+                header = {Text(stringResource(id = R.string.transfer_success_title))},
                 style = CardStyle.Success
             ) {
                 Column {
                     Text(
                         text = stringResource(
                             id = R.string.transfer_success_message,
-                            "$123.42",
-                            "Damián Villablanca",
-                            "Banco Galicia"
+                            amount, receiverName, bankName
                         ),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = stringResource(id = R.string.transfer_receipt, "#41231"),
+                        text = stringResource(id = R.string.transfer_receipt, receiptId),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -71,7 +77,7 @@ fun TransferResultScreen(
 
             // Detalles de la transferencia
             CustomCard(
-                title = stringResource(id = R.string.transfer_details_title),
+                header =  {Text(stringResource(id = R.string.transfer_details_title))},
                 style = CardStyle.Default
             ) {
                 Row(
@@ -80,12 +86,12 @@ fun TransferResultScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Tobías Juhasz",
+                            text = "Tobías Juhasz", // Nombre del remitente
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Alias: sol.cielo.arcoiris",
+                            text = "Alias: $aliasSender",
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -96,12 +102,12 @@ fun TransferResultScreen(
                     )
                     Column {
                         Text(
-                            text = "Damián Villablanca",
+                            text = receiverName, // Nombre del destinatario
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Alias: sol.cielo.arcoiris",
+                            text = "Alias: $aliasReceiver",
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -137,3 +143,5 @@ fun TransferResultScreen(
         }
     }
 }
+
+

@@ -24,43 +24,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.app.routes.Navigator
 
-import com.example.wallet_hci.app.routes.NavigatorProvider
+import com.example.wallet_hci.app.routes.Routes
+import com.example.wallet_hci.routes.NavigatorProvider
 
 @Composable
 fun NavBar() {
 
     val navigator = NavigatorProvider.current
-    var selectedItem by remember { mutableIntStateOf(0) }
-
-    val routes = listOf(
+    val items = listOf(
         "settings",
         "home",
         "activity",
         "contacts"
     )
-    var currentPage by remember { mutableStateOf("home") }
 
-    val items = listOf(
-        stringResource(R.string.r_settings), 
-        stringResource(R.string.r_home), 
-        stringResource(R.string.r_activities), 
-        // stringResource(R.string.r_contacts)
+    val routes = listOf(
+        Routes.Settings,
+        Routes.Home,
+        Routes.Activity,
+        Routes.Contacts
     )
-    val selectedIcons = listOf(
-        Icons.Filled.Settings, 
-        Icons.Filled.Home, 
-        Icons.Filled.Favorite, 
-        Icons.Filled.Star
-    )
-    val unselectedIcons = listOf(
-        Icons.Outlined.Settings, 
-        Icons.Outlined.Home, 
-        Icons.Outlined.FavoriteBorder, 
-        Icons.Outlined.Star
-    )
+    var currentPage by remember { mutableStateOf("home") }
     NavigationBar(
         containerColor = colorResource(R.color.primary_100),
     ) {
@@ -68,16 +56,16 @@ fun NavBar() {
             NavigationBarItem(
                 icon = {
                     Icon(
-                        if (currentPage.compareTo(routes[index]) == 0) selectedIcons[index] else unselectedIcons[index],
-                        contentDescription = item,
+                        routes[index].getIcon(currentPage.compareTo(item) == 0),
+                        contentDescription = routes[index].getName(),
                         tint = colorResource(R.color.primary_500),
                     )
                 },
-                label = { Text(item) },
-                selected = currentPage.compareTo(routes[index]) == 0,
+                label = { Text(routes[index].getName()) },
+                selected = currentPage.compareTo(item) == 0,
                 onClick = { 
-                    currentPage = routes[index]
-                    navigator.navigateTo(currentPage)
+                    currentPage = item
+                    navigator.navigateTo(routes[index])
                 },
             )
         }

@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 
-import com.example.wallet_hci.app.routes.NavigatorProvider
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
@@ -29,6 +28,9 @@ import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.example.wallet_hci.routes.NavigatorProvider
+
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +50,10 @@ class MainActivity : ComponentActivity() {
         val walletRemoteDataSource = NetworkModule.provideWalletApiService(retrofit)
         val paymentRemoteDataSource = NetworkModule.providePaymentApiService(retrofit)
 
-        navigator = Navigator(sessionManager)
+        this.navigator = Navigator(sessionManager)
         setContent {
             CompositionLocalProvider(
-                NavigatorProvider provides navigator,
+                NavigatorProvider provides this.navigator,
                 SessionProvider provides sessionManager,
                 UserRepositoryProvider provides userRepository,
                 WalletApiServiceProvider provides walletRemoteDataSource,
@@ -61,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 WallethciTheme {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        floatingActionButton = { FloatingQRButton(navigator) },
+                        // floatingActionButton = { FloatingQRButton(navigator) },
                         bottomBar = { 
                             NavBar() 
                         },

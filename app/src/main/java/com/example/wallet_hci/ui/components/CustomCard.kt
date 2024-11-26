@@ -21,16 +21,16 @@ enum class CardStyle(val headerColor: Color, val textColor: Color) {
 // Composable Function
 @Composable
 fun CustomCard(
-    title: String,
+
+    header: @Composable () -> Unit,
     style: CardStyle = CardStyle.Default,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     androidx.compose.material3.Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        elevation = androidx.compose.material3.CardDefaults.cardElevation(8.dp), // bordes + degrade
+            .fillMaxWidth(),
+        elevation = androidx.compose.material3.CardDefaults.cardElevation(4.dp), // bordes + degrade
         shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -45,11 +45,7 @@ fun CustomCard(
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = title,
-                    color = style.textColor,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                header()
             }
 
             // Body
