@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.text.font.FontWeight
 
 @Preview(showBackground = true)
 @Composable
@@ -19,7 +20,7 @@ fun PreviewCustomCard() {
         ) {
             // Tarjeta con estilo Primario
             CustomCard(
-                title = "Tarjeta Primaria",
+                header = { Text("Tarjeta Primaria", fontWeight = FontWeight.Bold) },
                 style = CardStyle.Primary,
                 modifier = Modifier.padding(8.dp)
             ) {
@@ -33,7 +34,7 @@ fun PreviewCustomCard() {
 
             // Tarjeta con estilo de Peligro
             CustomCard(
-                title = "Tarjeta de Peligro",
+                header = { Text("Tarjeta de Peligro", fontWeight = FontWeight.Bold) },
                 style = CardStyle.Danger,
                 modifier = Modifier.padding(8.dp)
             ) {
@@ -47,7 +48,7 @@ fun PreviewCustomCard() {
 
             // Tarjeta con estilo de Éxito
             CustomCard(
-                title = "Tarjeta Exitosa",
+                header = { Text("Tarjeta Exitosa", fontWeight = FontWeight.Bold) },
                 style = CardStyle.Success,
                 modifier = Modifier.padding(8.dp)
             ) {
@@ -61,7 +62,7 @@ fun PreviewCustomCard() {
 
             // Tarjeta con estilo por Defecto
             CustomCard(
-                title = "Tarjeta Por Defecto",
+                header = { Text("Tarjeta Por Defecto", fontWeight = FontWeight.Bold) },
                 style = CardStyle.Default,
                 modifier = Modifier.padding(8.dp)
             ) {
@@ -73,4 +74,3 @@ fun PreviewCustomCard() {
         }
     }
 }
-

@@ -29,6 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.wallet_hci.app.routes.Routes
+import com.example.wallet_hci.app.screens.home.ui.CardWrapper
+import com.example.wallet_hci.routes.NavigatorProvider
 import com.example.wallet_hci.ui.components.CardStyle
 import com.example.wallet_hci.ui.components.CustomCard
 
@@ -40,63 +43,51 @@ fun DepositResultScreen(
     receiptId: String = "41231", // ID de recibo generado
     onContinue: () -> Unit = {} // Acción para continuar
 ) {
+    val navigator = NavigatorProvider.current
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ingreso de dinero", color = colorResource(R.color.primary_500)) },
-                navigationIcon = {
-                    IconButton(onClick = onContinue) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
+                title = { Text(text = "Ingreso de dinero", color = colorResource(R.color.primary_500)) }
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
+               .padding(paddingValues).padding(horizontal = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Mensaje de éxito
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(R.color.primary_500)
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+            CustomCard (
+                style = CardStyle.Success,
+                header = {
                     Text(
                         text = "Ingreso de dinero exitoso",
                         style = MaterialTheme.typography.headlineSmall,
                         color = colorResource(id = R.color.primary_100),
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                },
+
+                ) {
+                Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "Se ingresaron $${String.format("%.2f", depositedAmount)} a tu cuenta de $accountName",
                         style = MaterialTheme.typography.bodyLarge,
-                        color = colorResource(id = R.color.primary_100)
+                       // color = colorResource(id = R.color.primary_100)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Comprobante #$receiptId",
                         style = MaterialTheme.typography.bodySmall,
-                        color = colorResource(id=R.color.primary_200)
+                    //    color = colorResource(id=R.color.primary_200)
                     )
                 }
             }
 
             // Detalles del depósito
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                ),
-                modifier = Modifier.fillMaxWidth()
+            CardWrapper(
+           //     modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier
@@ -138,7 +129,7 @@ fun DepositResultScreen(
 
             // Botón para continuar
             Button(
-                onClick = onContinue,
+                onClick = { navigator.navigateTo(Routes.Home)},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(R.color.blue_bar)

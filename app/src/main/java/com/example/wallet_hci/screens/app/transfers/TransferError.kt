@@ -47,7 +47,8 @@ fun TransferErrorScreen(
         ) {
             // Sección: Error de transferencia
             CustomCard(
-                title = stringResource(id = R.string.transfer_error_title),
+                header = { Text(stringResource(id = R.string.transfer_error_title)
+                )},
                 style = CardStyle.Danger
             ) {
                 Column {
