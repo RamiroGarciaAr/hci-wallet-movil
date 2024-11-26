@@ -11,7 +11,7 @@ fun VerificationScreenPreview() {
         init {
             // Set some mock data for the preview
             _state.value = VerificationState(
-                code = listOf("1", "2", "3", "4"), // Example pre-filled code
+                code = listOf("", "", "", ""), // Example pre-filled code
                 isLoading = false, // Not loading for preview
                 errorMsg = null // No error for preview
             )

@@ -2,22 +2,28 @@ package com.example.wallet_hci.screens.app.code
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wallet_hci.R
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +33,9 @@ fun VerificationScreen(
     onCancel: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    // Create a list of FocusRequesters, one for each TextField
+    val focusRequesters = List(state.code.size) { FocusRequester() }
 
     Box(
         modifier = Modifier
@@ -43,29 +52,43 @@ fun VerificationScreen(
             ) {
                 // App Logo
                 Image(
-                    painter = painterResource(id = R.drawable.app_logo), // Replace with your drawable resource
+                    painter = painterResource(id = R.drawable.app_logo),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(200.dp)
                         .padding(bottom = 16.dp)
+                        .clip(CircleShape)
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Title
                 Text(
-                    text = stringResource(id=R.string.welcome_title),
-                    style = MaterialTheme.typography.titleLarge
+                    text = stringResource(id = R.string.welcome_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 35.sp,
+                    color = colorResource(R.color.primary_700),
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
-
-
 
                 // Subtitle
                 Text(
-                    text = stringResource(id=R.string.mail_sent),
-                    style = MaterialTheme.typography.bodyMedium
+                    text = stringResource(id = R.string.mail_sent),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.W400,
+                    color = colorResource(R.color.primary_700),
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(150.dp))
 
                 // Verification Code Fields
                 Row(
@@ -73,18 +96,28 @@ fun VerificationScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     state.code.forEachIndexed { index, codeValue ->
-                        TextField(
+                        OutlinedTextField(
                             value = codeValue,
+                            placeholder = { Text("0") },
                             onValueChange = { newValue ->
-                                if (newValue.length <= 1) { // Solo permitir un carácter
+                                if (newValue.length <= 1) { // Allow only one character
                                     viewModel.onCodeChanged(index, newValue)
+                                    if (newValue.isNotEmpty() && index < state.code.size - 1) {
+                                        focusRequesters[index + 1].requestFocus()
+                                    }
                                 }
                             },
-                            modifier = Modifier.size(60.dp),
-                            colors = OutlinedTextFieldDefaults.colors( unfocusedContainerColor = Color.White),
+                            modifier = Modifier
+                                .size(60.dp)
+                                .focusRequester(focusRequesters[index]), // Attach FocusRequester
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.Black,
+                                unfocusedContainerColor = Color.White,
+                                focusedContainerColor = Color.White,
+                                focusedBorderColor = Color.Blue
+                            ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true
-
                         )
                     }
                 }
@@ -112,17 +145,17 @@ fun VerificationScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text(text = stringResource(id=R.string.cancel))
+                        Text(text = stringResource(id = R.string.cancel))
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Button(
                         onClick = { viewModel.onEvent(VerificationEvent.Verify) },
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.blue_bar)),
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_500)),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text(text  = stringResource(id=R.string.continue_action))
+                        Text(text = stringResource(id = R.string.continue_action))
                     }
                 }
             }

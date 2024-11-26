@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -74,7 +75,7 @@ fun AccordionItem(
                 .clickable { viewModel.toggleExpanded(title) }
                 .background(
                     if (isDangerZone) MaterialTheme.colorScheme.error
-                    else colorResource(R.color.blue_bar)
+                    else colorResource(R.color.primary_500)
                 )
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -84,7 +85,7 @@ fun AccordionItem(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.weight(1f)
             )
             Icon(
@@ -136,23 +137,28 @@ fun AccordionItem(
                     }
                     else
                     {
-
                         Text(
                             text = item,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
-                        TextField(
+                        OutlinedTextField(
                             value = name,
+                            label = { Text(txtBarMsg?.getOrNull(idx) ?: "Type here") },
                             onValueChange = { name = it },
-                            placeholder = { Text(txtBarMsg?.getOrNull(idx) ?: "Type here") },
+                            placeholder = { Text(txtBarMsg?.getOrNull(idx) ?: "Type Here") },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 16.dp),
                             singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors( unfocusedContainerColor = Color.White)
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.Black,
+                                unfocusedContainerColor = Color.White,
+                                focusedContainerColor = Color.White,
+                                focusedBorderColor = Color.Blue,
+                            )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
