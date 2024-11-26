@@ -79,22 +79,37 @@ fun VerificationScreen(
                 Text(
                     text = stringResource(id = R.string.mail_sent),
                     style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.W400,
-                    color = colorResource(R.color.primary_700),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Light,
+                    color = colorResource(R.color.primary_600),
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(),
                     textAlign = TextAlign.Start
                 )
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                )
+
 
                 Spacer(modifier = Modifier.height(150.dp))
 
                 // Verification Code Fields
+                Text(
+                    text ="Código de Verificación",
+                    textAlign = TextAlign.Start,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
                     state.code.forEachIndexed { index, codeValue ->
                         OutlinedTextField(
                             value = codeValue,
