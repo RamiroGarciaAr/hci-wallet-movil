@@ -34,6 +34,8 @@ val cardList = listOf<Card>(VisaCard, MastercardCard)
 fun CardHolder(
     issuer: String = "mastercard",
     lastFourDigits: String = "4242",
+    modifier: Modifier = Modifier,
+    onDelete: (() -> Unit)? = null, // Acción opcional para eliminar la tarjeta
     onClick: () -> Unit = {}
 ) {
     val card = cardList.find { it.issuer == issuer }
@@ -43,36 +45,45 @@ fun CardHolder(
             containerColor = colorResource(R.color.primary_700),
             contentColor = colorResource(R.color.white)
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         onClick = onClick
-    ){
-        Column(
+    ) {
+        Row(
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // Información de la tarjeta
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
             ) {
-            Icon(
-                painter = painterResource(id = card?.resourceId ?: 0),
-                contentDescription = "Visa",
-                tint = colorResource(R.color.white),
-                modifier = Modifier.size(32.dp)
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.fillMaxWidth()
-            ){
-                Column(){
-                    Text("**** **** **** $lastFourDigits")
-                    Text("Card Holder")
-                }
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
-                    contentDescription = "Arrow",
+                    painter = painterResource(id = card?.resourceId ?: R.drawable.ic_mastercard),
+                    contentDescription = "Card Icon",
                     tint = colorResource(R.color.white),
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(32.dp)
                 )
+                Text("**** **** **** $lastFourDigits")
+                Text("Card Holder")
+            }
+
+            // Botón de eliminación (si onDelete no es nulo)
+            if (onDelete != null) {
+                IconButton(
+                    onClick = onDelete, // Acción de eliminación
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.fa_trash),
+                        contentDescription = "Delete Card",
+                        modifier = Modifier.height(height = 24.dp),
+                        tint = colorResource(R.color.red)
+                    )
+                }
             }
         }
     }
