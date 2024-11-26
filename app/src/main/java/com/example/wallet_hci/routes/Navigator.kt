@@ -28,6 +28,7 @@ import com.example.wallet_hci.R
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.app.screens.home.*
+import com.example.wallet_hci.screens.app.Deposit.DepositResultScreen
 import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
@@ -223,6 +224,22 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                         onBack = { navigateTo("home") } // Volver a la pantalla principal
                 )
             }
+
+            //pantalla depositScreen
+            composable(
+                route = "depositResult/{amount}",
+                arguments = listOf(
+                    navArgument("amount") { type = NavType.StringType } // Maneja el monto como String
+                )
+            ) { backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount")?.toDoubleOrNull() ?: 0.0
+                DepositResultScreen(
+                    depositedAmount = amount,
+                    accountName = "Pagozen",
+                    onContinue = { navigateTo("home") }
+                )
+            }
+
 
             // Pantalla para agregar contactos
             composable("addContact") {

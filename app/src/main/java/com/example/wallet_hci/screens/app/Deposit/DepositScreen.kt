@@ -18,27 +18,17 @@ import com.example.wallet_hci.routes.NavigatorProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DepositScreen(
-    // onDepositComplete: (Double) -> Unit = {}, // Acción al completar el depósito
-    // onCancel: () -> Unit = {}
-) {
+fun DepositScreen() {
     val navigator = NavigatorProvider.current
-    val onDepositComplete: (Double) -> Unit = { depositAmount -> 
-        run { println("Depósito realizado: $depositAmount") }
-    }
-    val onCancel: () -> Unit = { run {
-        navigator.navigateBack()
-    } }
     var amount by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ingreso", color = colorResource(R.color.blue_bar))},
+                title = { Text(text = "Ingreso", color = colorResource(R.color.blue_bar)) },
                 navigationIcon = {
-                    IconButton(onClick = onCancel) {
+                    IconButton(onClick = { navigator.navigateBack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back"
@@ -112,7 +102,7 @@ fun DepositScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(
-                    onClick = onCancel,
+                    onClick = { navigator.navigateBack() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = MaterialTheme.colorScheme.primary
@@ -127,13 +117,13 @@ fun DepositScreen(
                             errorMessage = "Por favor, ingresa un monto válido."
                         } else {
                             errorMessage = null
-                            onDepositComplete(parsedAmount)
+                            navigator.navigateTo("depositResult/$parsedAmount")
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.blue_bar),
-                        )
+                        containerColor = colorResource(R.color.blue_bar)
+                    )
                 ) {
                     Text(
                         text = "Continuar",
@@ -143,13 +133,4 @@ fun DepositScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DepositScreenPreview() {
-    DepositScreen(
-        // onDepositComplete = { amount -> println("Depósito realizado: $amount") },
-        // onCancel = { println("Cancelado") }
-    )
 }
