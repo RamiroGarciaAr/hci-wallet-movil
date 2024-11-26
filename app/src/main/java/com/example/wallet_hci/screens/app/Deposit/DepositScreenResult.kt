@@ -43,7 +43,7 @@ fun DepositResultScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ingreso de dinero", color = colorResource(R.color.blue_bar)) },
+                title = { Text(text = "Ingreso de dinero", color = colorResource(R.color.primary_500)) },
                 navigationIcon = {
                     IconButton(onClick = onContinue) {
                         Icon(
@@ -65,7 +65,7 @@ fun DepositResultScreen(
             // Mensaje de éxito
             Card(
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = colorResource(R.color.primary_500)
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -73,18 +73,20 @@ fun DepositResultScreen(
                     Text(
                         text = "Ingreso de dinero exitoso",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.primary
+                        color = colorResource(id = R.color.primary_100),
+                        fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Se ingresaron $${String.format("%.2f", depositedAmount)} a tu cuenta de $accountName",
                         style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold
+                        color = colorResource(id = R.color.primary_100)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Comprobante #$receiptId",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorResource(id=R.color.primary_200)
                     )
                 }
             }

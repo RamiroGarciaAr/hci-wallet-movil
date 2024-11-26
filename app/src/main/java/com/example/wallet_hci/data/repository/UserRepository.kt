@@ -28,7 +28,7 @@ class UserRepository @Inject constructor(
      * @param password The user's password.
      */
     suspend fun login(username: String, password: String): String {
-        return remoteDataSource.login(username, password).
+        return remoteDataSource.login(username, password)
     }
 
     /**
