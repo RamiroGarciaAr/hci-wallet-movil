@@ -50,7 +50,7 @@ fun ContactScreen(
                 actions = {
                     IconButton(onClick = onAddContact) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_add), // Cambia por el recurso correcto
+                            painter = painterResource(id = R.drawable.plus), // Cambia por el recurso correcto
                             contentDescription = "Agregar contacto",
                             tint = Color(0xFF0066CC) // Azul
                         )
