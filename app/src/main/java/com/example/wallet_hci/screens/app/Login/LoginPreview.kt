@@ -83,7 +83,7 @@ fun LogInScreen(
             // Botón de inicio de sesión
             Button(
                 onClick = { 
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
                         val token = userRepository.login(email.value, password.value)
                         if (token.isNotEmpty()) {
                             sessionManager.saveAuthToken(token)
