@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">wallet-hci</string>
-    <string name="r_home">Inicio</string>
     <string name="r_settings">Configuración</string>
     <string name="r_activities">Actividad</string>
+    <string name="r_home">Inicio</string>
     <string name="r_contacts">Contactos</string>
     <string name="currency">ARS</string>
     <string name="available_money">Disponible</string>
@@ -50,6 +50,7 @@
 
     <string name="welcome_title">¡Bienvenido!</string>
     <string name="welcome_subtitle">Contanos un poco de vos.</string>
+    <string name="mail_sent">Te enviamos un código a tu mail</string>
     <string name="name_label">Nombre</string>
     <string name="name_placeholder">Nombre</string>
     <string name="last_name_label">Apellido</string>
@@ -86,4 +87,8 @@
     <string name="mercado_pay">Cuenta bancaria: MercadoPay</string>
     <string name="external_account">Seleccione una cuenta externa </string>
     <string name="add_amount">Seleccione el monto</string>
+
+    <string name="delete_account">Eliminar Cuenta</string>
+    <string name="change_password">Cambiar contraseña</string>">
+
 </resources>

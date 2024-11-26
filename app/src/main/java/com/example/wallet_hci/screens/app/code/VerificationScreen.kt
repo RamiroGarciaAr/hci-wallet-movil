@@ -1,5 +1,6 @@
 package com.example.wallet_hci.screens.app.code
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -7,13 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.wallet_hci.R
 
-@Preview
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerificationScreen(
     viewModel: VerificationViewModel = viewModel(),
@@ -35,22 +41,27 @@ fun VerificationScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // App logo (placeholder)
-                Text("PagoZen", style = MaterialTheme.typography.headlineMedium)
-
+                // App Logo
+                Image(
+                    painter = painterResource(id = R.drawable.app_logo), // Replace with your drawable resource
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(bottom = 16.dp)
+                )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Title
                 Text(
-                    text = "¡Bienvenido!",
+                    text = stringResource(id=R.string.welcome_title),
                     style = MaterialTheme.typography.titleLarge
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+
 
                 // Subtitle
                 Text(
-                    text = "Te enviamos un código a tu mail",
+                    text = stringResource(id=R.string.mail_sent),
                     style = MaterialTheme.typography.bodyMedium
                 )
 
@@ -70,8 +81,10 @@ fun VerificationScreen(
                                 }
                             },
                             modifier = Modifier.size(60.dp),
+                            colors = OutlinedTextFieldDefaults.colors( unfocusedContainerColor = Color.White),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true
+
                         )
                     }
                 }
@@ -99,16 +112,17 @@ fun VerificationScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Cancelar")
+                        Text(text = stringResource(id=R.string.cancel))
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Button(
                         onClick = { viewModel.onEvent(VerificationEvent.Verify) },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.blue_bar)),
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Registrar")
+                        Text(text  = stringResource(id=R.string.continue_action))
                     }
                 }
             }

@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class VerificationViewModel : ViewModel() {
+open class VerificationViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(VerificationState())
+    val _state = MutableStateFlow(VerificationState())
     val state = _state.asStateFlow()
 
     fun onCodeChanged(index: Int, value: String) {
@@ -33,8 +33,6 @@ class VerificationViewModel : ViewModel() {
             try {
                 _state.update { it.copy(isLoading = true, errorMsg = null) }
 
-                // Simulate verification delay
-                kotlinx.coroutines.delay(2000)
 
                 if (currentState.code.joinToString("").isEmpty()) {
                     throw IllegalArgumentException("El código de verificación no puede estar vacío.")
