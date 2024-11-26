@@ -28,6 +28,7 @@ import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.routes.NavigatorProvider
 
 class MainActivity : ComponentActivity() {
@@ -49,10 +50,10 @@ class MainActivity : ComponentActivity() {
         val walletRemoteDataSource = NetworkModule.provideWalletApiService(retrofit)
         val paymentRemoteDataSource = NetworkModule.providePaymentApiService(retrofit)
 
-        navigator = Navigator(sessionManager)
+        this.navigator = Navigator(sessionManager)
         setContent {
             CompositionLocalProvider(
-                NavigatorProvider provides navigator,
+                NavigatorProvider provides this.navigator,
                 SessionProvider provides sessionManager,
                 UserRepositoryProvider provides userRepository,
                 WalletApiServiceProvider provides walletRemoteDataSource,
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 WallethciTheme {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        floatingActionButton = { FloatingQRButton(navigator) },
+                        // floatingActionButton = { FloatingQRButton(navigator) },
                         bottomBar = { 
                             NavBar() 
                         },

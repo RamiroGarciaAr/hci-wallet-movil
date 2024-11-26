@@ -4,6 +4,7 @@ package com.example.wallet_hci.app.routes
 /**
  * ICONS
  */
+import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
@@ -103,12 +104,13 @@ sealed interface Routes {
     @Composable abstract fun getIcon(selected: Boolean): ImageVector
 }
 
-val NavigatorProvider = staticCompositionLocalOf<Navigator> { error("Navigator not provided") }
+//@SuppressLint("CompositionLocalNaming")
+//val NavigatorProvider = staticCompositionLocalOf<Navigator> { error("Navigator not provided") }
 
 @Singleton
 class Navigator @Inject constructor(private val sessionManager: SessionManager) {
 
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
 
     fun navigateTo(
             route: String,
@@ -130,14 +132,10 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         navController.popBackStack()
     }
 
-    fun getCurrentPage(): String {
-        return navController.currentBackStackEntry?.destination?.route ?: ""
-    }
-
     @Composable
     fun Routes() {
-        navController = rememberNavController()
-        NavHost(navController = navController, startDestination = Routes.Home) {
+        this.navController = rememberNavController()
+        NavHost(navController = this.navController, startDestination = Routes.Home) {
             composable<Routes.Home> { HomeView() }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> { 
