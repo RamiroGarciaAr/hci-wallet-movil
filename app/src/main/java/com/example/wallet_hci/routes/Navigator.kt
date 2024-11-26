@@ -34,9 +34,10 @@ import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
 import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
 
-
 import com.example.wallet_hci.screens.app.Login.LogInScreen
 import com.example.wallet_hci.screens.app.registration.RegistrationScreen
+import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInfo
+import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInfoParams
 import com.example.wallet_hci.screens.app.code.VerificationScreen
 
 import javax.inject.Inject
@@ -47,12 +48,17 @@ import androidx.navigation.Navigator as NavHostNavigator
 import com.example.wallet_hci.screens.app.Deposit.DepositScreen
 import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
 
+import com.example.wallet_hci.UiStateProvider
+
 sealed interface Routes {
     @Serializable
     object Login
 
     @Serializable
     object Register
+    @Serializable
+    data class RegisterAdditionalInfo(val params: RegistrationAdditionalInfoParams)
+
 
     @Serializable
     object Settings : Routes {
@@ -117,6 +123,7 @@ sealed interface Routes {
     @Serializable
     object Deposit
 
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -155,8 +162,13 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     @Composable
     fun Routes() {
         this.navController = rememberNavController()
+        val uiState = UiStateProvider.current
+
         NavHost(navController = this.navController, startDestination = Routes.Login) {
-            composable<Routes.Home> { HomeView() }
+            composable<Routes.Home> { 
+                uiState.showNavigationBar = false
+                HomeView() 
+            }
             composable<Routes.Activity> { Activity() }
             composable<Routes.Contacts> {
                 ContactScreen(
@@ -174,6 +186,14 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             composable<Routes.Transfer> { TransferScreen() }
             composable<Routes.Login> { LogInScreen() }
             composable<Routes.Register> { RegistrationScreen() }
+            // composable<Routes.RegisterAdditionalInfo> { it -> RegistrationAdditionalInfo(
+            //     params = RegistrationAdditionalInfoParams(
+            //         email = it.arguments?.getString("email") ?: "",
+            //         password = it.arguments?.getString("password") ?: "",
+            //         confirmPassword = it.arguments?.getString("confirmPassword") ?: ""
+            //     )
+            // ) }
+            
             composable<Routes.VerifyCode> { VerificationScreen() } 
 
             // composable<Routes.Profile> { MyProfile() }

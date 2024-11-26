@@ -17,6 +17,8 @@ import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.routes.NavigatorProvider
 
 import com.example.wallet_hci.data.model.RegistrationUser
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.ui.snackbars.SnackbarSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ fun RegistrationScreen(
     // onRegisterClick: (String, String, String) -> Unit = { _, _, _ -> }
 ) {
     val navigator = NavigatorProvider.current
+    val uiState = UiStateProvider.current
     val userRepository = UserRepositoryProvider.current
 
     Scaffold { paddingValues ->
@@ -95,8 +98,10 @@ fun RegistrationScreen(
                         password = password
                     )
 
+                    
                     CoroutineScope(Dispatchers.Main).launch {
-                        userRepository.register(registrationUser)
+                        uiState.snackbarHostState.showSnackbar(SnackbarSuccess(message = "Registro Exitoso"))
+                        // userRepository.register(registrationUser)
                     }
                  },
                 modifier = Modifier.fillMaxWidth(),

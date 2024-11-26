@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 import com.example.wallet_hci.app.routes.Navigator
 import com.example.wallet_hci.ui.theme.WallethciTheme
 import com.example.wallet_hci.ui.menu.NavBar
 import com.example.wallet_hci.ui.menu.FloatingQRButton
+import com.example.wallet_hci.ui.snackbars.SnackbarSuccess
 
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.data.repository.UserRepository
@@ -29,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.data.network.UserRemoteDataSource
 import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.UiState
+
 
 class MainActivity : ComponentActivity() {
     private lateinit var navigator: Navigator
@@ -38,6 +44,7 @@ class MainActivity : ComponentActivity() {
 
 
         val sessionManager = SessionManager(this)
+        val uiState = UiState()
 
         val loggingInterceptor = NetworkModule.provideHttpLoggingInterceptor()
         val okHttpClient = NetworkModule.provideOkHttpClient(loggingInterceptor, this)
@@ -57,16 +64,16 @@ class MainActivity : ComponentActivity() {
                 UserRepositoryProvider provides userRepository,
                 WalletApiServiceProvider provides walletRemoteDataSource,
                 PaymentApiServiceProvider provides paymentRemoteDataSource,
-                
+                UiStateProvider provides uiState,
             ){
                 WallethciTheme {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         // floatingActionButton = { FloatingQRButton(navigator) },
-                        bottomBar = { 
-                            NavBar() 
-                        },
-
+                        bottomBar = { if(uiState.showNavigationBar) NavBar() },
+                        snackbarHost = { SnackbarHost(
+                            uiState.snackbarHostState,
+                        ) },
                     ) { innerPadding ->  
                         Column(modifier = Modifier.padding(innerPadding))
                         { navigator.Routes() }
