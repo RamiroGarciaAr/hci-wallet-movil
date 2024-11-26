@@ -55,7 +55,7 @@ fun TransferResultScreen(
         ) {
             // Mensaje de éxito
             CustomCard(
-                title = stringResource(id = R.string.transfer_success_title),
+                header = {Text(stringResource(id = R.string.transfer_success_title))},
                 style = CardStyle.Success
             ) {
                 Column {
@@ -77,7 +77,7 @@ fun TransferResultScreen(
 
             // Detalles de la transferencia
             CustomCard(
-                title = stringResource(id = R.string.transfer_details_title),
+                header =  {Text(stringResource(id = R.string.transfer_details_title))},
                 style = CardStyle.Default
             ) {
                 Row(
