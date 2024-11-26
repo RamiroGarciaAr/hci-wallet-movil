@@ -36,9 +36,9 @@ fun ConfigurationAccordionMenu(viewModel: AccordionViewModel = viewModel()) {
         item {
             AccordionItem(
                 title = "Bancaria",
-                content = listOf("Tu Alias", "Añadir Tarjeta"),
+                content = listOf("Tu Alias"),
                 viewModel = viewModel,
-                txtBarMsg = listOf("Tu Alias", "Añadir Tarjeta")
+                txtBarMsg = listOf("Tu Alias")
             )
         }
         item {

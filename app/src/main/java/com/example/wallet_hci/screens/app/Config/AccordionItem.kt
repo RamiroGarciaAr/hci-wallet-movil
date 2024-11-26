@@ -30,6 +30,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,6 +52,7 @@ fun AccordionItem(
     content: List<String>,
     viewModel: AccordionViewModel,
     isDangerZone: Boolean = false,
+    isBank: Boolean = false,
     txtBarMsg: List<String>? = null
 ) {
     // Ensure the item is initialized in the ViewModel
@@ -58,10 +60,11 @@ fun AccordionItem(
 
     // Observe the expanded state from the ViewModel
     val expanded = viewModel.expandedStates[title] == true
-    val degrees = animateFloatAsState(if (expanded) 180f else 0f).value // Fixed here
+    val degrees = animateFloatAsState(if (expanded) 180f else 0f).value
 
-    // Local state for the TextField input
-    var name by remember { mutableStateOf("") }
+    // Local state for each TextField input
+    val textFieldValues = remember { mutableStateListOf(*Array(content.size) { "" }) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +73,7 @@ fun AccordionItem(
         // Header Row
         Row(
             modifier = Modifier
-                .fillMaxWidth() // Occupy the full width of the screen
+                .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
                 .clickable { viewModel.toggleExpanded(title) }
                 .background(
@@ -91,7 +94,7 @@ fun AccordionItem(
             Icon(
                 imageVector = Icons.Default.ArrowDropDown,
                 contentDescription = null,
-                modifier = Modifier.rotate(degrees), // Apply rotation
+                modifier = Modifier.rotate(degrees),
                 tint = MaterialTheme.colorScheme.onPrimary
             )
         }
@@ -115,57 +118,44 @@ fun AccordionItem(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                var idx = 0
-                // Loop through content items
-                content.forEach { item ->
-
-                    if (isDangerZone) {
-                        Button(
-                            onClick = { onChangePass() },
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(text = stringResource(id = R.string.change_password))
-                        }
-                        Button(
-                            onClick = { onDeleteAccount() },
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(text = stringResource(id = R.string.delete_account))
-                        }
-                    }
-                    else
-                    {
-                        Text(
-                            text = item,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                content.forEachIndexed { index, item ->
+                    Text(
+                        text = item,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                    OutlinedTextField(
+                        value = textFieldValues[index],
+                        label = { Text(txtBarMsg?.getOrNull(index) ?: "Type here") },
+                        onValueChange = { textFieldValues[index] = it },
+                        placeholder = { Text(txtBarMsg?.getOrNull(index) ?: "Type Here") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = Color.Black,
+                            unfocusedContainerColor = Color.White,
+                            focusedContainerColor = Color.White,
+                            focusedBorderColor = Color.Blue,
                         )
-                        OutlinedTextField(
-                            value = name,
-                            label = { Text(txtBarMsg?.getOrNull(idx) ?: "Type here") },
-                            onValueChange = { name = it },
-                            placeholder = { Text(txtBarMsg?.getOrNull(idx) ?: "Type Here") },
+                    )
+                    if (isBank) {
+                        Button(
+                            onClick = { /* Handle button click */ },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.primary_500)
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 16.dp),
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.Black,
-                                unfocusedContainerColor = Color.White,
-                                focusedContainerColor = Color.White,
-                                focusedBorderColor = Color.Blue,
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                                .padding(vertical = 8.dp)
+                        ) {
+                            Text(text = "Bank Action", color = MaterialTheme.colorScheme.onPrimary)
+                        }
                     }
-                    idx += 1
-
                 }
-
             }
         }
 
@@ -180,9 +170,9 @@ fun AccordionItem(
 }
 
 fun onDeleteAccount() {
-    //TODO
+    // TODO: Implement delete account functionality
 }
 
 fun onChangePass() {
-    //TODO
+    // TODO: Implement change password functionality
 }
