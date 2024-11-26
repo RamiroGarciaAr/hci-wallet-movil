@@ -80,7 +80,7 @@ fun VerificationScreen(
                     textAlign = TextAlign.Start
                 )
 
-                Spacer(modifier = Modifier.height(150.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
                 Text(
                     text = stringResource(id = R.string.verification_code),
@@ -121,8 +121,6 @@ fun VerificationScreen(
                     ) {
                         Text(text = stringResource(id = R.string.cancel))
                     }
-
-                    Spacer(modifier = Modifier.width(16.dp))
 
                     Button(
                         onClick = { viewModel.onEvent(VerificationEvent.Verify) },

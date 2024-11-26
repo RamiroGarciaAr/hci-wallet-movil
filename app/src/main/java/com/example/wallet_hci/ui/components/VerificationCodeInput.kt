@@ -16,6 +16,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.ui.input.key.*
+
+
+
 @Composable
 fun VerificationCodeInput(
     code: List<String>,
@@ -35,6 +39,7 @@ fun VerificationCodeInput(
                 onValueChange = { newValue ->
                     if (newValue.length <= 1) { // Allow only one character
                         onCodeChanged(index, newValue)
+
                         if (newValue.isNotEmpty() && index < code.size - 1) {
                             focusRequesters[index + 1].requestFocus()
                         }
@@ -42,7 +47,15 @@ fun VerificationCodeInput(
                 },
                 modifier = Modifier
                     .size(textFieldSize)
-                    .focusRequester(focusRequesters[index]),
+                    .focusRequester(focusRequesters[index])
+                    .onKeyEvent { event ->
+                        if (event.key == Key.Backspace && index > 0) {
+                            focusRequesters[index - 1].requestFocus()
+                            true
+                        } else {
+                            false
+                        }
+                    },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = Color.Black,
                     unfocusedContainerColor = Color.White,
@@ -55,3 +68,4 @@ fun VerificationCodeInput(
         }
     }
 }
+
