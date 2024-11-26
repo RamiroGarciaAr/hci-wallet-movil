@@ -66,7 +66,7 @@ fun LogInScreen(
                     onClick = { viewModel.onEvent(LoginEvent.Login) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Iniciar sesión")
+                    Text(stringResource.(id=R.string.log_in))
                 }
 
                 // Error message
@@ -85,7 +85,7 @@ fun LogInScreen(
                 TextButton(
                     onClick = onNavigateToRegister
                 ) {
-                    Text("Crear cuenta")
+                    Text(stringResource.(id=R.string.create_account))
                 }
             }
         }

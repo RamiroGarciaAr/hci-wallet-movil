@@ -69,8 +69,36 @@
     <string name="confirm_password_placeholder">**********</string>
 
 
+    <!-- stringResource.(id=R.string) -->
 
 
     <string name="need_camera_permission_to_scan">Necesitas permiso de cámara para escanear</string>
+
+    <string name="find_contact">Buscar un contacto</string>
+
+    <string name="unmark_favorite">Desmarcar favorito</string>
+    
+    <string name="mark_favorite">Marcar favorito</string>
+
+    <string name="all_contacts">Todos los contactos</string>
+
+    <string name="favorites">Favoritos</string>
+
+    <string name="recent">Recientes</string>
+
+    <string name="password">Contraseña</string>
+
+    <string name="log_in">Iniciar Sesión</string>
+
+    <string name="forgot_password">¿Olvidaste tu contraseña? Recupérala</string>
+
+    <string name="create_account">Crear cuenta</string>
+
+    <string name="QR_error">Error al generar el QR</string>
+
+    <string name="money_available">Dinero disponible</string>
+
+    <string name="money_movements">Movimientos de tu dinero</string>
+
 
 </resources>

@@ -96,7 +96,7 @@ fun MyProfile(
                         )
                     } else {
                         Text(
-                            text = "Error al generar el QR",
+                            text = stringResource.(id=R.string.QR_error),
                             color = Color.Red,
                             modifier = Modifier.padding(16.dp)
                         )

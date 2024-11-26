@@ -57,7 +57,7 @@ fun LogInScreen(
             OutlinedTextField(
                 value = password.value,
                 onValueChange = { password.value = it },
-                label = { Text("Contraseña") },
+                label = { Text(stringResource.(id=R.string.password)) },
                 placeholder = { Text("**********") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -77,7 +77,7 @@ fun LogInScreen(
 
             // Enlace para recuperar contraseña
             TextButton(onClick = onForgotPasswordClick) {
-                Text(text = "¿Olvidaste tu contraseña? Recupérala", color = Color(0xFF0056D2))
+                Text(text = stringResource.(id=R.string.forgot_password)), color = Color(0xFF0056D2))
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -95,7 +95,7 @@ fun LogInScreen(
                     containerColor = Color(0xFF0056D2) // Cambia a tu color azul
                 )
             ) {
-                Text(text = "Crear cuenta", color = Color.White)
+                Text(text = stringResource.(id=R.string.create_account), color = Color.White)
             }
         }
     }

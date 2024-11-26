@@ -53,8 +53,8 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
-        placeholder = { Text("Buscar un contacto") },
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
+        placeholder = { Text(stringResource.(id=R.string.find_contact)) },
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = stringResource.(id=R.string.find_contact)) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -86,7 +86,7 @@ fun ContactItem(contact: Contact, onFavoriteToggle: (Contact) -> Unit) {
         IconButton(onClick = { onFavoriteToggle(contact) }) {
             Icon(
                 imageVector = if (contact.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                contentDescription = if (contact.isFavorite) "Desmarcar favorito" else "Marcar como favorito",
+                contentDescription = if (contact.isFavorite) stringResource.(id=R.string.unmark_favorite) else stringResource.(id=R.string.mark_favorite),
                 tint = if (contact.isFavorite) Color.Red else Color.Gray
             )
         }
@@ -99,13 +99,13 @@ fun FiltersRow(selectedFilter: FilterOption, onFilterSelected: (FilterOption) ->
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        FilterButton("Todos los contactos", isSelected = selectedFilter == FilterOption.ALL) {
+        FilterButton(stringResource.(id=R.string.all_contacts), isSelected = selectedFilter == FilterOption.ALL) {
             onFilterSelected(FilterOption.ALL)
         }
-        FilterButton("Favoritos", isSelected = selectedFilter == FilterOption.FAVORITES) {
+        FilterButton(stringResource.(id=R.string.favorites), isSelected = selectedFilter == FilterOption.FAVORITES) {
             onFilterSelected(FilterOption.FAVORITES)
         }
-        FilterButton("Recientes", isSelected = selectedFilter == FilterOption.RECENTS) {
+        FilterButton(stringResource.(id=R.string.recent), isSelected = selectedFilter == FilterOption.RECENTS) {
             onFilterSelected(FilterOption.RECENTS)
         }
     }
