@@ -86,4 +86,10 @@
     <string name="mercado_pay">Cuenta bancaria: MercadoPay</string>
     <string name="external_account">Seleccione una cuenta externa </string>
     <string name="add_amount">Seleccione el monto</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="card_number"> Número de Tarjeta</string>
+    <string name="expiration_date">Fecha de Vencimiento (MM/AA)</string>
+    <string name="cvv">CVV</string>
+
 </resources>

@@ -23,6 +23,7 @@ fun TransferErrorScreen(
     onRetry: () -> Unit = {},
     onScheduleTransfer: () -> Unit = {}
 ) {
+
     Scaffold(
         topBar = {
             TopAppBar(

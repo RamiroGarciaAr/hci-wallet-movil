@@ -18,4 +18,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_bar">#0055FF</color>
     <color name="green_transfer">#00FF00</color>
+    <color name="red">#FF0000</color>
 </resources>

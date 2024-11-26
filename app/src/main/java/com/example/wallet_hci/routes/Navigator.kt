@@ -43,6 +43,7 @@ import kotlinx.serialization.Serializable
 
 import androidx.navigation.Navigator as NavHostNavigator
 import com.example.wallet_hci.screens.app.Deposit.DepositScreen
+import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
 
 sealed interface Routes {
     @Serializable
@@ -255,6 +256,26 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
 
             // Pantalla de transferencias
             // Pantalla de transferencias
+            // Nueva ruta en Navigator para Desvincular y Vincular Tarjetas
+           /* composable("unlinkCards") {
+                UnlinkCardScreen(
+                    cardList = listOf("Visa **** 1234", "Mastercard **** 5678"),
+                    onCardUnlink = { card ->
+                        println("Tarjeta desvinculada: $card") // Lógica para desvincular tarjeta
+                    },
+                    onBack = { navigateBack() }
+                )
+            }*/
+
+            composable("linkCard") {
+                LinkCardScreen(
+                    onCardLink = { cardNumber, expiryDate, cvv ->
+                        println("Tarjeta vinculada: $cardNumber $expiryDate $cvv") // Lógica para vincular tarjeta
+                    },
+                    onBack = { navigateBack() }
+                )
+            }
+
             composable(
                     route = "transfer?selectedContact={selectedContact}",
                     arguments =
