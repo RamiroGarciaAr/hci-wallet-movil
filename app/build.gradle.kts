@@ -67,8 +67,7 @@ dependencies {
     implementation(libs.retrofit) // Retrofit core library
     implementation(libs.retrofit2.kotlinx.serialization.converter) // Kotlin Serialization Converter
     implementation(libs.okhttp3.logging.interceptor) // Logging interceptor for OkHttp
-    // implementation (libs.kotlinx.serialization.json.v163)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation(libs.kotlinx.serialization.json.v163)
 
 
 
@@ -83,7 +82,7 @@ dependencies {
 
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
 
 
 

@@ -28,7 +28,6 @@ import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavigatorProvider
 import com.example.wallet_hci.routes.NavigatorProvider
 
 class MainActivity : ComponentActivity() {

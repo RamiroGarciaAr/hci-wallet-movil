@@ -1,52 +1,41 @@
 package com.example.wallet_hci.app.routes
 
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.Navigator as NavHostNavigator
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.composable
-import androidx.navigation.NavType
-import androidx.navigation.NavOptions
-import androidx.navigation.navArgument
-
-import com.example.wallet_hci.R
-import com.example.wallet_hci.SessionManager
-import com.example.wallet_hci.app.screens.home.*
-import com.example.wallet_hci.app.Activity
-import com.example.wallet_hci.data.network.api.NetworkModule
-import com.example.wallet_hci.data.UserRemoteDataSource
-import com.example.wallet_hci.data.netowrk.api.APIUserService
-import com.example.wallet_hci.data.repository.UserRepository
-import com.example.wallet_hci.screens.app.contacts.ContactScreen
-import com.example.wallet_hci.screens.app.Login.LoginView
-import com.example.wallet_hci.screens.app.contacts.AddContactScreen
-import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
-
-
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
  * ICONS
  */
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material.icons.filled.List
-
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.filled.Person2
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person2
-import androidx.compose.ui.res.stringResource
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.vector.ImageVector
-
-import android.content.SharedPreferences
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.wallet_hci.R
+import com.example.wallet_hci.SessionManager
+import com.example.wallet_hci.app.Activity
+import com.example.wallet_hci.app.screens.home.*
+import com.example.wallet_hci.screens.app.contacts.AddContactScreen
+import com.example.wallet_hci.screens.app.contacts.ContactScreen
+import com.example.wallet_hci.screens.app.transfers.TransferResultScreen
 
 import javax.inject.Inject
 import javax.inject.Singleton
-
 import kotlinx.serialization.Serializable
+
+import androidx.navigation.Navigator as NavHostNavigator
 
 sealed interface Routes {
     @Serializable
