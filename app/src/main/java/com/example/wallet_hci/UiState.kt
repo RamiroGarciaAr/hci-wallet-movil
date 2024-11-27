@@ -15,7 +15,7 @@ val UiStateProvider = staticCompositionLocalOf<UiState> { error("UiState not pro
 @Singleton
 class UiState @Inject constructor() {
     var snackbarHostState by mutableStateOf(SnackbarHostState())
-    var showNavigationBar by mutableStateOf(true)
+    var showNavigationBar by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
 
     fun toggleNavigationBar() {

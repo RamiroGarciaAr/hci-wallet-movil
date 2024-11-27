@@ -165,26 +165,13 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
         val uiState = UiStateProvider.current
 
         NavHost(navController = this.navController, startDestination = Routes.Login) {
-            composable<Routes.Home> { 
+            /**
+             * AUTH SCREENS
+             */
+            composable<Routes.Login> { 
                 uiState.showNavigationBar = false
-                HomeView() 
+                LogInScreen() 
             }
-            composable<Routes.Activity> { Activity() }
-            composable<Routes.Contacts> {
-                ContactScreen(
-                    onBack = { navigateBack() },
-                    onAddContact = { navigateTo("addContact") }, // Navega a agregar contacto
-                    onContactSelected = { selectedContact ->
-                        // Navega a la pantalla de transferencias con el contacto seleccionado
-                        navigateTo("transfer?selectedContact=$selectedContact")
-                    }
-                )
-            } // Ruta para Contacts
-
-            composable<Routes.Deposit> { DepositScreen() }
-            // Transfer screen
-            composable<Routes.Transfer> { TransferScreen() }
-            composable<Routes.Login> { LogInScreen() }
             composable<Routes.Register> { RegistrationScreen() }
             // composable<Routes.RegisterAdditionalInfo> { it -> RegistrationAdditionalInfo(
             //     params = RegistrationAdditionalInfoParams(
@@ -195,6 +182,34 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             // ) }
             
             composable<Routes.VerifyCode> { VerificationScreen() } 
+
+
+            /**
+             * APP SCREENS
+             */
+            composable<Routes.Home> { 
+                uiState.showNavigationBar = true
+                HomeView() 
+            }
+            composable<Routes.Activity> {
+                uiState.showNavigationBar = true
+                Activity() 
+            }
+            composable<Routes.Contacts> {
+                ContactScreen(
+                    onBack = { navigateBack() },
+                    onAddContact = { navigateTo("addContact") }, // Navega a agregar contacto
+                    onContactSelected = { selectedContact ->
+                        // Navega a la pantalla de transferencias con el contacto seleccionado
+                        navigateTo("transfer?selectedContact=$selectedContact")
+                    }
+                )
+            } // Ruta para Contacts
+            composable<Routes.Deposit> { DepositScreen() }
+            // Transfer screen
+            composable<Routes.Transfer> { TransferScreen() }
+
+
 
             // composable<Routes.Profile> { MyProfile() }
             // TransferResult
