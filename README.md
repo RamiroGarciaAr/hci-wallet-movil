@@ -1,86 +1,113 @@
-Requisitos Previos
-Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
+🚀 Requisitos Previos
 
-Android Studio (última versión recomendada).
-Java Development Kit (JDK) versión 11 o superior.
-Gradle (administrado automáticamente por Android Studio).
-Dispositivo o emulador Android para probar la aplicación.
-Pasos para Configurar el Proyecto
-1. Clonar o Descargar el Proyecto
-Clona el repositorio con el siguiente comando o descárgalo manualmente como archivo ZIP.
+Antes de empezar, asegúrate de contar con los siguientes elementos:
 
-bash
-Copy code
+- [Android Studio](https://developer.android.com/studio) (última versión recomendada).
+- Java Development Kit (JDK) versión 11 o superior.
+- Gradle (administrado automáticamente por Android Studio).
+- Un dispositivo Android físico o un emulador configurado.
+
+🛠️ Pasos para Configurar el Proyecto
+
+1️⃣ Clonar o Descargar el Proyecto
+Clona este repositorio o descárgalo manualmente como archivo ZIP:
+
 git clone https://github.com/usuario/nombre-repositorio.git
-Luego, abre el proyecto en Android Studio:
 
-Ve a File > Open y selecciona la carpeta del proyecto.
-Android Studio descargará las dependencias automáticamente.
-2. Configurar el SDK
-Ve a File > Project Structure > SDK Location.
-Asegúrate de que la ubicación del SDK esté configurada correctamente.
-Descarga cualquier versión requerida del SDK desde Tools > SDK Manager.
-3. Configurar un Emulador
-Ve a Tools > Device Manager en Android Studio.
-Crea un nuevo emulador (recomendado: Pixel 5 con Android 12 o superior).
-Haz clic en Run para iniciar el emulador.
-Construir y Correr la Aplicación
-1. Construir el Proyecto
-Haz clic en Build > Make Project en la barra de menú o utiliza el botón Build.
+1. Abre Android Studio.
+2. Ve a File > Open y selecciona la carpeta del proyecto.
+3. Android Studio descargará las dependencias automáticamente.
 
-2. Ejecutar la Aplicación
-Conecta un dispositivo físico con Depuración USB habilitada o inicia un emulador.
-Haz clic en Run > Run 'app' o en el botón de ejecución (triángulo verde).
-La aplicación se instalará en el dispositivo/emulador y se abrirá automáticamente.
-Solución de Problemas Comunes
-1. "Failed to sync Gradle project"
-Ve a File > Sync Project with Gradle Files.
-Asegúrate de estar conectado a internet.
-2. El emulador no inicia
-Asegúrate de que la configuración del emulador es compatible.
-Aumenta la RAM asignada en las configuraciones del emulador.
-3. Problemas con Gradle
-Revisa posibles conflictos en las dependencias en build.gradle.
-Ejecuta el siguiente comando en la terminal para limpiar y reconstruir:
-bash
-Copy code
+2️⃣ Configurar el SDK
+
+1. Abre File > Project Structure > SDK Location.
+2. Verifica que la ubicación del SDK esté configurada correctamente.
+3. Si faltan versiones del SDK, descárgalas desde Tools > SDK Manager.
+
+3️⃣ Configurar un Emulador
+
+1. Abre Tools > Device Manager.
+2. Crea un emulador (recomendado: Pixel 5 con Android 12 o superior).
+3. Haz clic en Run para iniciar el emulador.
+
+▶️ Construir y Ejecutar la Aplicación
+
+Construir el Proyecto
+
+- Haz clic en Build > Make Project o utiliza el botón de construcción en la barra de herramientas.
+
+Ejecutar la Aplicación
+
+1. Conecta un dispositivo físico con Depuración USB habilitada o inicia el emulador.
+2. Haz clic en Run > Run 'app' o en el botón de ejecución (triángulo verde).
+3. La aplicación se instalará automáticamente y se abrirá en el dispositivo o emulador.
+
+🛠️ Solución de Problemas Comunes
+
+⚠️ Error: "Failed to sync Gradle project"
+
+- Ve a File > Sync Project with Gradle Files.
+- Asegúrate de tener una conexión a internet activa.
+
+⚠️ El emulador no inicia
+
+- Verifica la configuración del emulador.
+- Aumenta la RAM asignada en las configuraciones del emulador.
+
+⚠️ Problemas con Gradle
+
+1. Revisa conflictos en las dependencias dentro de build.gradle.
+2. Limpia y reconstruye el proyecto con el siguiente comando:
+
 ./gradlew clean build
-4. Errores de permisos en dispositivos físicos
-Habilita Depuración USB en el dispositivo desde las Opciones de Desarrollador.
-Ve a Configuración > Acerca del Teléfono > Número de compilación (tócalo 7 veces para activar las Opciones de Desarrollador).
-Activa la opción Depuración USB.
-Probar la Aplicación
-Inicia la aplicación en un dispositivo o emulador.
 
-Navega por las pantallas principales y prueba las funcionalidades clave:
+⚠️ Errores de permisos en dispositivos físicos
 
-Inicio de sesión.
-Registro de usuario.
-Flujos de navegación.
-Si el proyecto requiere claves de API o configuraciones específicas, asegúrate de configurarlas en local.properties o en un archivo .env.
+1. Habilita Depuración USB:
+   - Ve a Configuración > Acerca del Teléfono > Número de compilación.
+   - Toca 7 veces para activar las Opciones de Desarrollador.
+2. Activa Depuración USB en las Opciones de Desarrollador.
 
-Generar un APK o AAB
-Para generar un archivo APK o AAB listo para distribución:
+✅ Probar la Aplicación
 
-Ve a Build > Build Bundle(s) / APK(s) > Build APK(s).
-El archivo generado estará en:
-bash
-Copy code
+1. Abre la aplicación en tu dispositivo o emulador.
+2. Navega por las pantallas principales y verifica las funcionalidades clave:
+   - Inicio de sesión.
+   - Registro de usuario.
+   - Flujos de navegación.
+
+🔑 Claves de API
+
+Si el proyecto requiere claves de API o configuraciones específicas, agrégalas en un archivo local.properties o .env.
+
+📦 Generar un APK o AAB
+
+Sigue estos pasos para generar un archivo listo para distribución:
+
+1. Ve a Build > Build Bundle(s) / APK(s) > Build APK(s).
+2. El archivo generado estará en la ruta:
+
 app/build/outputs/apk/
-Contribuir
-¡Las contribuciones son bienvenidas! Si deseas agregar nuevas funcionalidades o corregir errores, por favor:
 
-Crea un fork del repositorio.
-Crea una nueva rama para tus cambios:
-bash
-Copy code
+🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Para contribuir:
+
+1. Haz un fork del repositorio.
+2. Crea una rama nueva para tus cambios:
+
 git checkout -b nombre-de-tu-rama
-Realiza tus cambios y súbelos:
-bash
-Copy code
+
+3. Realiza tus cambios y súbelos:
+
 git add .
 git commit -m "Descripción de los cambios"
 git push origin nombre-de-tu-rama
-Abre un Pull Request en este repositorio.
-Licencia
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más información.
+
+4. Abre un Pull Request en este repositorio.
+
+📄 Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
+
+¡Gracias por contribuir y ser parte de este proyecto! 🚀
