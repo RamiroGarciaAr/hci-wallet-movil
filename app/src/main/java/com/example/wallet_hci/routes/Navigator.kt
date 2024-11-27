@@ -167,7 +167,6 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     fun Routes() {
         this.navController = rememberNavController()
         val uiState = UiStateProvider.current
-
         NavHost(navController = this.navController, startDestination = Routes.Login) {
             /**
              * AUTH SCREENS
@@ -222,7 +221,11 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             } // Ruta para Contacts
             composable<Routes.Deposit> { 
                 uiState.showNavigationBar = false
-                DepositScreen() 
+                DepositScreen(
+                    onCancel = {
+                        navigateBack()   
+                    }
+                ) 
             }
             // Transfer screen
             composable<Routes.Transfer> {
