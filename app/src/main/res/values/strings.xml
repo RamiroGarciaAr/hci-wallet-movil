@@ -109,5 +109,10 @@
     <string name="card_number"> Número de Tarjeta</string>
     <string name="expiration_date">Fecha de Vencimiento (MM/AA)</string>
     <string name="cvv">CVV</string>
+    <!-- Password Reset Texts -->
+    <string name="password_reset_title">Restablecer contraseña</string>
+    <string name="password_reset_subtitle">Te hemos enviado un mensaje al mail %1$s</string>
+    <string name="verification_code_title">¿No te llegó el código? Reenviar en %1$d s</string>
+    <string name="resend_button">Reenviar código</string>
 
 </resources>

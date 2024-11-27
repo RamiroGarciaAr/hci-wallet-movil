@@ -60,7 +60,7 @@ fun PasswordResetScreen(
         ) {
             // Title
             Text(
-                text = "Restablecer contraseña",
+                text = stringResource(id = R.string.password_reset_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 35.sp,
@@ -79,7 +79,7 @@ fun PasswordResetScreen(
 
             // Subtitle
             Text(
-                text = "Te hemos enviado un mensaje al mail $emailMethod",
+                text = stringResource(id = R.string.password_reset_subtitle, emailMethod),
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Light,
@@ -107,7 +107,7 @@ fun PasswordResetScreen(
             // Resend Button with Countdown
             if (isTimerActive) {
                 Text(
-                    text = "¿No te llegó el código? Reenviar en ${remainingTime}s",
+                    text = stringResource(id = R.string.verification_code_title, remainingTime),
                     style = MaterialTheme.typography.bodySmall.copy(color = colorResource(R.color.primary_600)),
                     textAlign = TextAlign.Center
                 )
@@ -122,7 +122,7 @@ fun PasswordResetScreen(
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.primary_600))
                 ) {
                     Text(
-                        text = "Reenviar código",
+                        text = stringResource(id = R.string.resend_button),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White
                     )
@@ -140,12 +140,12 @@ fun PasswordResetScreen(
         ) {
             Button(
                 onClick = onBack,
-                colors = ButtonDefaults.buttonColors(colorResource(R.color.primary_600)),
+                colors = ButtonDefaults.buttonColors(Color.White),
                 modifier = Modifier.weight(1f) // Equal weight for symmetry
             ) {
                 Text(
                     text = stringResource(id = R.string.back),
-                    color = Color.White
+                    color = colorResource(R.color.primary_600)
                 )
             }
 

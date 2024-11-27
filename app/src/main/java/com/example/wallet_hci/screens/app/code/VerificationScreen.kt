@@ -35,15 +35,16 @@ fun VerificationScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
+            .padding(16.dp)
     ) {
         if (state.isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
+            // Main content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+               
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.app_logo),
@@ -82,7 +83,6 @@ fun VerificationScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-
                 VerificationCodeInput(
                     code = state.code,
                     onCodeChanged = { index, newValue -> viewModel.onCodeChanged(index, newValue) },
@@ -99,27 +99,32 @@ fun VerificationScreen(
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
+            }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+            // Buttons at the bottom
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    onClick = onCancel,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                    modifier = Modifier.weight(1f) // Equal width for symmetry
                 ) {
-                    Button(
-                        onClick = onCancel,
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(text = stringResource(id = R.string.cancel))
-                    }
-                    Button(
-                        onClick = { viewModel.onEvent(VerificationEvent.Verify) },
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_500)),
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(text = stringResource(id = R.string.continue_action))
-                    }
+                    Text(text = stringResource(id = R.string.cancel))
+                }
+
+                Spacer(modifier = Modifier.width(16.dp)) // Space between buttons
+
+                Button(
+                    onClick = { viewModel.onEvent(VerificationEvent.Verify) },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_600)),
+                    modifier = Modifier.weight(1f) // Equal width for symmetry
+                ) {
+                    Text(text = stringResource(id = R.string.continue_action))
                 }
             }
         }
