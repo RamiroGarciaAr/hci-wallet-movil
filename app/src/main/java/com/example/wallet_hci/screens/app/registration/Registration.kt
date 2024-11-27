@@ -56,7 +56,7 @@ fun RegistrationScreen(
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
             var confirmPassword by remember { mutableStateOf("") }
-
+            val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -87,14 +87,16 @@ fun RegistrationScreen(
 
             // Botón "Registrarse"
             Button(
-                onClick = { 
-
+                onClick = {
                     CoroutineScope(Dispatchers.Main).launch {
                         try { 
                             if(email.isBlank() || password.isBlank() || confirmPassword.isBlank())
                                 throw IllegalArgumentException("Por favor, rellena todos los campos.")
                             if(password != confirmPassword)
                                 throw IllegalArgumentException("Las contraseñas no coinciden.")
+                            if (!emailRegex.matches(email)) {
+                                throw IllegalArgumentException("El mail no tiene un formato valido")
+                            }
                             navigator.navigateTo(Routes.RegisterAdditionalInfo(
                                 email = email,
                                 password = password,

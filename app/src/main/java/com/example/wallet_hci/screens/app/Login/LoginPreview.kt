@@ -28,6 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch 
 
 import com.example.wallet_hci.SessionProvider
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.data.DataSourceException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,9 +41,41 @@ fun LogInScreen(
     val navigator = NavigatorProvider.current
     val sessionManager = SessionProvider.current
     val userRepository = UserRepositoryProvider.current
+    val uiState = UiStateProvider.current
+    // Campos de entrada
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
     val onRegisterClick = { navigator.navigateTo(Routes.Register) }
     val onForgotPasswordClick = { navigator.navigateTo(Routes.Login) }
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+
+    val onLogInClick = {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                if (email.value.isBlank() || password.value.isBlank()) {
+                    throw IllegalArgumentException("Por favor, rellena todos los campos.")
+                }
+                if (!emailRegex.matches(email.value)) {
+                    throw IllegalArgumentException("El mail no tiene un formato válido.")
+                }
+
+                userRepository.login(email = email.value, password = password.value)
+                navigator.navigateTo(Routes.Home) // Navigate to Home on success
+            } catch (e: IllegalArgumentException) {
+                uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al iniciar sesión")
+            } catch (e: DataSourceException) {
+                when (e.code) {
+                    400, 401 -> uiState.snackbarHostState.showSnackbar(message = "El usuario no existe")
+                    404 -> uiState.snackbarHostState.showSnackbar(message = "Los datos ingresados son incorrectos")
+                    else -> uiState.snackbarHostState.showSnackbar(message = "Error al iniciar sesión")
+                }
+            } catch (e: Exception) {
+                uiState.snackbarHostState.showSnackbar(message = "Error desconocido")
+            }
+        }
+    }
 
     Scaffold { paddingValues ->
         Column(
@@ -62,9 +96,7 @@ fun LogInScreen(
                     .clip(CircleShape)
             )
 
-            // Campos de entrada
-            val email = remember { mutableStateOf("") }
-            val password = remember { mutableStateOf("") }
+
 
             OutlinedTextField(
                 value = email.value,
@@ -86,18 +118,7 @@ fun LogInScreen(
 
             // Botón de inicio de sesión
             Button(
-                onClick = { 
-                    CoroutineScope(Dispatchers.Main).launch {
-                        try {
-                           userRepository.login(email.value, password.value)
-                           navigator.navigateTo(Routes.Home)
-                        }
-                        catch (e: Exception) {
-                            println("Error al iniciar sesión: ${e.message}")
-                        }
-                    }
-                    navigator.navigateTo(Routes.Home)
-                 },
+                onClick = {onLogInClick()},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(R.color.primary_500)
