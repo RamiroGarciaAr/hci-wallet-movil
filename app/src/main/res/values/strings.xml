@@ -110,4 +110,6 @@
     <string name="expiration_date">Fecha de Vencimiento (MM/AA)</string>
     <string name="cvv">CVV</string>
 
+
+    <string name="error_registration_empty_fields">Por favor, rellena todos los campos.</string>
 </resources>
