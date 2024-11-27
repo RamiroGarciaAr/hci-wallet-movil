@@ -53,6 +53,7 @@ import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
 import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordEmailScreenStyled
 import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordScreen
 import com.example.wallet_hci.screens.app.passwordRecovery.code.PasswordResetScreen
+import com.example.wallet_hci.screens.app.myProfile.MyProfile
 
 import com.example.wallet_hci.UiStateProvider
 
@@ -246,6 +247,10 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 TransferScreen() 
             }
 
+            composable<Routes.Profile> {
+                uiState.showNavigationBar = true
+                MyProfile()
+            }
 
 
             // composable<Routes.Profile> { MyProfile() }
@@ -387,7 +392,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             }
 
             composable<Routes.EmailRecovery> {
-                uiState.showNavigationBar = true
+                uiState.showNavigationBar = false
                 ResetPasswordEmailScreenStyled(
                     onBackClick = { navigateBack() },
                     onContinueClick = { navigateTo(Routes.RecoveryCode) }
@@ -395,7 +400,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             }
 
             composable<Routes.RecoveryCode> {
-                uiState.showNavigationBar = true
+                uiState.showNavigationBar = false
                 PasswordResetScreen(
                     onBack = { navigateBack() },
                     onResend = { navigateTo(Routes.EmailRecovery) },
@@ -405,7 +410,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             }
 
             composable<Routes.RestePassword> {
-                uiState.showNavigationBar = true
+                uiState.showNavigationBar = false
                 ResetPasswordScreen(
                     onNavigateBack = { navigateBack() },
                     onPasswordChange = { navigateTo(Routes.Home) }
