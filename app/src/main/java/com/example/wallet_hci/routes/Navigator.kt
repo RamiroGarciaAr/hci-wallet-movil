@@ -29,6 +29,8 @@ import com.example.wallet_hci.R
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.app.screens.home.*
+
+import com.example.wallet_hci.screens.app.Config.PreviewConfigurationAccordionMenu
 import com.example.wallet_hci.screens.app.Deposit.DepositResultScreen
 import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
@@ -39,6 +41,7 @@ import com.example.wallet_hci.screens.app.registration.RegistrationScreen
 import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInfo
 import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInfoParams
 import com.example.wallet_hci.screens.app.code.VerificationScreen
+
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -124,6 +127,7 @@ sealed interface Routes {
     object Deposit
 
 
+
     @Serializable object Profile
 
     @Composable abstract fun getName(): String
@@ -192,6 +196,11 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             /**
              * APP SCREENS
              */
+            composable<Routes.Settings> {
+                uiState.showNavigationBar = true
+                PreviewConfigurationAccordionMenu()
+            }
+
             composable<Routes.Home> { 
                 uiState.showNavigationBar = true
                 HomeView() 
