@@ -21,7 +21,5 @@ fun VerificationScreenPreview() {
     // Mock `onVerificationSuccess` and `onCancel` lambdas
     VerificationScreen(
         viewModel = mockViewModel,
-        onVerificationSuccess = { /* Do nothing for preview */ },
-        onCancel = { /* Do nothing for preview */ }
     )
 }
