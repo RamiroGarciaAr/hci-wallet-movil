@@ -172,7 +172,11 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 uiState.showNavigationBar = false
                 LogInScreen() 
             }
-            composable<Routes.Register> { RegistrationScreen() }
+            composable<Routes.Register> { 
+
+                    navigateBack()
+
+                RegistrationScreen() }
             // composable<Routes.RegisterAdditionalInfo> { it -> RegistrationAdditionalInfo(
             //     params = RegistrationAdditionalInfoParams(
             //         email = it.arguments?.getString("email") ?: "",
