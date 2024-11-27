@@ -46,8 +46,12 @@ fun AvailableMoney() {
 
     CoroutineScope(Dispatchers.Main).launch {
         val token = sessionManager.loadAuthToken() ?: ""
-        val balance = walletRepository.getBalance(token = token)
-        balanceState.value = balance?.balance ?: 0.0f
+        try {
+            val balance = walletRepository.getBalance(token = token)
+            balanceState.value = balance?.balance ?: 0.0f
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     var formatter = NumberFormat.getCurrencyInstance()
