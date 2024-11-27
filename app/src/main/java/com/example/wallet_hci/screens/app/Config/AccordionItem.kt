@@ -45,6 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wallet_hci.R
+import com.example.wallet_hci.app.routes.Routes
+import com.example.wallet_hci.routes.NavigatorProvider
 
 @Composable
 fun AccordionItem(
@@ -57,7 +59,7 @@ fun AccordionItem(
 ) {
     // Ensure the item is initialized in the ViewModel
     viewModel.ensureItemInitialized(title)
-
+    val navigator = NavigatorProvider.current
     // Observe the expanded state from the ViewModel
     val expanded = viewModel.expandedStates[title] == true
     val degrees = animateFloatAsState(if (expanded) 180f else 0f).value
@@ -168,7 +170,9 @@ fun AccordionItem(
                     // Display button for Bank Section
                     if (isBank) {
                         Button(
-                            onClick = { /* Handle bank action */ },
+                            onClick = { 
+                                navigator.navigateTo(Routes.NewCard)
+                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = colorResource(R.color.teal_700)
                             ),

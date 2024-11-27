@@ -126,6 +126,8 @@ sealed interface Routes {
     @Serializable
     object Deposit
 
+    @Serializable
+    object NewCard
 
 
     @Serializable object Profile
@@ -331,7 +333,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
             }*/
 
-            composable("linkCard") {
+            composable<Routes.NewCard> {
                 LinkCardScreen(
                     onCardLink = { cardNumber, expiryDate, cvv ->
                         println("Tarjeta vinculada: $cardNumber $expiryDate $cvv") // Lógica para vincular tarjeta
