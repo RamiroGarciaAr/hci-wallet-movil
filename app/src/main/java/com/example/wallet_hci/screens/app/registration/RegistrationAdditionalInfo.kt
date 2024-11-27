@@ -40,6 +40,7 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
         val userRepository = UserRepositoryProvider.current
         val name = remember { mutableStateOf("") }
         val lastName = remember { mutableStateOf("") }
+        val acceptedTerms = remember { mutableStateOf(false) }
 
         //     val errorResource = stringResource(id = R.string.error_registration_empty_fields)
 
@@ -48,6 +49,8 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
                 CoroutineScope(Dispatchers.Main).launch {
                         val birthDate = Date(123456789)
                         try {
+                                if(!acceptedTerms.value)
+                                        throw IllegalArgumentException("Por favor, acepta los términos y condiciones")
                                 if (name.value.isBlank() || lastName.value.isBlank())
                                         throw IllegalArgumentException(
                                                 "Por favor, rellena todos los campos."
@@ -147,8 +150,8 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
                         // para términos y condiciones
                         Row(verticalAlignment = Alignment.CenterVertically) {
                                 Checkbox(
-                                        checked = false,
-                                        onCheckedChange = { /* Manejar cambios */}
+                                        checked = acceptedTerms.value,
+                                        onCheckedChange = { acceptedTerms.value = it }
                                 )
                                 Text(
                                         text = stringResource(id = R.string.terms_conditions_text),

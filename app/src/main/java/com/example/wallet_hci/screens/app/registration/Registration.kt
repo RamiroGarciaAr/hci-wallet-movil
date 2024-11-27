@@ -1,6 +1,8 @@
 package com.example.wallet_hci.screens.app.registration
 
 import androidx.compose.foundation.Image
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -34,7 +36,21 @@ fun RegistrationScreen(
     val navigator = NavigatorProvider.current
     val uiState = UiStateProvider.current
 
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.back)) },
+                navigationIcon = {
+                    IconButton(onClick = { navigator.navigateBack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back)
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,7 +72,7 @@ fun RegistrationScreen(
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
             var confirmPassword by remember { mutableStateOf("") }
-
+            val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -87,14 +103,16 @@ fun RegistrationScreen(
 
             // Botón "Registrarse"
             Button(
-                onClick = { 
-
+                onClick = {
                     CoroutineScope(Dispatchers.Main).launch {
                         try { 
                             if(email.isBlank() || password.isBlank() || confirmPassword.isBlank())
                                 throw IllegalArgumentException("Por favor, rellena todos los campos.")
                             if(password != confirmPassword)
                                 throw IllegalArgumentException("Las contraseñas no coinciden.")
+                            if (!emailRegex.matches(email)) {
+                                throw IllegalArgumentException("El mail no tiene un formato valido")
+                            }
                             navigator.navigateTo(Routes.RegisterAdditionalInfo(
                                 email = email,
                                 password = password,

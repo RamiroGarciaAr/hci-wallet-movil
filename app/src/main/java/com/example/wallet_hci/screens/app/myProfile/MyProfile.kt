@@ -47,12 +47,14 @@ fun generateQRCode(content: String, size: Int = 512): Bitmap? {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyProfile(
-    alias: String = "sol.cielo.arcoiris",
-    cvu: String = "2850590940090418135201",
-    onCopyAlias: () -> Unit = {},
-    onCopyCVU: () -> Unit = {},
-    onShareContact: () -> Unit = {}
+    
 ) {
+    val alias: String = "sol.cielo.arcoiris"
+    val cvu: String = "2850590940090418135201"
+    val onCopyAlias: () -> Unit = {}
+    val onCopyCVU: () -> Unit = {}
+    val onShareContact: () -> Unit = {}
+
     Scaffold(
         topBar = {
             TopAppBar(

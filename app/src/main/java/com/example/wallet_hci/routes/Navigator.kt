@@ -29,6 +29,8 @@ import com.example.wallet_hci.R
 import com.example.wallet_hci.SessionManager
 import com.example.wallet_hci.app.Activity
 import com.example.wallet_hci.app.screens.home.*
+
+import com.example.wallet_hci.screens.app.Config.PreviewConfigurationAccordionMenu
 import com.example.wallet_hci.screens.app.Deposit.DepositResultScreen
 import com.example.wallet_hci.screens.app.contacts.AddContactScreen
 import com.example.wallet_hci.screens.app.contacts.ContactScreen
@@ -40,6 +42,7 @@ import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInf
 import com.example.wallet_hci.screens.app.registration.RegistrationAdditionalInfoParams
 import com.example.wallet_hci.screens.app.code.VerificationScreen
 
+
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.serialization.Serializable
@@ -47,6 +50,10 @@ import kotlinx.serialization.Serializable
 import androidx.navigation.Navigator as NavHostNavigator
 import com.example.wallet_hci.screens.app.Deposit.DepositScreen
 import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
+import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordEmailScreenStyled
+import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordScreen
+import com.example.wallet_hci.screens.app.passwordRecovery.code.PasswordResetScreen
+import com.example.wallet_hci.screens.app.myProfile.MyProfile
 
 import com.example.wallet_hci.UiStateProvider
 
@@ -59,6 +66,14 @@ sealed interface Routes {
     @Serializable
     data class RegisterAdditionalInfo(val email: String, val password: String, val confirmPassword: String)
 
+    @Serializable
+    object EmailRecovery
+
+    @Serializable
+    object RecoveryCode
+
+    @Serializable
+    object RestePassword
 
     @Serializable
     object Settings : Routes {
@@ -123,6 +138,9 @@ sealed interface Routes {
     @Serializable
     object Deposit
 
+    @Serializable
+    object NewCard
+
 
     @Serializable object Profile
 
@@ -163,7 +181,6 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
     fun Routes() {
         this.navController = rememberNavController()
         val uiState = UiStateProvider.current
-
         NavHost(navController = this.navController, startDestination = Routes.Login) {
             /**
              * AUTH SCREENS
@@ -192,6 +209,11 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
             /**
              * APP SCREENS
              */
+            composable<Routes.Settings> {
+                uiState.showNavigationBar = true
+                PreviewConfigurationAccordionMenu()
+            }
+
             composable<Routes.Home> { 
                 uiState.showNavigationBar = true
                 HomeView() 
@@ -211,10 +233,24 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                     }
                 )
             } // Ruta para Contacts
-            composable<Routes.Deposit> { DepositScreen() }
+            composable<Routes.Deposit> { 
+                uiState.showNavigationBar = false
+                DepositScreen(
+                    onCancel = {
+                        navigateBack()   
+                    }
+                ) 
+            }
             // Transfer screen
-            composable<Routes.Transfer> { TransferScreen() }
+            composable<Routes.Transfer> {
+                uiState.showNavigationBar = false
+                TransferScreen() 
+            }
 
+            composable<Routes.Profile> {
+                uiState.showNavigationBar = true
+                MyProfile()
+            }
 
 
             // composable<Routes.Profile> { MyProfile() }
@@ -313,7 +349,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 )
             }*/
 
-            composable("linkCard") {
+            composable<Routes.NewCard> {
                 LinkCardScreen(
                     onCardLink = { cardNumber, expiryDate, cvv ->
                         println("Tarjeta vinculada: $cardNumber $expiryDate $cvv") // Lógica para vincular tarjeta
@@ -352,6 +388,32 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                         navigateTo(route)
                     },
                     onGoToContacts = { navigateTo("contacts") }
+                )
+            }
+
+            composable<Routes.EmailRecovery> {
+                uiState.showNavigationBar = false
+                ResetPasswordEmailScreenStyled(
+                    onBackClick = { navigateBack() },
+                    onContinueClick = { navigateTo(Routes.RecoveryCode) }
+                )
+            }
+
+            composable<Routes.RecoveryCode> {
+                uiState.showNavigationBar = false
+                PasswordResetScreen(
+                    onBack = { navigateBack() },
+                    onResend = { navigateTo(Routes.EmailRecovery) },
+                    onCodeEntered = { navigateTo(Routes.RestePassword) },
+                    emailMethod = "email"
+                )
+            }
+
+            composable<Routes.RestePassword> {
+                uiState.showNavigationBar = false
+                ResetPasswordScreen(
+                    onNavigateBack = { navigateBack() },
+                    onPasswordChange = { navigateTo(Routes.Home) }
                 )
             }
         }

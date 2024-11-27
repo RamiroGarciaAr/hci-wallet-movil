@@ -42,13 +42,15 @@ fun HomeView() {
         Action(
             icon = R.drawable.fa_money_bills,
             text = R.string.deposit,
-            onClick = { /* Lógica para Depósito */ }
+            onClick = { 
+                navigator.navigateTo(Routes.Deposit)
+             }
         ),
         Action(
             icon = R.drawable.fa_paper_plane,
             text = R.string.spend,
             onClick = { 
-                navigator.navigateTo(Routes.Deposit)
+                navigator.navigateTo("transfer")
              }
         ),
         Action(
@@ -61,7 +63,7 @@ fun HomeView() {
         Action(
             icon = R.drawable.fa_address_card,
             text = R.string.cvu,
-            onClick = { /* Lógica para CVU */ }
+            onClick = { navigator.navigateTo(Routes.Profile) }
         )
     )
 

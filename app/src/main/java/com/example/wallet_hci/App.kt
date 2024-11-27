@@ -10,6 +10,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -23,6 +24,8 @@ import com.example.wallet_hci.ui.snackbars.SnackbarSuccess
 
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.data.repository.UserRepository
+import com.example.wallet_hci.data.repository.WalletRepository
+import com.example.wallet_hci.data.repository.WalletRepositoryProvider
 import com.example.wallet_hci.data.network.api.NetworkModule
 import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
 import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
@@ -30,10 +33,13 @@ import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
 import androidx.navigation.compose.rememberNavController
 import com.example.wallet_hci.data.network.UserRemoteDataSource
+import com.example.wallet_hci.data.network.WalletDataSource
 import com.example.wallet_hci.routes.NavigatorProvider
 import com.example.wallet_hci.UiState
+
 
 
 class MainActivity : ComponentActivity() {
@@ -53,7 +59,9 @@ class MainActivity : ComponentActivity() {
         val userRemoteDataSource = UserRemoteDataSource(sessionManager, NetworkModule.provideUserApiService(retrofit))
         val userRepository = UserRepository(userRemoteDataSource)
 
-        val walletRemoteDataSource = NetworkModule.provideWalletApiService(retrofit)
+        val walletRemoteDataSource = WalletDataSource(NetworkModule.provideWalletApiService(retrofit))
+        val walletRepository = WalletRepository(walletRemoteDataSource)
+
         val paymentRemoteDataSource = NetworkModule.providePaymentApiService(retrofit)
 
         this.navigator = Navigator(sessionManager)
@@ -62,11 +70,12 @@ class MainActivity : ComponentActivity() {
                 NavigatorProvider provides this.navigator,
                 SessionProvider provides sessionManager,
                 UserRepositoryProvider provides userRepository,
-                WalletApiServiceProvider provides walletRemoteDataSource,
+                WalletRepositoryProvider provides walletRepository,
                 PaymentApiServiceProvider provides paymentRemoteDataSource,
                 UiStateProvider provides uiState,
             ){
                 WallethciTheme {
+                    if(uiState.isLoading){ CircularProgressIndicator() }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         // floatingActionButton = { FloatingQRButton(navigator) },
@@ -78,6 +87,8 @@ class MainActivity : ComponentActivity() {
                         Column(modifier = Modifier.padding(innerPadding))
                         { navigator.Routes() }
                     }
+
+                    
                 }
             }
         }

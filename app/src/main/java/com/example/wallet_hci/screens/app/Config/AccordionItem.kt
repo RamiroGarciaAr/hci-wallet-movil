@@ -65,6 +65,9 @@ fun AccordionItem(
     // Local state for each TextField input
     val textFieldValues = remember { mutableStateListOf(*Array(content.size) { "" }) }
 
+    // State for showing the AddCardDialog
+    var showAddCardDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,8 +138,7 @@ fun AccordionItem(
                     ) {
                         Text(text = stringResource(id = R.string.delete_account))
                     }
-                }
-                else {
+                } else {
                     // Display content items and TextFields
                     content.forEachIndexed { index, item ->
                         Text(
@@ -168,7 +170,7 @@ fun AccordionItem(
                     // Display button for Bank Section
                     if (isBank) {
                         Button(
-                            onClick = { /* Handle bank action */ },
+                            onClick = { showAddCardDialog = true }, // Show the AddCardDialog
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = colorResource(R.color.teal_700)
                             ),
@@ -177,11 +179,9 @@ fun AccordionItem(
                                 .padding(vertical = 8.dp)
                         ) {
                             Text(text = stringResource(id = R.string.new_card))
-
                         }
                     }
                 }
-
             }
         }
         // Divider
@@ -190,6 +190,18 @@ fun AccordionItem(
                 .fillMaxWidth()
                 .padding(top = 8.dp),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+        )
+    }
+
+    // Show AddCardDialog
+    if (showAddCardDialog) {
+        AddCardDialog(
+            onDismiss = { showAddCardDialog = false },
+            onSave = { cardNumber, cardHolder, expiryDate, cvv ->
+                // Handle the saved card data
+                println("Card Added: $cardNumber, $cardHolder, $expiryDate, $cvv")
+                showAddCardDialog = false
+            }
         )
     }
 }

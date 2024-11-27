@@ -12,6 +12,5 @@ class NetworkBalance (
         return Balance(
             balance = this.balance
         )
-
     }
 }

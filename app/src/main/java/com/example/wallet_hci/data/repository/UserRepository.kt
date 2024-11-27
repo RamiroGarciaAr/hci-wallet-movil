@@ -24,11 +24,11 @@ class UserRepository @Inject constructor(
 
     /**
      * Logs in the user by delegating to the remote data source.
-     * @param username The user's username.
+     * @param email The user's email.
      * @param password The user's password.
      */
-    suspend fun login(username: String, password: String) {
-        return remoteDataSource.login(username, password)
+    suspend fun login(email: String, password: String) {
+        return remoteDataSource.login(email, password)
     }
 
     /**

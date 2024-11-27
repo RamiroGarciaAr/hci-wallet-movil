@@ -3,9 +3,12 @@ package com.example.wallet_hci.screens.app.code
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,33 +48,33 @@ fun VerificationScreen(
     val uiState = UiStateProvider.current
     val userRepository = UserRepositoryProvider.current
 
-    val onVerfication = { 
+    val verificationCode = remember { mutableStateOf("") }
+
+    val onVerification = {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val code = state.code.joinToString("")
-                if(code.isEmpty() || code.length != 4)
-                    throw IllegalArgumentException("El código de verificación no puede estar vacío.")
+                val code = verificationCode.value
+                if (code.isEmpty() || code.length != 4)
+                    throw IllegalArgumentException("El código de verificación debe tener 4 dígitos.")
 
                 userRepository.verify(Code(code))
                 navigator.navigateTo(Routes.Home)
             } catch (e: DataSourceException) {
                 when (e.code) {
-                    400 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
-                    401 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
-                    404 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
+                    400, 401, 404 -> uiState.snackbarHostState.showSnackbar(
+                        message = "El código de verificación no es correcto"
+                    )
                     else -> uiState.snackbarHostState.showSnackbar(message = "Error al verificar")
                 }
             } catch (e: Exception) {
                 uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al verificar")
             }
         }
-        viewModel.onEvent(VerificationEvent.Verify)
     }
-    val onCancel = { 
+
+    val onCancel = {
         navigator.navigateBack()
     }
-    // Create a list of FocusRequesters, one for each TextField
-    val focusRequesters = List(state.code.size) { FocusRequester() }
 
     Box(
         modifier = Modifier
@@ -85,7 +88,6 @@ fun VerificationScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-               
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.app_logo),
@@ -124,11 +126,15 @@ fun VerificationScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                VerificationCodeInput(
-                    code = state.code,
-                    onCodeChanged = { index, newValue -> viewModel.onCodeChanged(index, newValue) },
+                OutlinedTextField(
+                    value = verificationCode.value,
+                    onValueChange = {
+                        if (it.length <= 16) verificationCode.value = it
+                    },
+                    label = { Text("Código de Verificación") },
+                    placeholder = { Text("Ingrese el código") },
                     modifier = Modifier.fillMaxWidth(),
-                    focusRequesters = focusRequesters
+                    isError = verificationCode.value.length != 16 && verificationCode.value.isNotEmpty()
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -161,7 +167,7 @@ fun VerificationScreen(
                 Spacer(modifier = Modifier.width(16.dp)) // Space between buttons
 
                 Button(
-                    onClick = { onVerfication },
+                    onClick = {onVerification()},
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_600)),
                     modifier = Modifier.weight(1f) // Equal width for symmetry
                 ) {
