@@ -2,6 +2,7 @@ package com.example.wallet_hci.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -17,7 +18,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 import androidx.compose.ui.input.key.*
-
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.example.wallet_hci.R
 
 
 @Composable
@@ -28,6 +34,15 @@ fun VerificationCodeInput(
     textFieldSize: Dp = 60.dp,
     focusRequesters: List<FocusRequester> = List(code.size) { FocusRequester() }
 ) {
+    Text(
+        text = stringResource(id = R.string.verification_code),
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.SemiBold,
+        color = colorResource(R.color.primary_600),
+        fontSize = 18.sp,
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier

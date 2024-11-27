@@ -82,14 +82,6 @@ fun VerificationScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Text(
-                    text = stringResource(id = R.string.verification_code),
-                    textAlign = TextAlign.Start,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colorResource(R.color.primary_600),
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
 
                 VerificationCodeInput(
                     code = state.code,
@@ -121,7 +113,6 @@ fun VerificationScreen(
                     ) {
                         Text(text = stringResource(id = R.string.cancel))
                     }
-
                     Button(
                         onClick = { viewModel.onEvent(VerificationEvent.Verify) },
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_500)),
