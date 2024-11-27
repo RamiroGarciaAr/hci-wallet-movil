@@ -196,6 +196,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 Activity() 
             }
             composable<Routes.Contacts> {
+                uiState.showNavigationBar = true
                 ContactScreen(
                     onBack = { navigateBack() },
                     onAddContact = { navigateTo("addContact") }, // Navega a agregar contacto
@@ -283,6 +284,7 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
 
             // Pantalla para agregar contactos
             composable("addContact") {
+                uiState.showNavigationBar = true
                 AddContactScreen(
                     onBack = { navigateBack() },
                     onAdd = { name, cvuOrAlias, email ->
