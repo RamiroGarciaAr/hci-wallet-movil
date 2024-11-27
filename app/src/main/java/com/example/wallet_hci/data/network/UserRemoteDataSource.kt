@@ -1,7 +1,8 @@
-package com.example.wallet_hci.data
+package com.example.wallet_hci.data.network
 
 import com.example.wallet_hci.SessionManager
-import com.example.wallet_hci.data.netowrk.api.APIUserService
+import com.example.wallet_hci.data.DataSourceException
+import com.example.wallet_hci.data.network.api.APIUserService
 import com.example.wallet_hci.data.model.NetworkCode
 import com.example.wallet_hci.data.model.NetworkCredentials
 import com.example.wallet_hci.data.model.NetworkRegistrationUser
@@ -10,24 +11,24 @@ import com.example.wallet_hci.data.model.NetworkUser
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
     private val userApiService: APIUserService
-) {
+): RemoteDataSource() {
 
-        /**
+    /**
      * Logs in the user by sending credentials to the API.
      * On success, saves the authentication token in the session manager.
      */
-    suspend fun login(username: String, password: String): String {
-        val token = userApiService.login(NetworkCredentials(username, password))
-        sessionManager.saveAuthToken(token.token)
+    suspend fun login(username: String, password: String) {
+        val token = handleApiResponse { userApiService.login(NetworkCredentials(username, password)) } 
+        if(token == null) throw DataSourceException(UNAUTHORIZED_ERROR_CODE, "Invalid credentials")
 
-        return token.token
+        sessionManager.saveAuthToken(token.token)
     }
 
     /**
      * Logs out the user by calling the logout endpoint and clearing the session.
      */
     suspend fun logout(token: String) {
-        userApiService.logout(token)
+        handleApiResponse { userApiService.logout(token) }
         sessionManager.removeAuthToken()
     }
 
@@ -36,7 +37,9 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object.
      */
     suspend fun getCurrentUser(token: String): NetworkUser {
-        return userApiService.getCurrentUser(token)
+        val user = handleApiResponse { userApiService.getCurrentUser(token) }
+        if(user == null) throw DataSourceException(UNAUTHORIZED_ERROR_CODE, "Invalid credentials")
+        return user
     }
 
     /**
@@ -45,7 +48,9 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object for the newly registered user.
      */
     suspend fun register(user: NetworkRegistrationUser): NetworkUser {
-        return userApiService.register(user)
+        val networkUser = handleApiResponse{ userApiService.register(user) }
+        if(networkUser == null) throw DataSourceException(UNAUTHORIZED_ERROR_CODE, "Invalid credentials")
+        return networkUser
     }
 
     /**
@@ -54,6 +59,8 @@ class UserRemoteDataSource(
      * @return A [NetworkUser] object for the verified user.
      */
     suspend fun verify(code: NetworkCode): NetworkUser {
-        return userApiService.verify(code)
+        val user = handleApiResponse { userApiService.verify(code) }
+        if(user == null) throw DataSourceException(UNAUTHORIZED_ERROR_CODE, "Invalid credentials")
+        return user
     }
 }

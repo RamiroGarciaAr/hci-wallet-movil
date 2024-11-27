@@ -14,21 +14,51 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
+
+import com.example.wallet_hci.data.repository.WalletRepositoryProvider
 import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.SessionProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DepositScreen() {
-    val navigator = NavigatorProvider.current
+fun DepositScreen(
+    onDepositComplete: (Double) -> Unit = {}, // Acción al completar el depósito
+    onCancel: () -> Unit = {}
+) {
+    val currentBalance = remember { mutableStateOf(1500.00f) }
     var amount by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    val walletRepository = WalletRepositoryProvider.current
+    val sessionManager = SessionProvider.current
+    val uiState = UiStateProvider.current
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val token = sessionManager.loadAuthToken() ?: ""
+        try {
+            val balance = walletRepository.getBalance(token = token)
+            currentBalance.value = balance?.balance ?: 0.0f
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    val SnackbarShow = { message: String ->
+        CoroutineScope(Dispatchers.Main).launch { 
+            uiState.snackbarHostState.showSnackbar(message = message)
+        }
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Ingreso", color = colorResource(R.color.blue_bar)) },
+                title = { Text(text = stringResource(id = R.string.ingress), color = colorResource(R.color.blue_bar))},
                 navigationIcon = {
-                    IconButton(onClick = { navigator.navigateBack() }) {
+                    IconButton(onClick = onCancel) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back"
@@ -102,35 +132,45 @@ fun DepositScreen() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(
-                    onClick = { navigator.navigateBack() },
+                    onClick = onCancel,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
-                    Text(text = "Cancelar")
+                    Text(text = stringResource(id = R.string.cancel))
                 }
                 Button(
                     onClick = {
                         val parsedAmount = amount.toDoubleOrNull()
-                        if (parsedAmount == null || parsedAmount <= 0) {
-                            errorMessage = "Por favor, ingresa un monto válido."
+                        if (parsedAmount == null || parsedAmount <= 0 || parsedAmount > currentBalance.value) {
+                            SnackbarShow("Por favor, ingresa un monto válido.")
                         } else {
                             errorMessage = null
-                            navigator.navigateTo("depositResult/$parsedAmount")
+                            onDepositComplete(parsedAmount)
+                            SnackbarShow("El depósito se ha completado con éxito.")
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.blue_bar)
-                    )
+                        containerColor = colorResource(R.color.blue_bar),
+                        )
                 ) {
                     Text(
-                        text = "Continuar",
+                        text =  stringResource(id = R.string.continue_action),
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DepositScreenPreview() {
+    DepositScreen(
+        onDepositComplete = { amount -> println("Depósito realizado: $amount") },
+        onCancel = { println("Cancelado") }
+    )
 }

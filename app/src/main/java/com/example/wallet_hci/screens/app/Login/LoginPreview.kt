@@ -4,17 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import com.example.wallet_hci.R
 import com.example.wallet_hci.routes.NavigatorProvider
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
@@ -25,6 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch 
 
 import com.example.wallet_hci.SessionProvider
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.data.DataSourceException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,9 +41,41 @@ fun LogInScreen(
     val navigator = NavigatorProvider.current
     val sessionManager = SessionProvider.current
     val userRepository = UserRepositoryProvider.current
+    val uiState = UiStateProvider.current
+    // Campos de entrada
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
     val onRegisterClick = { navigator.navigateTo(Routes.Register) }
-    val onForgotPasswordClick = { navigator.navigateTo(Routes.Login) }
+    val onForgotPasswordClick = { navigator.navigateTo(Routes.EmailRecovery) }
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+
+    val onLogInClick = {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                if (email.value.isBlank() || password.value.isBlank()) {
+                    throw IllegalArgumentException("Por favor, rellena todos los campos.")
+                }
+                if (!emailRegex.matches(email.value)) {
+                    throw IllegalArgumentException("El mail no tiene un formato válido.")
+                }
+
+                userRepository.login(email = email.value, password = password.value)
+                navigator.navigateTo(Routes.Home) // Navigate to Home on success
+            } catch (e: IllegalArgumentException) {
+                uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al iniciar sesión")
+            } catch (e: DataSourceException) {
+                when (e.code) {
+                    400, 401 -> uiState.snackbarHostState.showSnackbar(message = "El usuario no existe")
+                    404 -> uiState.snackbarHostState.showSnackbar(message = "Los datos ingresados son incorrectos")
+                    else -> uiState.snackbarHostState.showSnackbar(message = "Error al iniciar sesión")
+                }
+            } catch (e: Exception) {
+                uiState.snackbarHostState.showSnackbar(message = "Error desconocido")
+            }
+        }
+    }
 
     Scaffold { paddingValues ->
         Column(
@@ -54,13 +91,12 @@ fun LogInScreen(
                 painter = painterResource(id = R.drawable.app_logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(200.dp)
                     .padding(bottom = 16.dp)
+                    .clip(CircleShape)
             )
 
-            // Campos de entrada
-            val email = remember { mutableStateOf("") }
-            val password = remember { mutableStateOf("") }
+
 
             OutlinedTextField(
                 value = email.value,
@@ -82,19 +118,10 @@ fun LogInScreen(
 
             // Botón de inicio de sesión
             Button(
-                onClick = { 
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val token = userRepository.login(email.value, password.value)
-                        if (token.isNotEmpty()) {
-                            sessionManager.saveAuthToken(token)
-                            navigator.navigateTo(Routes.Home)
-                        }
-                    }
-                    navigator.navigateTo(Routes.Home)
-                 },
+                onClick = {onLogInClick()},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0056D2) // Cambia a tu color azul
+                    containerColor = colorResource(R.color.primary_500)
                 )
             ) {
                 Text(text = "Iniciar sesión", color = Color.White)
@@ -117,7 +144,7 @@ fun LogInScreen(
                 onClick = { onRegisterClick() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0056D2) // Cambia a tu color azul
+                    containerColor = colorResource(R.color.primary_500)
                 )
             ) {
                 Text(text = "Crear cuenta", color = Color.White)

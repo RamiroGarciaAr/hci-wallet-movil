@@ -1,6 +1,8 @@
 package com.example.wallet_hci.screens.app.registration
 
 import androidx.compose.foundation.Image
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,8 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.example.wallet_hci.R
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.app.routes.Routes
 
 import com.example.wallet_hci.data.model.RegistrationUser
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.ui.snackbars.SnackbarSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,9 +34,23 @@ fun RegistrationScreen(
     // onRegisterClick: (String, String, String) -> Unit = { _, _, _ -> }
 ) {
     val navigator = NavigatorProvider.current
-    val userRepository = UserRepositoryProvider.current
+    val uiState = UiStateProvider.current
 
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.back)) },
+                navigationIcon = {
+                    IconButton(onClick = { navigator.navigateBack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back)
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,7 +72,7 @@ fun RegistrationScreen(
             var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
             var confirmPassword by remember { mutableStateOf("") }
-
+            val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -84,21 +103,27 @@ fun RegistrationScreen(
 
             // Botón "Registrarse"
             Button(
-                onClick = { 
-
-                    val dateBirth = Date(123456789)
-                    val registrationUser = RegistrationUser(
-                        firstName = "Test",
-                        lastName = "Test",
-                        email = email,
-                        birthDate = dateBirth,
-                        password = password
-                    )
-
+                onClick = {
                     CoroutineScope(Dispatchers.Main).launch {
-                        userRepository.register(registrationUser)
+                        try { 
+                            if(email.isBlank() || password.isBlank() || confirmPassword.isBlank())
+                                throw IllegalArgumentException("Por favor, rellena todos los campos.")
+                            if(password != confirmPassword)
+                                throw IllegalArgumentException("Las contraseñas no coinciden.")
+                            if (!emailRegex.matches(email)) {
+                                throw IllegalArgumentException("El mail no tiene un formato valido")
+                            }
+                            navigator.navigateTo(Routes.RegisterAdditionalInfo(
+                                email = email,
+                                password = password,
+                                confirmPassword = confirmPassword
+                            ))
+                        }
+                        catch (e: Exception) {
+                            uiState.snackbarHostState.showSnackbar(SnackbarSuccess(message = e.message ?: "Error al registrar")) 
+                        }
                     }
-                 },
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.blue_bar) // Cambia a tu color azul

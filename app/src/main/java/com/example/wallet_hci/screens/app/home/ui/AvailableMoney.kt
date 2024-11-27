@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import com.example.wallet_hci.SessionProvider
 import com.example.wallet_hci.data.network.api.PaymentApiServiceProvider
 import com.example.wallet_hci.data.network.api.WalletApiServiceProvider
+import com.example.wallet_hci.data.repository.WalletRepositoryProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,17 +38,29 @@ object AvailableMoneyState {
 
 @Composable
 fun AvailableMoney() {
+
+    val walletRepository = WalletRepositoryProvider.current
+    val sessionManager = SessionProvider.current
     
+    val balanceState = remember { mutableStateOf(0.0f) }
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val token = sessionManager.loadAuthToken() ?: ""
+        try {
+            val balance = walletRepository.getBalance(token = token)
+            balanceState.value = balance?.balance ?: 0.0f
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     var formatter = NumberFormat.getCurrencyInstance()
 
     formatter.setCurrency(Currency.getInstance(stringResource(R.string.currency)))
     formatter.setMaximumFractionDigits(2)
     formatter.setMinimumFractionDigits(2)
 
-    val amount = 1685.85
-    val formattedAmount = formatter.format(amount)
-
-
+    val formattedAmount = formatter.format(balanceState.value)
 
     Column(
         modifier = Modifier

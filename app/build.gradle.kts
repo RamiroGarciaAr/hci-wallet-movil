@@ -21,7 +21,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://dhz57745-8080.brs.devtunnels.ms/\"")
+           // buildConfigField("String", "BASE_URL", "\"https://dhz57745-8080.brs.devtunnels.ms/api/\"")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
         }
         release {
             buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
@@ -106,6 +107,5 @@ dependencies {
 
     implementation ("com.google.zxing:core:3.5.1")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
-
 
 }

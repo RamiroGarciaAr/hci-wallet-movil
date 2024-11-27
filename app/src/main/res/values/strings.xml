@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">wallet-hci</string>
+    <string name="app_name">PagoZen</string>
     <string name="r_home">Inicio</string>
-    <string name="r_settings">Configuración</string>
     <string name="r_activities">Actividad</string>
+    <string name="r_settings">Configuración</string>
     <string name="r_contacts">Contactos</string>
     <string name="currency">ARS</string>
     <string name="available_money">Disponible</string>
@@ -11,6 +11,7 @@
     <string name="spend">Egresar</string>
     <string name="transfer">Transferir</string>
     <string name="cvu">CVU</string>
+    <string name="ingress">Ingreso</string>
 
     <string name="revenue">Rendimiento</string>
 
@@ -50,6 +51,7 @@
 
     <string name="welcome_title">¡Bienvenido!</string>
     <string name="welcome_subtitle">Contanos un poco de vos.</string>
+    <string name="mail_sent">Te enviamos un código a tu mail</string>
     <string name="name_label">Nombre</string>
     <string name="name_placeholder">Nombre</string>
     <string name="last_name_label">Apellido</string>
@@ -86,10 +88,33 @@
     <string name="mercado_pay">Cuenta bancaria: MercadoPay</string>
     <string name="external_account">Seleccione una cuenta externa </string>
     <string name="add_amount">Seleccione el monto</string>
+
+    <string name="delete_account">Eliminar Cuenta</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="personal">Personales</string>
+    <string name="contact_sec">Contacto</string>
+    <string name="accordion_title_personal">Nombre</string>
+    <string name="accordion_title_last_name">Apellido</string>
+    <string name="accordion_title_email">Email</string>
+    <string name="accordion_title_phone">Número de teléfono</string>
+    <string name="accordion_title_bank">Bancaria</string>
+    <string name="accordion_content_alias">Tu Alias</string>
+    <string name="accordion_title_danger">Zona de Peligro</string>
+    <string name="accordion_content_change_password">Cambiar contraseña</string>
+    <string name="accordion_content_delete_account">Eliminar Cuenta</string>
+    <string name="new_card">Nueva tarjeta</string>
+    <string name="verification_code">Código de Verificación</string>
     <string name="name">Nombre</string>
     <string name="surname">Apellido</string>
     <string name="card_number"> Número de Tarjeta</string>
     <string name="expiration_date">Fecha de Vencimiento (MM/AA)</string>
     <string name="cvv">CVV</string>
+    <!-- Password Reset Texts -->
+    <string name="password_reset_title">Restablecer contraseña</string>
+    <string name="password_reset_subtitle">Te hemos enviado un mensaje al mail %1$s</string>
+    <string name="verification_code_title">¿No te llegó el código? Reenviar en %1$d s</string>
+    <string name="resend_button">Reenviar código</string>
 
+
+    <string name="error_registration_empty_fields">Por favor, rellena todos los campos.</string>
 </resources>
