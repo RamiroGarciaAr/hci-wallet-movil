@@ -33,7 +33,6 @@ fun RegistrationScreen(
 ) {
     val navigator = NavigatorProvider.current
     val uiState = UiStateProvider.current
-    val userRepository = UserRepositoryProvider.current
 
     Scaffold { paddingValues ->
         Column(

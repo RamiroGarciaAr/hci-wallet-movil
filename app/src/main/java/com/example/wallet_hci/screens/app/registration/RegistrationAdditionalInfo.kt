@@ -21,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import com.example.wallet_hci.data.DataSourceException
 
 import java.util.Date
 
@@ -46,7 +47,7 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
     val onRegisterComplete: () -> Unit = {
         CoroutineScope(Dispatchers.Main).launch {
             val birthDate = Date(123456789)
-        //     try {
+            try {
                 if (name.value.isBlank() || lastName.value.isBlank())
                         throw IllegalArgumentException("Por favor, rellena todos los campos.")
                 userRepository.register(
@@ -59,9 +60,16 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
                         )
                 )
                 navigator.navigateTo(Routes.VerifyCode)
-        //     } catch (e: Exception) {
-        //         uiState.snackbarHostState.showSnackbar(message = errorResource)
-        //     }
+            } catch (e: DataSourceException) {
+                when(e.code) {
+                    400 -> uiState.snackbarHostState.showSnackbar(message = "El usuario ya existe")
+                    401 -> uiState.snackbarHostState.showSnackbar(message = "El usuario ya existe")
+                    404 -> uiState.snackbarHostState.showSnackbar(message = "Los datos ingresados son incorrectos")
+                    else -> uiState.snackbarHostState.showSnackbar(message = "Error al registrar")
+                }
+            } catch (e: Exception) {
+                uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al registrar")
+            }
         }
     }
 

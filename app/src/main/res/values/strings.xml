@@ -90,9 +90,9 @@
     <string name="add_amount">Seleccione el monto</string>
 
     <string name="delete_account">Eliminar Cuenta</string>
-    <string name="change_password">Cambiar contraseña</string>">
+    <string name="change_password">Cambiar contraseña</string>
     <string name="personal">Personales</string>
-    <string name="contact_sec">Contacto</string>>
+    <string name="contact_sec">Contacto</string>
     <string name="accordion_title_personal">Nombre</string>
     <string name="accordion_title_last_name">Apellido</string>
     <string name="accordion_title_email">Email</string>
@@ -102,8 +102,8 @@
     <string name="accordion_title_danger">Zona de Peligro</string>
     <string name="accordion_content_change_password">Cambiar contraseña</string>
     <string name="accordion_content_delete_account">Eliminar Cuenta</string>
-    <string name="new_card">Nueva tarjeta</string>">
-    <string name="verification_code">Código de Verificación</string>>
+    <string name="new_card">Nueva tarjeta</string>
+    <string name="verification_code">Código de Verificación</string>
     <string name="name">Nombre</string>
     <string name="surname">Apellido</string>
     <string name="card_number"> Número de Tarjeta</string>
