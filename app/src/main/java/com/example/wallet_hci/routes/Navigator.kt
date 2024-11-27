@@ -50,6 +50,9 @@ import kotlinx.serialization.Serializable
 import androidx.navigation.Navigator as NavHostNavigator
 import com.example.wallet_hci.screens.app.Deposit.DepositScreen
 import com.example.wallet_hci.screens.app.LinkCard.LinkCardScreen
+import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordEmailScreenStyled
+import com.example.wallet_hci.screens.app.resetPassword.ResetPasswordScreen
+import com.example.wallet_hci.screens.app.passwordRecovery.code.PasswordResetScreen
 
 import com.example.wallet_hci.UiStateProvider
 
@@ -62,6 +65,14 @@ sealed interface Routes {
     @Serializable
     data class RegisterAdditionalInfo(val email: String, val password: String, val confirmPassword: String)
 
+    @Serializable
+    object EmailRecovery
+
+    @Serializable
+    object RecoveryCode
+
+    @Serializable
+    object RestePassword
 
     @Serializable
     object Settings : Routes {
@@ -372,6 +383,32 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                         navigateTo(route)
                     },
                     onGoToContacts = { navigateTo("contacts") }
+                )
+            }
+
+            composable<Routes.EmailRecovery> {
+                uiState.showNavigationBar = true
+                ResetPasswordEmailScreenStyled(
+                    onBackClick = { navigateBack() },
+                    onContinueClick = { navigateTo(Routes.RecoveryCode) }
+                )
+            }
+
+            composable<Routes.RecoveryCode> {
+                uiState.showNavigationBar = true
+                PasswordResetScreen(
+                    onBack = { navigateBack() },
+                    onResend = { navigateTo(Routes.EmailRecovery) },
+                    onCodeEntered = { navigateTo(Routes.RestePassword) },
+                    emailMethod = "email"
+                )
+            }
+
+            composable<Routes.RestePassword> {
+                uiState.showNavigationBar = true
+                ResetPasswordScreen(
+                    onNavigateBack = { navigateBack() },
+                    onPasswordChange = { navigateTo(Routes.Home) }
                 )
             }
         }

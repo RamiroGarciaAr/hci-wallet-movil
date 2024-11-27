@@ -47,7 +47,7 @@ fun LogInScreen(
     val password = remember { mutableStateOf("") }
 
     val onRegisterClick = { navigator.navigateTo(Routes.Register) }
-    val onForgotPasswordClick = { navigator.navigateTo(Routes.Login) }
+    val onForgotPasswordClick = { navigator.navigateTo(Routes.EmailRecovery) }
 
     val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
 
