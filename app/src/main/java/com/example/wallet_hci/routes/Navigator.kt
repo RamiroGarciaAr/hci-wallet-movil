@@ -57,7 +57,7 @@ sealed interface Routes {
     @Serializable
     object Register
     @Serializable
-    data class RegisterAdditionalInfo(val params: RegistrationAdditionalInfoParams)
+    data class RegisterAdditionalInfo(val email: String, val password: String, val confirmPassword: String)
 
 
     @Serializable
@@ -173,13 +173,13 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                 LogInScreen() 
             }
             composable<Routes.Register> { RegistrationScreen() }
-            // composable<Routes.RegisterAdditionalInfo> { it -> RegistrationAdditionalInfo(
-            //     params = RegistrationAdditionalInfoParams(
-            //         email = it.arguments?.getString("email") ?: "",
-            //         password = it.arguments?.getString("password") ?: "",
-            //         confirmPassword = it.arguments?.getString("confirmPassword") ?: ""
-            //     )
-            // ) }
+            composable<Routes.RegisterAdditionalInfo> { it -> RegistrationAdditionalInfo(
+                params = RegistrationAdditionalInfoParams(
+                    email = it.arguments?.getString("email") ?: "",
+                    password = it.arguments?.getString("password") ?: "",
+                    confirmPassword = it.arguments?.getString("confirmPassword") ?: ""
+                )
+            ) }
             
             composable<Routes.VerifyCode> { VerificationScreen() } 
 

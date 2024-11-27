@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.wallet_hci.R
 import com.example.wallet_hci.data.repository.UserRepositoryProvider
 import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.app.routes.Routes
 
 import com.example.wallet_hci.data.model.RegistrationUser
 import com.example.wallet_hci.UiStateProvider
@@ -89,21 +90,23 @@ fun RegistrationScreen(
             Button(
                 onClick = { 
 
-                    val dateBirth = Date(123456789)
-                    val registrationUser = RegistrationUser(
-                        firstName = "Test",
-                        lastName = "Test",
-                        email = email,
-                        birthDate = dateBirth,
-                        password = password
-                    )
-
-                    
                     CoroutineScope(Dispatchers.Main).launch {
-                        uiState.snackbarHostState.showSnackbar(SnackbarSuccess(message = "Registro Exitoso"))
-                        // userRepository.register(registrationUser)
+                        try { 
+                            if(email.isBlank() || password.isBlank() || confirmPassword.isBlank())
+                                throw IllegalArgumentException("Por favor, rellena todos los campos.")
+                            if(password != confirmPassword)
+                                throw IllegalArgumentException("Las contraseñas no coinciden.")
+                            navigator.navigateTo(Routes.RegisterAdditionalInfo(
+                                email = email,
+                                password = password,
+                                confirmPassword = confirmPassword
+                            ))
+                        }
+                        catch (e: Exception) {
+                            uiState.snackbarHostState.showSnackbar(SnackbarSuccess(message = e.message ?: "Error al registrar")) 
+                        }
                     }
-                 },
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.blue_bar) // Cambia a tu color azul
