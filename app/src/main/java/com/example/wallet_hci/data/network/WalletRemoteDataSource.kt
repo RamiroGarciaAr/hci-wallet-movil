@@ -1,48 +1,35 @@
 package com.example.wallet_hci.data.network
 
-import com.example.wallet_hci.data.api.APIPaymentService
-import com.example.wallet_hci.data.model.NetworkBalancePayment
-import com.example.wallet_hci.data.model.NetworkCardPayment
-import com.example.wallet_hci.data.model.NetworkLinkPaymentObject
-import com.example.wallet_hci.data.model.NetworkLinkUuid
-import com.example.wallet_hci.data.model.NetworkNewPaymentLink
-import com.example.wallet_hci.data.model.NetworkPayment
-import com.example.wallet_hci.data.model.NetworkPaymentLink
-import com.example.wallet_hci.data.model.NetworkPaymentResponse
-import retrofit2.http.Body
-import retrofit2.http.Path
+import com.example.wallet_hci.data.network.api.APIWalletService
 
-class WalletDataSource(private val paymentService: APIPaymentService): RemoteDataSource()
+import com.example.wallet_hci.data.model.*
+class WalletDataSource(private val walletService: APIWalletService): RemoteDataSource()
 {
-    //Getters
-    suspend fun getPayments(token: String): List<NetworkPayment>? {
-        return handleApiResponse { paymentService.getPayments(token)}
-    }
-    suspend fun getPaymentData(linkUuid: String, token: String): NetworkLinkPaymentObject? {
-        return handleApiResponse { paymentService.getPaymentData(linkUuid, token) }
+    suspend fun getCards(token: String): List<NetworkCard>? {
+        return handleApiResponse { walletService.getCards(token) }
     }
 
-    suspend fun payWithCard(@Body cardPayment : NetworkCardPayment, token: String): Unit? {
-        return handleApiResponse { paymentService.payWithCard(cardPayment, token) }
+    suspend fun addCard(card: NetworkCard, token: String): NetworkCard? {
+        return handleApiResponse { walletService.addCard(card, token) }
     }
 
-    suspend fun settlePayment(@Body linkPayment: NetworkPaymentLink, @Path("linkUuid") linkUuid: String, token: String): NetworkPaymentResponse?
-    {
-        return handleApiResponse { paymentService.settlePayment(linkPayment, linkUuid, token) }
+    suspend fun deleteCard(cardId: Int, token: String): Unit? {
+        return handleApiResponse { walletService.deleteCard(cardId, token) }
     }
 
-    suspend fun getPaymentLink(@Path("linkUuid") linkUuid: String, token: String): NetworkPaymentResponse?
-    {
-        return handleApiResponse { paymentService.getPaymentLink(linkUuid, token) }
+    suspend fun getBalance(token: String): NetworkBalance? {
+        return handleApiResponse { walletService.getBalance(token) }
     }
 
-    suspend fun payWithBalance(@Body balancePayment : NetworkBalancePayment, token: String): Unit?
-    {
-        return handleApiResponse { paymentService.payWithBalance(balancePayment, token) }
+    suspend fun recharge(rechargeRequest: NetworkRechargeRequest, token: String): NetworkRechargeResponse? {
+        return handleApiResponse { walletService.recharge(rechargeRequest, token) }
     }
 
-    suspend fun generateLink(linkPayment: NetworkNewPaymentLink, token: String): NetworkLinkUuid?
-    {
-        return handleApiResponse { paymentService.generateLink(linkPayment, token) }
+    suspend fun getWalletDetails(token: String): NetworkWalletDetails? {
+        return handleApiResponse { walletService.getWalletDetails(token) }
+    }
+
+    suspend fun updateAlias(alias: NetworkAlias, token: String): Unit? {
+        return handleApiResponse { walletService.updateAlias(alias, token) }
     }
 }
