@@ -15,15 +15,43 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.example.wallet_hci.R
 
+import com.example.wallet_hci.data.repository.WalletRepositoryProvider
+import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.UiStateProvider
+import com.example.wallet_hci.SessionProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DepositScreen(
-    currentBalance: String = "1500.00",
     onDepositComplete: (Double) -> Unit = {}, // Acción al completar el depósito
     onCancel: () -> Unit = {}
 ) {
+    val currentBalance = remember { mutableStateOf(1500.00f) }
     var amount by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    val walletRepository = WalletRepositoryProvider.current
+    val sessionManager = SessionProvider.current
+    val uiState = UiStateProvider.current
+
+    CoroutineScope(Dispatchers.Main).launch {
+        val token = sessionManager.loadAuthToken() ?: ""
+        try {
+            val balance = walletRepository.getBalance(token = token)
+            currentBalance.value = balance?.balance ?: 0.0f
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    val SnackbarShow = { message: String ->
+        CoroutineScope(Dispatchers.Main).launch { 
+            uiState.snackbarHostState.showSnackbar(message = message)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -115,11 +143,12 @@ fun DepositScreen(
                 Button(
                     onClick = {
                         val parsedAmount = amount.toDoubleOrNull()
-                        if (parsedAmount == null || parsedAmount <= 0) {
-                            errorMessage = "Por favor, ingresa un monto válido."
+                        if (parsedAmount == null || parsedAmount <= 0 || parsedAmount > currentBalance.value) {
+                            SnackbarShow("Por favor, ingresa un monto válido.")
                         } else {
                             errorMessage = null
                             onDepositComplete(parsedAmount)
+                            SnackbarShow("El depósito se ha completado con éxito.")
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),

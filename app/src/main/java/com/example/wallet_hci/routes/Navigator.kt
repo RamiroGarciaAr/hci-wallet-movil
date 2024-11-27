@@ -220,9 +220,15 @@ class Navigator @Inject constructor(private val sessionManager: SessionManager) 
                     }
                 )
             } // Ruta para Contacts
-            composable<Routes.Deposit> { DepositScreen() }
+            composable<Routes.Deposit> { 
+                uiState.showNavigationBar = false
+                DepositScreen() 
+            }
             // Transfer screen
-            composable<Routes.Transfer> { TransferScreen() }
+            composable<Routes.Transfer> {
+                uiState.showNavigationBar = false
+                TransferScreen() 
+            }
 
 
 
