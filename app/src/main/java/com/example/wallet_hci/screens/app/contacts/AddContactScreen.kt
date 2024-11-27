@@ -32,7 +32,7 @@ fun AddContactScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Agregar Contacto") },
+                title = { Text(text = stringResource(id = R.string.add_contact)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -53,7 +53,7 @@ fun AddContactScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Completa los datos del contacto",
+                text = stringResource(id = R.string.complete_contact_data),
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -61,7 +61,7 @@ fun AddContactScreen(
             OutlinedTextField(
                 value = name.value,
                 onValueChange = { name.value = it },
-                label = { Text("Nombre y Apellido") },
+                label = { Text(stringResource(id = R.string.name_and_surname)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -70,7 +70,7 @@ fun AddContactScreen(
             OutlinedTextField(
                 value = cvuOrAlias.value,
                 onValueChange = { cvuOrAlias.value = it },
-                label = { Text("CVU o Alias") },
+                label = { Text(stringResource(id = R.string.cvu_or_alias)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -79,7 +79,7 @@ fun AddContactScreen(
             OutlinedTextField(
                 value = email.value,
                 onValueChange = { email.value = it },
-                label = { Text("Dirección Email") },
+                label = { Text(stringResource(id = R.string.direction_email)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -93,7 +93,7 @@ fun AddContactScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0066CC))
             ) {
                 Text(
-                    text = "Agregar Contacto",
+                    text = stringResource(id = R.string.add_contact),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }

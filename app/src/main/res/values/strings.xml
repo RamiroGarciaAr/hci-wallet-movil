@@ -117,4 +117,23 @@
 
 
     <string name="error_registration_empty_fields">Por favor, rellena todos los campos.</string>
+
+
+    <string name="verification_code">Código de Verificación</string>
+    <string name="enter_code">Ingrese el código</string>
+    <string name="verification_code_error">El código de verificación no puede estar vacío</string>
+    <string name="verification_error">Error al verificar</string>
+    <string name="verification_digit_error">El código de verificación debe tener 4 dígitos.</string>
+    <string name="incorrect_verification_code">Error al verificar</string>
+    <string name="add_contact">Agregar contacto</string>
+    <string name="complete_contact_data">Completa los datos del contacto</string>
+    <string name="name_and_surname">Nombre y Apellido</string>
+    <string name="cvu_or_alias">CVU o Alias</string>
+    <string name="direction_email">Dirección email</string>
+    <string name="search">Buscar</string>
+    <string name="money_available">Dinero Disponible</string>
+    <string name="money_movements">"Movimientos de tu dinero"</string>
+
+<!-- stringResource(id = R.string.accordion_title_danger) -->
+
 </resources>

@@ -35,7 +35,7 @@ open class VerificationViewModel : ViewModel() {
 
 
                 if (currentState.code.joinToString("").isEmpty()) {
-                    throw IllegalArgumentException("El código de verificación no puede estar vacío.")
+                    throw IllegalArgumentException(stringResource(id = R.string.verification_code_error))
                 }                
 
                 // Simulate success

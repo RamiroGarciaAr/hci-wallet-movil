@@ -37,7 +37,7 @@ fun Activity() {
                 .padding(16.dp) // Espaciado interno
         ) {
             Text(
-                text = "Dinero disponible", // Título
+                text = stringResource(id = R.string.money_available), // Título
                 color = Color.White, // Texto blanco
                 fontSize = 20.sp // Tamaño de texto
             )
@@ -84,7 +84,7 @@ fun Activity() {
     fun MovementList() {
         Column(modifier = Modifier.padding(16.dp)) { // Un contenedor vertical con margen
             Text(
-                text = "Movimientos de tu dinero",
+                text = stringResource(id = R.string.money_movements),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

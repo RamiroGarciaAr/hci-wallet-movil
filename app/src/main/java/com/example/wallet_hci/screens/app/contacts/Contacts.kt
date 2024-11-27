@@ -144,11 +144,11 @@ fun SearchBar(
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
-        placeholder = { Text("Buscar un contacto") },
+        placeholder = { Text(stringResource(id = R.string.go_to_contacts)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Buscar"
+                contentDescription = stringResource(id = R.string.search)
             )
         },
         modifier = Modifier

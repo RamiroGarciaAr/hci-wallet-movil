@@ -55,19 +55,19 @@ fun VerificationScreen(
             try {
                 val code = verificationCode.value
                 if (code.isEmpty() || code.length != 4)
-                    throw IllegalArgumentException("El código de verificación debe tener 4 dígitos.")
+                    throw IllegalArgumentException(stringResource(id = R.string.verification_digit_error))
 
                 userRepository.verify(Code(code))
                 navigator.navigateTo(Routes.Home)
             } catch (e: DataSourceException) {
                 when (e.code) {
                     400, 401, 404 -> uiState.snackbarHostState.showSnackbar(
-                        message = "El código de verificación no es correcto"
+                        message = stringResource(id = R.string.incorrect_verification_code)
                     )
-                    else -> uiState.snackbarHostState.showSnackbar(message = "Error al verificar")
+                    else -> uiState.snackbarHostState.showSnackbar(message = stringResource(id = R.string.verification_error))
                 }
             } catch (e: Exception) {
-                uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al verificar")
+                uiState.snackbarHostState.showSnackbar(message = e.message ?: stringResource(id = R.string.verification_error))
             }
         }
     }
@@ -131,8 +131,8 @@ fun VerificationScreen(
                     onValueChange = {
                         if (it.length <= 16) verificationCode.value = it
                     },
-                    label = { Text("Código de Verificación") },
-                    placeholder = { Text("Ingrese el código") },
+                    label = { Text(stringResource(id = R.string.verification_code)) },
+                    placeholder = { Text(stringResource(id = R.string.enter_code)) },
                     modifier = Modifier.fillMaxWidth(),
                     isError = verificationCode.value.length != 16 && verificationCode.value.isNotEmpty()
                 )
