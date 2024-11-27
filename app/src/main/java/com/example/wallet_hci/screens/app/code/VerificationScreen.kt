@@ -25,15 +25,54 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wallet_hci.R
 
+import com.example.wallet_hci.data.repository.UserRepositoryProvider
+import com.example.wallet_hci.routes.NavigatorProvider
+import com.example.wallet_hci.UiStateProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+import com.example.wallet_hci.data.model.Code
+import com.example.wallet_hci.data.DataSourceException
+import com.example.wallet_hci.app.routes.Routes
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerificationScreen(
     viewModel: VerificationViewModel = viewModel(),
-    onVerificationSuccess: () -> Unit = {},
-    onCancel: () -> Unit = {}
 ) {
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val navigator = NavigatorProvider.current
+    val uiState = UiStateProvider.current
+    val userRepository = UserRepositoryProvider.current
+
+    val onVerfication = { 
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val code = state.code.joinToString("")
+                if(code.isEmpty() || code.length != 4)
+                    throw IllegalArgumentException("El código de verificación no puede estar vacío.")
+
+                userRepository.verify(Code(code))
+                navigator.navigateTo(Routes.Home)
+            } catch (e: DataSourceException) {
+                when (e.code) {
+                    400 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
+                    401 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
+                    404 -> uiState.snackbarHostState.showSnackbar(message = "El código de verificación no es correcto")
+                    else -> uiState.snackbarHostState.showSnackbar(message = "Error al verificar")
+                }
+            } catch (e: Exception) {
+                uiState.snackbarHostState.showSnackbar(message = e.message ?: "Error al verificar")
+            }
+        }
+        viewModel.onEvent(VerificationEvent.Verify)
+    }
+    val onCancel = { 
+        navigator.navigateBack()
+    }
     // Create a list of FocusRequesters, one for each TextField
     val focusRequesters = List(state.code.size) { FocusRequester() }
 
@@ -167,7 +206,7 @@ fun VerificationScreen(
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Button(
-                        onClick = { viewModel.onEvent(VerificationEvent.Verify) },
+                        onClick = onVerfication,
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primary_500)),
                         modifier = Modifier.weight(1f)
                     ) {

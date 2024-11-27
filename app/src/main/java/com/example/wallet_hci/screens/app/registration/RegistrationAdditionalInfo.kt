@@ -2,6 +2,7 @@ package com.example.wallet_hci.screens.app.registration
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,28 +97,28 @@ fun RegistrationAdditionalInfo(params: RegistrationAdditionalInfoParams) {
 
             // Campos de texto
             OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Nombre */},
+                    value = name.value,
+                    onValueChange = { name.value = it },
                     label = { Text(stringResource(id = R.string.name_label)) },
                     placeholder = { Text(stringResource(id = R.string.name_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Apellido */},
+                    value = lastName.value,
+                    onValueChange = { lastName.value = it },
                     label = { Text(stringResource(id = R.string.last_name_label)) },
                     placeholder = { Text(stringResource(id = R.string.last_name_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
             )
 
-            OutlinedTextField(
-                    value = "",
-                    onValueChange = { /* Nacionalidad */},
-                    label = { Text(stringResource(id = R.string.nationality_label)) },
-                    placeholder = { Text(stringResource(id = R.string.nationality_placeholder)) },
-                    modifier = Modifier.fillMaxWidth()
-            )
+        //     OutlinedTextField(
+        //             value = "",
+        //             onValueChange = { /* Nacionalidad */},
+        //             label = { Text(stringResource(id = R.string.nationality_label)) },
+        //             placeholder = { Text(stringResource(id = R.string.nationality_placeholder)) },
+        //             modifier = Modifier.fillMaxWidth()
+        //     )
 
             Spacer(modifier = Modifier.height(16.dp))
 
